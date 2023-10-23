@@ -1,7 +1,3 @@
-
-server:
-  port: 7070
-
 spring:
   datasource:
     driver-class-name: oracle.jdbc.OracleDriver
@@ -10,7 +6,7 @@ spring:
     password: sekohan
   jpa:
     hibernate:
-      ddl-auto: create
+      ddl-auto: update
     properties:
       hibernate:
         format_sql: true
@@ -22,3 +18,16 @@ spring:
       location: C:\\upload
       max-request-size: 30MB
       max-file-size: 10MB
+  mail:
+    host: smtp.gmail.com
+    port: 587
+    username: dim95985@gmail.com
+    password: kghc vluw ouie gvjo
+    properties:
+      mail:
+        smtp:
+          auth: true
+          starttls:
+            enable: true
+server:
+  port: 7070

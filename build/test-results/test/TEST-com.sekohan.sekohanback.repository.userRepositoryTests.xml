@@ -1,9 +1,9 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<testsuite name="com.sekohan.sekohanback.repository.userRepositoryTests" tests="1" skipped="0" failures="0" errors="0" timestamp="2023-10-19T08:37:24" hostname="DESKTOP-4ICJHRT" time="0.544">
+<testsuite name="com.sekohan.sekohanback.repository.userRepositoryTests" tests="1" skipped="0" failures="0" errors="0" timestamp="2023-10-20T08:07:20" hostname="DESKTOP-4ICJHRT" time="0.524">
   <properties/>
-  <testcase name="insertUser()" classname="com.sekohan.sekohanback.repository.userRepositoryTests" time="0.544"/>
-  <system-out><![CDATA[17:37:19.574 [Test worker] INFO org.springframework.test.context.support.AnnotationConfigContextLoaderUtils -- Could not detect default configuration classes for test class [com.sekohan.sekohanback.repository.userRepositoryTests]: userRepositoryTests does not declare any static, non-private, non-final, nested classes annotated with @Configuration.
-17:37:19.681 [Test worker] INFO org.springframework.boot.test.context.SpringBootTestContextBootstrapper -- Found @SpringBootConfiguration com.sekohan.sekohanback.SekohanBackApplication for test class com.sekohan.sekohanback.repository.userRepositoryTests
+  <testcase name="insertUser()" classname="com.sekohan.sekohanback.repository.userRepositoryTests" time="0.524"/>
+  <system-out><![CDATA[17:07:16.631 [Test worker] INFO org.springframework.test.context.support.AnnotationConfigContextLoaderUtils -- Could not detect default configuration classes for test class [com.sekohan.sekohanback.repository.userRepositoryTests]: userRepositoryTests does not declare any static, non-private, non-final, nested classes annotated with @Configuration.
+17:07:16.743 [Test worker] INFO org.springframework.boot.test.context.SpringBootTestContextBootstrapper -- Found @SpringBootConfiguration com.sekohan.sekohanback.SekohanBackApplication for test class com.sekohan.sekohanback.repository.userRepositoryTests
 
   .   ____          _            __ _ _
  /\\ / ___'_ __ _ _(_)_ __  __ _ \ \ \ \
@@ -13,188 +13,24 @@
  =========|_|==============|___/=/_/_/_/
  :: Spring Boot ::                (v3.1.4)
 
-2023-10-19T17:37:20.107+09:00  INFO 21516 --- [    Test worker] c.s.s.repository.userRepositoryTests     : Starting userRepositoryTests using Java 17.0.7 with PID 21516 (started by DongHan in C:\Users\DongHan\Desktop\project\sekohan\sekohan-back)
-2023-10-19T17:37:20.109+09:00  INFO 21516 --- [    Test worker] c.s.s.repository.userRepositoryTests     : No active profile set, falling back to 1 default profile: "default"
-2023-10-19T17:37:20.699+09:00  INFO 21516 --- [    Test worker] .s.d.r.c.RepositoryConfigurationDelegate : Bootstrapping Spring Data JPA repositories in DEFAULT mode.
-2023-10-19T17:37:20.753+09:00  INFO 21516 --- [    Test worker] .s.d.r.c.RepositoryConfigurationDelegate : Finished Spring Data repository scanning in 46 ms. Found 1 JPA repository interfaces.
-2023-10-19T17:37:21.294+09:00  INFO 21516 --- [    Test worker] o.hibernate.jpa.internal.util.LogHelper  : HHH000204: Processing PersistenceUnitInfo [name: default]
-2023-10-19T17:37:21.361+09:00  INFO 21516 --- [    Test worker] org.hibernate.Version                    : HHH000412: Hibernate ORM core version 6.2.9.Final
-2023-10-19T17:37:21.365+09:00  INFO 21516 --- [    Test worker] org.hibernate.cfg.Environment            : HHH000406: Using bytecode reflection optimizer
-2023-10-19T17:37:21.504+09:00  INFO 21516 --- [    Test worker] o.h.b.i.BytecodeProviderInitiator        : HHH000021: Bytecode provider name : bytebuddy
-2023-10-19T17:37:21.656+09:00  INFO 21516 --- [    Test worker] o.s.o.j.p.SpringPersistenceUnitInfo      : No LoadTimeWeaver setup: ignoring JPA class transformer
-2023-10-19T17:37:21.680+09:00  INFO 21516 --- [    Test worker] com.zaxxer.hikari.HikariDataSource       : HikariPool-1 - Starting...
-2023-10-19T17:37:21.901+09:00  INFO 21516 --- [    Test worker] com.zaxxer.hikari.pool.HikariPool        : HikariPool-1 - Added connection oracle.jdbc.driver.T4CConnection@56b9d43f
-2023-10-19T17:37:21.902+09:00  INFO 21516 --- [    Test worker] com.zaxxer.hikari.HikariDataSource       : HikariPool-1 - Start completed.
-2023-10-19T17:37:21.925+09:00  WARN 21516 --- [    Test worker] org.hibernate.orm.deprecation            : HHH90000026: Oracle12cDialect has been deprecated; use org.hibernate.dialect.OracleDialect instead
-2023-10-19T17:37:22.270+09:00  INFO 21516 --- [    Test worker] o.h.b.i.BytecodeProviderInitiator        : HHH000021: Bytecode provider name : bytebuddy
-2023-10-19T17:37:22.902+09:00  INFO 21516 --- [    Test worker] o.h.e.t.j.p.i.JtaPlatformInitiator       : HHH000490: Using JtaPlatform implementation: [org.hibernate.engine.transaction.jta.platform.internal.NoJtaPlatform]
-Hibernate: 
-    drop table tb_category cascade constraints
-Hibernate: 
-    drop table tb_comment cascade constraints
-Hibernate: 
-    drop table tb_event cascade constraints
-Hibernate: 
-    drop table tb_pro_img cascade constraints
-Hibernate: 
-    drop table tb_product cascade constraints
-Hibernate: 
-    drop table tb_service cascade constraints
-Hibernate: 
-    drop table tb_user cascade constraints
-Hibernate: 
-    drop table tb_user_img cascade constraints
-Hibernate: 
-    drop table tb_wish_list cascade constraints
-Hibernate: 
-    drop sequence sequence_attr_reply
-Hibernate: 
-    create sequence sequence_attr_reply start with 1 increment by 1
-Hibernate: 
-    create table tb_category (
-        category_datail_parent_lev number(10,0) not null,
-        category_detail_lev number(10,0) not null,
-        category_lev number(10,0) not null,
-        category_parent_lev number(10,0) not null,
-        category_id number(19,0) not null,
-        category_detail_nm varchar2(255 char) not null,
-        category_nm varchar2(255 char) not null,
-        group_id varchar2(255 char) not null,
-        primary key (category_id)
-    )
-Hibernate: 
-    create table tb_comment (
-        comment_id number(19,0) not null,
-        local_date_time timestamp(6) not null,
-        pro_id number(19,0),
-        user_id number(19,0),
-        comment_content varchar2(255 char) not null,
-        primary key (comment_id)
-    )
-Hibernate: 
-    create table tb_event (
-        address_id number(19,0) not null,
-        event_id number(19,0) not null,
-        local_date_time timestamp(6) not null,
-        user_id number(19,0),
-        detail_add varchar2(255 char) not null,
-        event_name varchar2(255 char) not null,
-        main_add varchar2(255 char) not null,
-        path varchar2(255 char),
-        sub_add varchar2(255 char) not null,
-        primary key (event_id)
-    )
-Hibernate: 
-    create table tb_pro_img (
-        pro_id number(19,0),
-        pro_img_id number(19,0) not null,
-        path varchar2(255 char),
-        primary key (pro_img_id)
-    )
-Hibernate: 
-    create table tb_product (
-        pro_price number(10,0) not null,
-        pro_status CHAR(1) default 0 not null,
-        pro_view number(10,0) default 0 not null,
-        category_id number(19,0),
-        local_date_time timestamp(6) not null,
-        pro_id number(19,0) not null,
-        user_id number(19,0),
-        pro_info varchar2(255 char) not null,
-        pro_name varchar2(255 char) not null,
-        primary key (pro_id)
-    )
-Hibernate: 
-    create table tb_service (
-        pro_id number(19,0),
-        service_id number(19,0) not null,
-        user_id number(19,0),
-        primary key (service_id)
-    )
-Hibernate: 
-    create table tb_user (
-        report_conut number(10,0) default 0 not null,
-        user_id number(19,0) not null,
-        email varchar2(255 char) not null,
-        login_id varchar2(255 char) not null,
-        name varchar2(255 char) not null,
-        nick_name varchar2(255 char) not null,
-        passowrd varchar2(255 char) not null,
-        primary key (user_id)
-    )
-Hibernate: 
-    create table tb_user_img (
-        user_id number(19,0) unique,
-        user_img_id number(19,0) not null,
-        path varchar2(255 char),
-        primary key (user_img_id)
-    )
-Hibernate: 
-    create table tb_wish_list (
-        list_id number(19,0) not null,
-        local_date_time timestamp(6) not null,
-        pro_id number(19,0),
-        user_id number(19,0),
-        primary key (list_id)
-    )
-Hibernate: 
-    alter table tb_comment 
-       add constraint FK1md29ldxe5n5hk5ndgqcq0ds8 
-       foreign key (pro_id) 
-       references tb_product
-Hibernate: 
-    alter table tb_comment 
-       add constraint FK45c1cuqlljd60ihc9j0962ekq 
-       foreign key (user_id) 
-       references tb_user
-Hibernate: 
-    alter table tb_event 
-       add constraint FKdxmu3wp63adbhybp8sgb2c4ye 
-       foreign key (user_id) 
-       references tb_user
-Hibernate: 
-    alter table tb_pro_img 
-       add constraint FKl4pil3yo07jvdnjdu4n54ypnv 
-       foreign key (pro_id) 
-       references tb_product
-Hibernate: 
-    alter table tb_product 
-       add constraint FK8i0sq9mfbpsrabrm2pum9fspo 
-       foreign key (category_id) 
-       references tb_category
-Hibernate: 
-    alter table tb_product 
-       add constraint FK71fg44ns068tnlvra0oh83hvu 
-       foreign key (user_id) 
-       references tb_user
-Hibernate: 
-    alter table tb_service 
-       add constraint FK2usqr1ueiv3f1kqwdj7dvr4em 
-       foreign key (pro_id) 
-       references tb_product
-Hibernate: 
-    alter table tb_service 
-       add constraint FK82fxt5qd4drb9kq4tgnbjoroe 
-       foreign key (user_id) 
-       references tb_user
-Hibernate: 
-    alter table tb_user_img 
-       add constraint FKm56otpca2djuj9dxw12nebsx1 
-       foreign key (user_id) 
-       references tb_user
-Hibernate: 
-    alter table tb_wish_list 
-       add constraint FKb346w70j0ih2mwj66h8pabpe2 
-       foreign key (pro_id) 
-       references tb_product
-Hibernate: 
-    alter table tb_wish_list 
-       add constraint FKc1d8elkfw6bfq2yasq10o3h2k 
-       foreign key (user_id) 
-       references tb_user
-2023-10-19T17:37:23.148+09:00  INFO 21516 --- [    Test worker] j.LocalContainerEntityManagerFactoryBean : Initialized JPA EntityManagerFactory for persistence unit 'default'
-2023-10-19T17:37:23.326+09:00  WARN 21516 --- [    Test worker] JpaBaseConfiguration$JpaWebConfiguration : spring.jpa.open-in-view is enabled by default. Therefore, database queries may be performed during view rendering. Explicitly configure spring.jpa.open-in-view to disable this warning
-2023-10-19T17:37:24.150+09:00  INFO 21516 --- [    Test worker] c.s.s.repository.userRepositoryTests     : Started userRepositoryTests in 4.312 seconds (process running for 5.424)
+2023-10-20T17:07:17.152+09:00  INFO 16900 --- [    Test worker] c.s.s.repository.userRepositoryTests     : Starting userRepositoryTests using Java 17.0.7 with PID 16900 (started by DongHan in C:\Users\DongHan\Desktop\project\sekohan-back)
+2023-10-20T17:07:17.153+09:00  INFO 16900 --- [    Test worker] c.s.s.repository.userRepositoryTests     : No active profile set, falling back to 1 default profile: "default"
+2023-10-20T17:07:17.762+09:00  INFO 16900 --- [    Test worker] .s.d.r.c.RepositoryConfigurationDelegate : Bootstrapping Spring Data JPA repositories in DEFAULT mode.
+2023-10-20T17:07:17.830+09:00  INFO 16900 --- [    Test worker] .s.d.r.c.RepositoryConfigurationDelegate : Finished Spring Data repository scanning in 58 ms. Found 1 JPA repository interfaces.
+2023-10-20T17:07:18.378+09:00  INFO 16900 --- [    Test worker] o.hibernate.jpa.internal.util.LogHelper  : HHH000204: Processing PersistenceUnitInfo [name: default]
+2023-10-20T17:07:18.433+09:00  INFO 16900 --- [    Test worker] org.hibernate.Version                    : HHH000412: Hibernate ORM core version 6.2.9.Final
+2023-10-20T17:07:18.436+09:00  INFO 16900 --- [    Test worker] org.hibernate.cfg.Environment            : HHH000406: Using bytecode reflection optimizer
+2023-10-20T17:07:18.577+09:00  INFO 16900 --- [    Test worker] o.h.b.i.BytecodeProviderInitiator        : HHH000021: Bytecode provider name : bytebuddy
+2023-10-20T17:07:18.721+09:00  INFO 16900 --- [    Test worker] o.s.o.j.p.SpringPersistenceUnitInfo      : No LoadTimeWeaver setup: ignoring JPA class transformer
+2023-10-20T17:07:18.740+09:00  INFO 16900 --- [    Test worker] com.zaxxer.hikari.HikariDataSource       : HikariPool-1 - Starting...
+2023-10-20T17:07:18.958+09:00  INFO 16900 --- [    Test worker] com.zaxxer.hikari.pool.HikariPool        : HikariPool-1 - Added connection oracle.jdbc.driver.T4CConnection@5df64b2a
+2023-10-20T17:07:18.959+09:00  INFO 16900 --- [    Test worker] com.zaxxer.hikari.HikariDataSource       : HikariPool-1 - Start completed.
+2023-10-20T17:07:18.978+09:00  WARN 16900 --- [    Test worker] org.hibernate.orm.deprecation            : HHH90000026: Oracle12cDialect has been deprecated; use org.hibernate.dialect.OracleDialect instead
+2023-10-20T17:07:19.308+09:00  INFO 16900 --- [    Test worker] o.h.b.i.BytecodeProviderInitiator        : HHH000021: Bytecode provider name : bytebuddy
+2023-10-20T17:07:19.907+09:00  INFO 16900 --- [    Test worker] o.h.e.t.j.p.i.JtaPlatformInitiator       : HHH000490: Using JtaPlatform implementation: [org.hibernate.engine.transaction.jta.platform.internal.NoJtaPlatform]
+2023-10-20T17:07:19.910+09:00  INFO 16900 --- [    Test worker] j.LocalContainerEntityManagerFactoryBean : Initialized JPA EntityManagerFactory for persistence unit 'default'
+2023-10-20T17:07:20.436+09:00  WARN 16900 --- [    Test worker] JpaBaseConfiguration$JpaWebConfiguration : spring.jpa.open-in-view is enabled by default. Therefore, database queries may be performed during view rendering. Explicitly configure spring.jpa.open-in-view to disable this warning
+2023-10-20T17:07:20.929+09:00  INFO 16900 --- [    Test worker] c.s.s.repository.userRepositoryTests     : Started userRepositoryTests in 4.027 seconds (process running for 5.187)
 Hibernate: 
     select
         sequence_attr_reply.nextval 
