@@ -21,5 +21,5 @@ public class ProImageEntity {
 
     @ManyToOne
     @JoinColumn(name = "productId")
-    private ProductEntity prodcutId;
+    private ProductEntity productId;
 }
