@@ -10,6 +10,7 @@ import org.hibernate.annotations.ColumnDefault;
 @NoArgsConstructor(access = AccessLevel.PROTECTED)
 @AllArgsConstructor
 @Getter
+@Setter
 public class UserEntity {
     @Id
     @GeneratedValue(strategy = GenerationType.SEQUENCE,generator = "SEQ_ATTR_REPLY")// 11번 12번줄 있으면 기본키가 1부터 시작해서 1씩 자동으로 올라감
@@ -35,5 +36,8 @@ public class UserEntity {
     @Column(nullable = false)
     private int report;
 
+    public UserEntity(Long uId) {
+        this.uId = uId;
+    }
 
 }

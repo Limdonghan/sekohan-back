@@ -3,14 +3,18 @@ package com.sekohan.sekohanback.entity;
 import jakarta.persistence.*;
 import lombok.*;
 import org.hibernate.annotations.ColumnDefault;
+import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestParam;
+import com.sekohan.sekohanback.service.ProductService;
 
 import java.time.LocalDateTime;
 
 @Entity
 @Table(name = "TB_Product")
 @Builder
-@NoArgsConstructor(access = AccessLevel.PROTECTED)
+@NoArgsConstructor
 @AllArgsConstructor
+@Setter
 @Getter
 public class ProductEntity {
     @Id
@@ -18,24 +22,24 @@ public class ProductEntity {
     @SequenceGenerator(name = "SEQ_ATTR_REPLY", sequenceName = "SEQUENCE_ATTR_REPLY", allocationSize = 1) // 인덱스값 다른 조합으로 하고 싶으면 지우셈
     private long productId;
 
-    @Column(nullable = false)
+    @Column(name = "pro_name", nullable = false)
     private String proName;
 
-    @Column(nullable = false)
+    @Column(name = "pro_price", nullable = false)
     private int proPrice;
 
-    @Column(nullable = false)
+    @Column(name = "pro_info", nullable = false)
     private String proInfo;
 
-    @Column(nullable = false)
-    private LocalDateTime localDateTime;  //생성일자
+    @Column(name = "local_date_time", nullable = false)
+    private LocalDateTime localDateTime;
 
-    @ColumnDefault("0")  //default 0
-    @Column(nullable = false)
+    @ColumnDefault("0")
+    @Column(name = "pro_view", nullable = false)
     private int proView;
 
-    @ColumnDefault("0")  //default 0
-    @Column(nullable = false, columnDefinition = "CHAR(1)")
+    @ColumnDefault("0")
+    @Column(name = "pro_status", nullable = false, columnDefinition = "CHAR(1)")
     private byte proStatus;
 
     @ManyToOne

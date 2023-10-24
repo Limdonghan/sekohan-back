@@ -8,6 +8,7 @@ import lombok.*;
 @Builder
 @NoArgsConstructor(access = AccessLevel.PROTECTED)
 @AllArgsConstructor
+@Setter
 @Getter
 public class CategoryEntity {
     @Id
@@ -35,5 +36,9 @@ public class CategoryEntity {
 
     @Column(nullable = false)
     private int catDetailParentLev;
+
+    public CategoryEntity(Long catId) {
+        this.catId = catId;
+    }
 
 }
