@@ -3,9 +3,6 @@ package com.sekohan.sekohanback.entity;
 import jakarta.persistence.*;
 import lombok.*;
 import org.hibernate.annotations.ColumnDefault;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestParam;
-import com.sekohan.sekohanback.service.ProductService;
 
 import java.time.LocalDateTime;
 

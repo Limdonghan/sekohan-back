@@ -28,12 +28,22 @@ public class ProductController {
                                        @RequestParam("proInfo") String proInfo,
                                        @RequestParam("categoryId") long categoryId,
                                        @RequestParam("userId") long userId,
-                                       @RequestParam("files") List<MultipartFile> files) {
+                                       @RequestPart("files") List<MultipartFile> files) {
         CategoryEntity categoryEntity = new CategoryEntity(categoryId);
         categoryEntity.setCatId(categoryId);
         UserEntity userEntity = new UserEntity(userId);
         userEntity.setUId(userId);
         return productService.uploadProduct(proName, proPrice, proInfo, categoryEntity, userEntity, files);
+    }
+
+    @GetMapping("/list")
+    public List<ProductEntity> getAllProducts() {
+        return productService.getAllProducts();
+    }
+
+    @GetMapping("/page/{productId}")
+    public ProductEntity getProductById(@PathVariable long productId) {
+        return productService.getProductById(productId);
     }
 
     @DeleteMapping("/delete/{productId}")
