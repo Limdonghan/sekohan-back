@@ -22,3 +22,5 @@ spring:
       location: src/main/upload/
       max-request-size: 30MB
       max-file-size: 10MB
+  resources:
+    static-locations=classpath:/META-INF/resources/,classpath:/resources/,classpath:/static/,classpath:/public/,file:/path/to/your/uploads/directory/: src/main/upload/

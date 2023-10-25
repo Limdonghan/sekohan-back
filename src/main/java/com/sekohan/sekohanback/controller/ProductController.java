@@ -3,6 +3,7 @@ package com.sekohan.sekohanback.controller;
 import com.sekohan.sekohanback.entity.CategoryEntity;
 import com.sekohan.sekohanback.entity.ProductEntity;
 import com.sekohan.sekohanback.entity.UserEntity;
+import com.sekohan.sekohanback.entity.img.ProImageEntity;
 import com.sekohan.sekohanback.service.ProductService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
@@ -11,6 +12,7 @@ import org.springframework.web.multipart.MultipartFile;
 import java.util.List;
 
 @RestController
+@CrossOrigin(origins = "*")
 @RequestMapping("/products")
 public class ProductController {
 
@@ -39,6 +41,11 @@ public class ProductController {
     @GetMapping("/list")
     public List<ProductEntity> getAllProducts() {
         return productService.getAllProducts();
+    }
+
+    @GetMapping("/imagelist")
+    public List<ProImageEntity> getAllproImage(){
+        return productService.getAllDistinctProImages();
     }
 
     @GetMapping("/page/{productId}")

@@ -15,8 +15,11 @@ import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.Paths;
 import java.time.LocalDateTime;
+import java.time.format.DateTimeFormatter;
+import java.util.ArrayList;
+import java.util.HashSet;
 import java.util.List;
-import java.util.UUID;
+import java.util.Set;
 
 @Service
 public class ProductService {
@@ -25,6 +28,8 @@ public class ProductService {
     private final ProductRepository productRepository;
     private final ProImageRepository proImageRepository;
 
+
+
     @Autowired
     public ProductService(ProductRepository productRepository, ProImageRepository proImageRepository) {
         this.productRepository = productRepository;
@@ -32,7 +37,21 @@ public class ProductService {
     }
 
     public List<ProductEntity> getAllProducts() {
+
         return productRepository.findAll();
+    }
+
+    public List<ProImageEntity> getAllDistinctProImages() {
+        List<ProImageEntity> allProImages = proImageRepository.findAll();
+        Set<Long> seenProductIds = new HashSet<>();
+        List<ProImageEntity> distinctProImages = new ArrayList<>();
+        for (ProImageEntity proImage : allProImages) {
+            if (!seenProductIds.contains(proImage.getProductId().getProductId())) {
+                distinctProImages.add(proImage);
+                seenProductIds.add(proImage.getProductId().getProductId());
+            }
+        }
+        return distinctProImages;
     }
 
     public ProductEntity getProductById(long productId) {
@@ -56,15 +75,23 @@ public class ProductService {
             ProImageEntity proImageEntity = new ProImageEntity();
             proImageEntity.setPath(imagePath.getOriginalFilename());
             proImageEntity.setProductId(savedProduct);
-            proImageRepository.save(proImageEntity);
         }
+        int i = 0;
         for (MultipartFile file : files) {
             if (!file.isEmpty()) {
                 try {
                     byte[] bytes = file.getBytes();
+                    ProImageEntity proImageEntity = new ProImageEntity();
                     String originalFilename = file.getOriginalFilename();
                     String cleanedFilename = originalFilename.replaceAll("[^a-zA-Z0-9.-]", "_");
-                    String newFileName = LocalDateTime.now() + "-" + UUID.randomUUID() + "-" + savedProduct.getProductId() + "-" + cleanedFilename;
+
+                    String formattedDateTime = LocalDateTime.now().
+                            format(DateTimeFormatter.ofPattern("yyyy-MM-dd_HH-mm-ss"));
+                    String newFileName = formattedDateTime + "_" + i + "_" + cleanedFilename;
+                    proImageEntity.setPath(newFileName);
+                    proImageEntity.setProductId(savedProduct);
+                    proImageRepository.save(proImageEntity);
+                    i++;
                     Path path = Paths.get(uploadDir + newFileName);
                     Files.write(path, bytes);
                 } catch (IOException e) {
