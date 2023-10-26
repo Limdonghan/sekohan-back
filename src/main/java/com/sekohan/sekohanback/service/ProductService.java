@@ -1,5 +1,8 @@
 package com.sekohan.sekohanback.service;
 
+import com.sekohan.sekohanback.dto.ProductDTO;
+import com.sekohan.sekohanback.dto.ProductGetDTO;
+import com.sekohan.sekohanback.dto.proImageDTO;
 import com.sekohan.sekohanback.entity.CategoryEntity;
 import com.sekohan.sekohanback.entity.ProductEntity;
 import com.sekohan.sekohanback.entity.UserEntity;
@@ -20,6 +23,7 @@ import java.util.ArrayList;
 import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
+import java.util.stream.Collectors;
 
 @Service
 public class ProductService {
@@ -36,26 +40,74 @@ public class ProductService {
         this.proImageRepository = proImageRepository;
     }
 
-    public List<ProductEntity> getAllProducts() {
-
-        return productRepository.findAll();
+    public List<ProductDTO> getAllProducts() {
+        List<ProductEntity> products = productRepository.findAll();
+        return products.stream()
+                .map(this::convertToDTO)
+                .collect(Collectors.toList());
     }
 
-    public List<ProImageEntity> getAllDistinctProImages() {
-        List<ProImageEntity> allProImages = proImageRepository.findAll();
-        Set<Long> seenProductIds = new HashSet<>();
-        List<ProImageEntity> distinctProImages = new ArrayList<>();
-        for (ProImageEntity proImage : allProImages) {
-            if (!seenProductIds.contains(proImage.getProductId().getProductId())) {
-                distinctProImages.add(proImage);
-                seenProductIds.add(proImage.getProductId().getProductId());
+    private ProductDTO convertToDTO(ProductEntity product) {
+        ProductDTO productDTO = new ProductDTO();
+        productDTO.setProductId(product.getProductId());
+        productDTO.setProName(product.getProName());
+        productDTO.setProPrice(product.getProPrice());
+        productDTO.setProInfo(product.getProInfo());
+        return productDTO;
+    }
+
+    public List<proImageDTO> getAllImages() {
+        List<ProImageEntity> images = proImageRepository.findAll();
+        List<proImageDTO> result = new ArrayList<>();
+        List<Long> seenProductIds = new ArrayList<>();
+
+        for (ProImageEntity image : images) {
+            if (!seenProductIds.contains(image.getProductId().getProductId())) {
+                seenProductIds.add(image.getProductId().getProductId());
+                result.add(convertToDTO(image));
             }
         }
-        return distinctProImages;
+
+        return result;
     }
 
-    public ProductEntity getProductById(long productId) {
-        return productRepository.findById(productId).orElse(null);
+    private proImageDTO convertToDTO(ProImageEntity image) {
+        proImageDTO proImageDTO = new proImageDTO();
+        proImageDTO.setProductId(image.getProductId().getProductId());
+        proImageDTO.setProName(image.getProductId().getProName());
+        proImageDTO.setProPrice(image.getProductId().getProPrice());
+        proImageDTO.setProInfo(image.getProductId().getProInfo().substring(0, Math.min(image.getProductId().getProInfo().length(), 10)));
+        proImageDTO.setPath(image.getPath());
+        proImageDTO.setCreated_date(image.getProductId().getLocalDateTime());
+        return proImageDTO;
+    }
+
+    public ProductGetDTO getProductById(long productId) {
+        return productRepository.findById(productId)
+                .map(this::ProgetDTO)
+                .orElse(null); // or throw an exception if required
+    }
+
+    private ProductGetDTO ProgetDTO(ProductEntity product){
+        ProductGetDTO productGetDTO = new ProductGetDTO();
+        productGetDTO.setProductId(product.getProductId());
+        productGetDTO.setProName(product.getProName());
+        productGetDTO.setProInfo(product.getProInfo());
+        productGetDTO.setProPrice(product.getProPrice());
+        productGetDTO.setProView(product.getProView());
+        productGetDTO.setProStatus(product.getProStatus());
+        productGetDTO.setCatId(product.getCatId().getCatId());
+        productGetDTO.setDetailName(product.getCatId().getCatDetailClass());
+        productGetDTO.setUId(product.getUId().getUId());
+        productGetDTO.setNickName(product.getUId().getNickname());
+
+        List<String> fileAddresses = new ArrayList<>(); // 파일 주소를 저장할 리스트
+        List<ProImageEntity> images = proImageRepository.getImagesByProductId(product.getProductId());
+        for (ProImageEntity image : images) {
+            fileAddresses.add(image.getPath());
+        }
+        productGetDTO.setPath(fileAddresses);
+        return productGetDTO;
     }
 
     public ProductEntity uploadProduct(String proName, int proPrice, String proInfo, CategoryEntity categoryEntity, UserEntity userEntity, List<MultipartFile> files) {

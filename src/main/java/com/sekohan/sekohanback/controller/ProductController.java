@@ -1,9 +1,11 @@
 package com.sekohan.sekohanback.controller;
 
+import com.sekohan.sekohanback.dto.ProductDTO;
+import com.sekohan.sekohanback.dto.ProductGetDTO;
+import com.sekohan.sekohanback.dto.proImageDTO;
 import com.sekohan.sekohanback.entity.CategoryEntity;
 import com.sekohan.sekohanback.entity.ProductEntity;
 import com.sekohan.sekohanback.entity.UserEntity;
-import com.sekohan.sekohanback.entity.img.ProImageEntity;
 import com.sekohan.sekohanback.service.ProductService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
@@ -38,18 +40,18 @@ public class ProductController {
         return productService.uploadProduct(proName, proPrice, proInfo, categoryEntity, userEntity, files);
     }
 
-    @GetMapping("/list")
-    public List<ProductEntity> getAllProducts() {
+    @GetMapping("list")
+    public List<ProductDTO> getAllProducts() {
         return productService.getAllProducts();
     }
 
     @GetMapping("/imagelist")
-    public List<ProImageEntity> getAllproImage(){
-        return productService.getAllDistinctProImages();
+    public List<proImageDTO> getAllImages(){
+        return productService.getAllImages();
     }
 
     @GetMapping("/page/{productId}")
-    public ProductEntity getProductById(@PathVariable long productId) {
+    public ProductGetDTO getProductById(@PathVariable long productId) {
         return productService.getProductById(productId);
     }
 
