@@ -1,0 +1,29 @@
+{
+  "groups": [
+    {
+      "name": "application.security.jwt",
+      "type": "com.sekohan.sekohanback.jwt.config.JwtProperties",
+      "sourceType": "com.sekohan.sekohanback.jwt.config.JwtProperties"
+    }
+  ],
+  "properties": [
+    {
+      "name": "application.security.jwt.expiration",
+      "type": "java.lang.Long",
+      "sourceType": "com.sekohan.sekohanback.jwt.config.JwtProperties",
+      "defaultValue": 0
+    },
+    {
+      "name": "application.security.jwt.refresh-expiration",
+      "type": "java.lang.Long",
+      "sourceType": "com.sekohan.sekohanback.jwt.config.JwtProperties",
+      "defaultValue": 0
+    },
+    {
+      "name": "application.security.jwt.secret-key",
+      "type": "java.lang.String",
+      "sourceType": "com.sekohan.sekohanback.jwt.config.JwtProperties"
+    }
+  ],
+  "hints": []
+}

@@ -1,0 +1,45 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<testsuite name="com.sekohan.sekohanback.SekohanBackApplicationTests" tests="1" skipped="0" failures="0" errors="0" timestamp="2023-10-26T06:00:35" hostname="DESKTOP-4ICJHRT" time="0.753">
+  <properties/>
+  <testcase name="contextLoads()" classname="com.sekohan.sekohanback.SekohanBackApplicationTests" time="0.753"/>
+  <system-out><![CDATA[15:00:27.631 [Test worker] INFO org.springframework.test.context.support.AnnotationConfigContextLoaderUtils -- Could not detect default configuration classes for test class [com.sekohan.sekohanback.SekohanBackApplicationTests]: SekohanBackApplicationTests does not declare any static, non-private, non-final, nested classes annotated with @Configuration.
+15:00:27.749 [Test worker] INFO org.springframework.boot.test.context.SpringBootTestContextBootstrapper -- Found @SpringBootConfiguration com.sekohan.sekohanback.SekohanBackApplication for test class com.sekohan.sekohanback.SekohanBackApplicationTests
+
+  .   ____          _            __ _ _
+ /\\ / ___'_ __ _ _(_)_ __  __ _ \ \ \ \
+( ( )\___ | '_ | '_| | '_ \/ _` | \ \ \ \
+ \\/  ___)| |_)| | | | | || (_| |  ) ) ) )
+  '  |____| .__|_| |_|_| |_\__, | / / / /
+ =========|_|==============|___/=/_/_/_/
+ :: Spring Boot ::                (v3.1.4)
+
+2023-10-26T15:00:28.235+09:00  INFO 5244 --- [    Test worker] c.s.s.SekohanBackApplicationTests        : Starting SekohanBackApplicationTests using Java 17.0.7 with PID 5244 (started by DongHan in C:\Users\DongHan\Desktop\project\sekohan-back)
+2023-10-26T15:00:28.237+09:00  INFO 5244 --- [    Test worker] c.s.s.SekohanBackApplicationTests        : No active profile set, falling back to 1 default profile: "default"
+2023-10-26T15:00:29.387+09:00  INFO 5244 --- [    Test worker] .s.d.r.c.RepositoryConfigurationDelegate : Multiple Spring Data modules found, entering strict repository configuration mode
+2023-10-26T15:00:29.389+09:00  INFO 5244 --- [    Test worker] .s.d.r.c.RepositoryConfigurationDelegate : Bootstrapping Spring Data JPA repositories in DEFAULT mode.
+2023-10-26T15:00:29.565+09:00  INFO 5244 --- [    Test worker] .s.d.r.c.RepositoryConfigurationDelegate : Finished Spring Data repository scanning in 166 ms. Found 2 JPA repository interfaces.
+2023-10-26T15:00:29.578+09:00  INFO 5244 --- [    Test worker] .s.d.r.c.RepositoryConfigurationDelegate : Multiple Spring Data modules found, entering strict repository configuration mode
+2023-10-26T15:00:29.579+09:00  INFO 5244 --- [    Test worker] .s.d.r.c.RepositoryConfigurationDelegate : Bootstrapping Spring Data Redis repositories in DEFAULT mode.
+2023-10-26T15:00:29.597+09:00  INFO 5244 --- [    Test worker] .RepositoryConfigurationExtensionSupport : Spring Data Redis - Could not safely identify store assignment for repository candidate interface com.sekohan.sekohanback.repository.UserImageRepository; If you want this repository to be a Redis repository, consider annotating your entities with one of these annotations: org.springframework.data.redis.core.RedisHash (preferred), or consider extending one of the following types with your repository: org.springframework.data.keyvalue.repository.KeyValueRepository
+2023-10-26T15:00:29.597+09:00  INFO 5244 --- [    Test worker] .RepositoryConfigurationExtensionSupport : Spring Data Redis - Could not safely identify store assignment for repository candidate interface com.sekohan.sekohanback.repository.UserRepository; If you want this repository to be a Redis repository, consider annotating your entities with one of these annotations: org.springframework.data.redis.core.RedisHash (preferred), or consider extending one of the following types with your repository: org.springframework.data.keyvalue.repository.KeyValueRepository
+2023-10-26T15:00:29.597+09:00  INFO 5244 --- [    Test worker] .s.d.r.c.RepositoryConfigurationDelegate : Finished Spring Data repository scanning in 8 ms. Found 0 Redis repository interfaces.
+2023-10-26T15:00:30.327+09:00  INFO 5244 --- [    Test worker] o.hibernate.jpa.internal.util.LogHelper  : HHH000204: Processing PersistenceUnitInfo [name: default]
+2023-10-26T15:00:30.410+09:00  INFO 5244 --- [    Test worker] org.hibernate.Version                    : HHH000412: Hibernate ORM core version 6.2.9.Final
+2023-10-26T15:00:30.414+09:00  INFO 5244 --- [    Test worker] org.hibernate.cfg.Environment            : HHH000406: Using bytecode reflection optimizer
+2023-10-26T15:00:30.599+09:00  INFO 5244 --- [    Test worker] o.h.b.i.BytecodeProviderInitiator        : HHH000021: Bytecode provider name : bytebuddy
+2023-10-26T15:00:30.764+09:00  INFO 5244 --- [    Test worker] o.s.o.j.p.SpringPersistenceUnitInfo      : No LoadTimeWeaver setup: ignoring JPA class transformer
+2023-10-26T15:00:30.782+09:00  INFO 5244 --- [    Test worker] com.zaxxer.hikari.HikariDataSource       : HikariPool-1 - Starting...
+2023-10-26T15:00:30.983+09:00  INFO 5244 --- [    Test worker] com.zaxxer.hikari.pool.HikariPool        : HikariPool-1 - Added connection oracle.jdbc.driver.T4CConnection@6fc7e828
+2023-10-26T15:00:30.985+09:00  INFO 5244 --- [    Test worker] com.zaxxer.hikari.HikariDataSource       : HikariPool-1 - Start completed.
+2023-10-26T15:00:31.008+09:00  WARN 5244 --- [    Test worker] org.hibernate.orm.deprecation            : HHH90000026: Oracle12cDialect has been deprecated; use org.hibernate.dialect.OracleDialect instead
+2023-10-26T15:00:31.427+09:00  INFO 5244 --- [    Test worker] o.h.b.i.BytecodeProviderInitiator        : HHH000021: Bytecode provider name : bytebuddy
+2023-10-26T15:00:32.330+09:00  INFO 5244 --- [    Test worker] o.h.e.t.j.p.i.JtaPlatformInitiator       : HHH000490: Using JtaPlatform implementation: [org.hibernate.engine.transaction.jta.platform.internal.NoJtaPlatform]
+2023-10-26T15:00:32.507+09:00  INFO 5244 --- [    Test worker] j.LocalContainerEntityManagerFactoryBean : Initialized JPA EntityManagerFactory for persistence unit 'default'
+2023-10-26T15:00:32.970+09:00  INFO 5244 --- [    Test worker] o.s.d.j.r.query.QueryEnhancerFactory     : Hibernate is in classpath; If applicable, HQL parser will be used.
+2023-10-26T15:00:33.606+09:00  WARN 5244 --- [    Test worker] JpaBaseConfiguration$JpaWebConfiguration : spring.jpa.open-in-view is enabled by default. Therefore, database queries may be performed during view rendering. Explicitly configure spring.jpa.open-in-view to disable this warning
+2023-10-26T15:00:33.935+09:00  INFO 5244 --- [    Test worker] o.s.s.web.DefaultSecurityFilterChain     : Will secure any request with [org.springframework.security.web.session.DisableEncodeUrlFilter@1ad4ff2a, org.springframework.security.web.context.request.async.WebAsyncManagerIntegrationFilter@625ae6d, org.springframework.security.web.context.SecurityContextHolderFilter@626967a0, org.springframework.security.web.header.HeaderWriterFilter@4f55da9b, org.springframework.security.web.authentication.logout.LogoutFilter@473e0536, org.springframework.security.web.authentication.UsernamePasswordAuthenticationFilter@399ef33f, org.springframework.security.web.authentication.ui.DefaultLoginPageGeneratingFilter@37635407, org.springframework.security.web.authentication.ui.DefaultLogoutPageGeneratingFilter@207bf6d8, org.springframework.security.web.savedrequest.RequestCacheAwareFilter@5080c40e, org.springframework.security.web.servletapi.SecurityContextHolderAwareRequestFilter@46763680, org.springframework.security.web.authentication.AnonymousAuthenticationFilter@5cdb7b, org.springframework.security.web.access.ExceptionTranslationFilter@5bd11ad6, org.springframework.security.web.access.intercept.AuthorizationFilter@4001dc35]
+2023-10-26T15:00:35.503+09:00  INFO 5244 --- [    Test worker] o.s.b.a.e.web.EndpointLinksResolver      : Exposing 1 endpoint(s) beneath base path '/actuator'
+2023-10-26T15:00:35.618+09:00  INFO 5244 --- [    Test worker] c.s.s.SekohanBackApplicationTests        : Started SekohanBackApplicationTests in 7.672 seconds (process running for 8.874)
+]]></system-out>
+  <system-err><![CDATA[]]></system-err>
+</testsuite>

@@ -20,7 +20,7 @@ public class ServiceEntity {
     private UserEntity uId;
 
     @ManyToOne
-    @JoinColumn(name = "proid")
-    private ProductEntity proid;
+    @JoinColumn(name = "productId")
+    private ProductEntity productId;
 
 }

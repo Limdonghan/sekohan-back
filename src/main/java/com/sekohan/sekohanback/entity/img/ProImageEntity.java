@@ -20,6 +20,6 @@ public class ProImageEntity {
     private String path;
 
     @ManyToOne
-    @JoinColumn(name = "proid")
-    private ProductEntity proid;
+    @JoinColumn(name = "prodcutId")
+    private ProductEntity prodcutId;
 }

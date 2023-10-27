@@ -16,7 +16,7 @@ public class ProductEntity {
     @Id
     @GeneratedValue(strategy = GenerationType.SEQUENCE,generator = "SEQ_ATTR_REPLY")// 11번 12번줄 있으면 기본키가 1부터 시작해서 1씩 자동으로 올라감
     @SequenceGenerator(name = "SEQ_ATTR_REPLY", sequenceName = "SEQUENCE_ATTR_REPLY", allocationSize = 1) // 인덱스값 다른 조합으로 하고 싶으면 지우셈
-    private long proid;
+    private long productId;
 
     @Column(nullable = false)
     private String proName;
@@ -43,7 +43,7 @@ public class ProductEntity {
     private UserEntity uId;
 
     @ManyToOne
-    @JoinColumn(name = "cate_id")
-    private CategoryEntity cate_id;
+    @JoinColumn(name = "catId")
+    private CategoryEntity catId;
 
 }

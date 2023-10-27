@@ -1,10 +1,7 @@
 package com.sekohan.sekohanback.entity.img;
 
-import com.sekohan.sekohanback.entity.ProductEntity;
-import com.sekohan.sekohanback.entity.UserEntity;
 import jakarta.persistence.*;
 import lombok.*;
-import org.hibernate.mapping.ToOne;
 
 @Entity
 @Table(name = "TB_User_Img")
@@ -21,7 +18,11 @@ public class UserImageEntity {
     @Column(nullable = true)
     private String path;
 
-    @OneToOne
-    @JoinColumn(name = "uId")
-    private UserEntity uId;
+//    @OneToOne(fetch = FetchType.LAZY)
+//    @JoinColumn(name = "user_id")
+//    private UserEntity userid;
+
+    public void updateUrl(String path) {
+        this.path = path;
+    }
 }

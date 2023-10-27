@@ -29,6 +29,6 @@ public class CommentEntity {
     private UserEntity uId;
 
     @ManyToOne(fetch = FetchType.LAZY)
-    @JoinColumn(name="proid")
-    private ProductEntity proid;
+    @JoinColumn(name="productId")
+    private ProductEntity productId;
 }

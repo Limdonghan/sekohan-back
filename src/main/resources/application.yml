@@ -1,4 +1,9 @@
 spring:
+  data:
+    redis:
+      host: localhost
+      port: 6379
+
   datasource:
     driver-class-name: oracle.jdbc.OracleDriver
     url: jdbc:oracle:thin:@localhost:1521:xe
@@ -31,3 +36,15 @@ spring:
             enable: true
 server:
   port: 7070
+
+com:
+  sekohan:
+    upload:
+      path: C:\\img
+
+application:
+  security:
+    jwt:
+      secretKey: 25432A462D4A614E645267556A586E3272357538782F413F4428472B4B625065
+      expiration: 900000 #15분
+      refreshExpiration: 86400000 #24시간
