@@ -1,7 +1,7 @@
 package com.sekohan.sekohanback.controller;
 
-import com.sekohan.sekohanback.dto.ValidCheckDTO;
-import com.sekohan.sekohanback.dto.UserSignUpDTO;
+import com.sekohan.sekohanback.dto.user.ValidCheckDTO;
+import com.sekohan.sekohanback.dto.user.UserSignUpDTO;
 import com.sekohan.sekohanback.service.signUp.SignUpService;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;

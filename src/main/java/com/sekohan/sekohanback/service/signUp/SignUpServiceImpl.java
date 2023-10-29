@@ -1,7 +1,7 @@
 package com.sekohan.sekohanback.service.signUp;
 
-import com.sekohan.sekohanback.dto.ValidCheckDTO;
-import com.sekohan.sekohanback.dto.UserSignUpDTO;
+import com.sekohan.sekohanback.dto.user.ValidCheckDTO;
+import com.sekohan.sekohanback.dto.user.UserSignUpDTO;
 import com.sekohan.sekohanback.entity.UserEntity;
 import com.sekohan.sekohanback.repository.UserImageRepository;
 import com.sekohan.sekohanback.repository.UserRepository;

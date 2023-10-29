@@ -1,9 +1,9 @@
 package com.sekohan.sekohanback.service.Authentication;
 
-import com.sekohan.sekohanback.dto.request.AuthenticationRequest;
-import com.sekohan.sekohanback.dto.response.JsonWebTokenResponse;
+import com.sekohan.sekohanback.dto.user.UserSignInDTO;
+import com.sekohan.sekohanback.dto.jwt.JsonWebTokenResponseDTO;
 
 public interface AuthenticationService {
-    JsonWebTokenResponse auth(AuthenticationRequest authRequset);
-    JsonWebTokenResponse refresh(String token);
+    JsonWebTokenResponseDTO auth(UserSignInDTO authRequset);
+    JsonWebTokenResponseDTO refresh(String token);
 }

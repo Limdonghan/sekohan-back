@@ -3,6 +3,7 @@ package com.sekohan.sekohanback.entity;
 import jakarta.persistence.*;
 import lombok.*;
 import org.hibernate.annotations.ColumnDefault;
+import org.springframework.data.annotation.CreatedDate;
 
 import java.time.LocalDateTime;
 
@@ -14,8 +15,8 @@ import java.time.LocalDateTime;
 @Getter
 public class ProductEntity {
     @Id
-    @GeneratedValue(strategy = GenerationType.SEQUENCE,generator = "SEQ_ATTR_REPLY")// 11번 12번줄 있으면 기본키가 1부터 시작해서 1씩 자동으로 올라감
-    @SequenceGenerator(name = "SEQ_ATTR_REPLY", sequenceName = "SEQUENCE_ATTR_REPLY", allocationSize = 1) // 인덱스값 다른 조합으로 하고 싶으면 지우셈
+    @GeneratedValue(strategy = GenerationType.SEQUENCE,generator = "SEQ_PRODUCT")// 11번 12번줄 있으면 기본키가 1부터 시작해서 1씩 자동으로 올라감
+    @SequenceGenerator(name = "SEQ_PRODUCT", sequenceName = "SEQUENCE_PRODUCT", allocationSize = 1) // 인덱스값 다른 조합으로 하고 싶으면 지우셈
     private long productId;
 
     @Column(nullable = false)
@@ -27,7 +28,8 @@ public class ProductEntity {
     @Column(nullable = false)
     private String proInfo;
 
-    @Column(nullable = false)
+    @CreatedDate
+    @Column(nullable = false, updatable = false)
     private LocalDateTime localDateTime;  //생성일자
 
     @ColumnDefault("0")  //default 0
@@ -45,5 +47,6 @@ public class ProductEntity {
     @ManyToOne
     @JoinColumn(name = "catId")
     private CategoryEntity catId;
+
 
 }

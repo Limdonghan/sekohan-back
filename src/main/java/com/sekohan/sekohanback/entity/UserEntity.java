@@ -1,5 +1,6 @@
 package com.sekohan.sekohanback.entity;
 
+import com.sekohan.sekohanback.entity.img.UserImageEntity;
 import jakarta.persistence.*;
 import jakarta.validation.constraints.Email;
 import lombok.*;
@@ -17,8 +18,8 @@ import java.util.Set;
 @ToString
 public class UserEntity {
     @Id
-    @GeneratedValue(strategy = GenerationType.SEQUENCE,generator = "SEQ_ATTR_REPLY")// 11번 12번줄 있으면 기본키가 1부터 시작해서 1씩 자동으로 올라감
-    @SequenceGenerator(name = "SEQ_ATTR_REPLY", sequenceName = "SEQUENCE_ATTR_REPLY", allocationSize = 1) // 인덱스값 다른 조합으로 하고 싶으면 지우셈
+    @GeneratedValue(strategy = GenerationType.SEQUENCE,generator = "SEQ_USER")// 11번 12번줄 있으면 기본키가 1부터 시작해서 1씩 자동으로 올라감
+    @SequenceGenerator(name = "SEQ_USER", sequenceName = "SEQUENCE_USER", allocationSize = 1) // 인덱스값 다른 조합으로 하고 싶으면 지우셈
     private long uId;
 
     @Column(unique = true)  //NotNull
@@ -41,8 +42,9 @@ public class UserEntity {
     @Column(nullable = false)
     private int report;
 
-//    @OneToOne( fetch = FetchType.LAZY) //mappedBy = "userid",
-//    private UserImageEntity userImage;
+    @OneToOne
+    @JoinColumn(name = "userImageID")
+    private UserImageEntity userImage;
 
     @ElementCollection(fetch = FetchType.LAZY)
     @Builder.Default

@@ -20,7 +20,7 @@ spring:
   servlet:
     multipart:
       enabled: true
-      location: C:\\upload
+      location: C:\\img
       max-request-size: 30MB
       max-file-size: 10MB
   mail:

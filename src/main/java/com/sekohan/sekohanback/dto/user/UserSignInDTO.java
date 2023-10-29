@@ -1,4 +1,4 @@
-package com.sekohan.sekohanback.dto.request;
+package com.sekohan.sekohanback.dto.user;
 
 import jakarta.validation.constraints.NotBlank;
 import lombok.Getter;
@@ -6,7 +6,7 @@ import lombok.Setter;
 
 @Getter
 @Setter
-public class AuthenticationRequest {
+public class UserSignInDTO {
 
     @NotBlank
     private String login;   //로그인 ID

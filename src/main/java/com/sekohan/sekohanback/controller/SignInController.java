@@ -1,7 +1,7 @@
 package com.sekohan.sekohanback.controller;
 
-import com.sekohan.sekohanback.dto.request.AuthenticationRequest;
-import com.sekohan.sekohanback.dto.response.JsonWebTokenResponse;
+import com.sekohan.sekohanback.dto.user.UserSignInDTO;
+import com.sekohan.sekohanback.dto.jwt.JsonWebTokenResponseDTO;
 import com.sekohan.sekohanback.entity.UserEntity;
 import com.sekohan.sekohanback.security.repository.UserSecurityRepository;
 import com.sekohan.sekohanback.service.Authentication.AuthenticationService;
@@ -20,7 +20,7 @@ public class SignInController {
     private final AuthenticationService authenticationService;
 
     @PostMapping("/signin")
-    public JsonWebTokenResponse auth(@Validated @RequestBody AuthenticationRequest authRequest) {
+    public JsonWebTokenResponseDTO auth(@Validated @RequestBody UserSignInDTO authRequest) {
         log.info("--------SigninController--------");
 
         return authenticationService.auth(authRequest);
@@ -28,6 +28,7 @@ public class SignInController {
 
     @GetMapping("/member")
     public void exMember(){
+        log.info("멤버인증중:");
         UserEntity user = userSecurityRepository.getUser();
         log.info("exMember.......... : {}",user);
     }

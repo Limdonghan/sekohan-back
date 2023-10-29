@@ -1,5 +1,7 @@
 package com.sekohan.sekohanback.config;
 
+import com.sekohan.sekohanback.jwt.filter.JwtAuthenticationFilter;
+import com.sekohan.sekohanback.jwt.filter.JwtExceptionFilter;
 import lombok.RequiredArgsConstructor;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
@@ -11,11 +13,15 @@ import org.springframework.security.config.annotation.web.configurers.AbstractHt
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.security.web.SecurityFilterChain;
+import org.springframework.security.web.authentication.UsernamePasswordAuthenticationFilter;
 
 @Configuration
 @EnableWebSecurity
 @RequiredArgsConstructor
 public class SecurityConfig  {
+
+    private final JwtAuthenticationFilter jwtAuthenticationFilter;
+    private final JwtExceptionFilter jwtExceptionFilter;
 
     @Bean  //
     public AuthenticationManager authenticationManager(AuthenticationConfiguration authenticationConfiguration) throws Exception{
@@ -32,7 +38,7 @@ public class SecurityConfig  {
     public SecurityFilterChain securityFilterChain(HttpSecurity http) throws Exception {
         http
                 .csrf(AbstractHttpConfigurer::disable)  //csrf 토큰 비활성화
-                //.cors(AbstractHttpConfigurer::disable)
+                .cors(AbstractHttpConfigurer::disable)
                 .authorizeHttpRequests(authorizationManagerRequestMatcherRegistry ->
                         authorizationManagerRequestMatcherRegistry
                                 .requestMatchers("/api/user/**").permitAll()   //모든 사용자에게 이 경로는 허락
@@ -41,8 +47,9 @@ public class SecurityConfig  {
                                 .anyRequest().authenticated()  //인증이 되어야 한다
                 )
                 //addFilterBefore : 필터처리를 하기전에 필요한 것
-               // .addFilterBefore(new JwtExceptionFilter(userService, secretKey), UsernamePasswordAuthenticationFilter.class)  //받은 토큰을 풀어줘야함
-                .formLogin(httpSecurityFormLoginConfigurer -> httpSecurityFormLoginConfigurer.isCustomLoginPage());
+                .addFilterBefore(jwtAuthenticationFilter, UsernamePasswordAuthenticationFilter.class) //받은 토큰을 풀어줘야함
+                .addFilterBefore(jwtExceptionFilter, JwtAuthenticationFilter.class);
+                //.formLogin(httpSecurityFormLoginConfigurer -> httpSecurityFormLoginConfigurer.isCustomLoginPage());
         return http.build();
     }
 }
