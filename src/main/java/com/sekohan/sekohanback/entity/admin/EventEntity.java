@@ -20,14 +20,13 @@ public class EventEntity {
     private long eid;
 
     @Column(nullable = false)
-    private String name;
+    private String name;  //이벤트 이름
 
     @CreatedDate
     @Column(nullable = false,updatable = false)
     private LocalDateTime localDateTime;  //생성일자
 
-    @OneToOne
-    @JoinColumn(name = "ImageID")
+    @OneToOne(mappedBy = "eventEntity",fetch = FetchType.LAZY)
     private EventImageEntity eventImageEntity;
 
 }

@@ -4,6 +4,8 @@ import com.sekohan.sekohanback.dto.event.EventDTO;
 import com.sekohan.sekohanback.dto.event.EventImageDTO;
 import com.sekohan.sekohanback.entity.admin.EventEntity;
 import com.sekohan.sekohanback.entity.admin.EventImageEntity;
+import org.springframework.transaction.annotation.Transactional;
+import org.springframework.web.multipart.MultipartFile;
 
 import java.util.HashMap;
 import java.util.List;
@@ -12,12 +14,11 @@ import java.util.stream.Collectors;
 
 public interface EventUploadService {
 
-    void register(EventDTO eventDTO);
 
     //dto -> entity로 변경
     default Map<String, Object> dtoToEntity(EventDTO eventDTO){
-        Map<String,Object> entityMap=new HashMap<>();
-        EventEntity eventEntity = EventEntity.builder()
+        Map<String,Object> entityMap=new HashMap<>();  //EventEntity 와 List<EventImageEntity>를 저장
+        EventEntity eventEntity = EventEntity.builder()  //EventEntity 객체 생성
                 .name(eventDTO.getEventName())
                 .localDateTime(eventDTO.getLocalDateTime())
                 .build();
@@ -28,14 +29,19 @@ public interface EventUploadService {
             List<EventImageEntity> eventImageEntityList = imageDTOList.stream().map(eventImageDTO -> {
                 return EventImageEntity.builder()
                         .path(eventImageDTO.getPath())
-                        .imgName(eventImageDTO.getImgName())
+                        .originalFileName(eventImageDTO.getImgName())
                         .uuid(eventImageDTO.getUuid())
                         .eventEntity(eventEntity)
                         .build();
             }).collect(Collectors.toList());
             entityMap.put("eventImg",eventImageEntityList);
         }
-
         return entityMap;
     }
+
+    @Transactional(rollbackFor = Exception.class)  //오류나면 롤백
+    void register(EventDTO eventDTO);
+
+    @Transactional(rollbackFor = Exception.class)  //오류나면 롤백
+    List<EventImageDTO> uploadFile(MultipartFile uploadFiles) throws Exception;
 }

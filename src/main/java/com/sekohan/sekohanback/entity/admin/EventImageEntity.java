@@ -17,11 +17,12 @@ public class EventImageEntity {
     @SequenceGenerator(name = "SEQ_EVENT_IMAGE", sequenceName = "SEQUENCE_EVENT_IMAGE", allocationSize = 1)
     private Long eventImgId;
 
-    // UUID
+    
     private String uuid;
-    private String imgName;
-    private String path;
+    private String originalFileName;  //기존 파일 이름
+    private String path;  //파일 경로
 
-    @OneToOne(mappedBy = "eventImageEntity")
+    @OneToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "evnetID")
     private EventEntity eventEntity;
 }

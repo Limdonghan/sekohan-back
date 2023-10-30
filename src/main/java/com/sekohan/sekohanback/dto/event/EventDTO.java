@@ -17,8 +17,6 @@ public class EventDTO {
 
     private LocalDateTime localDateTime;
     
-    @Builder.Default  //초기화
+    @Builder.Default  //초기화값 정할 수 있음
     private List<EventImageDTO> eventImageDTO = new ArrayList<>();
-
-
 }
