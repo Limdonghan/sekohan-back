@@ -9,7 +9,7 @@ import java.time.LocalDateTime;
 @Entity
 @Table(name = "TB_Product")
 @Builder
-@NoArgsConstructor
+@NoArgsConstructor(access = AccessLevel.PUBLIC)
 @AllArgsConstructor
 @Setter
 @Getter
@@ -47,6 +47,8 @@ public class ProductEntity {
     @JoinColumn(name = "catId")
     private CategoryEntity catId;
 
-
+    public ProductEntity(Long productId) {
+        this.productId = productId;
+    }
 
 }

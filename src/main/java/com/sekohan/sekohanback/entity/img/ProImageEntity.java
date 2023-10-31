@@ -7,7 +7,7 @@ import lombok.*;
 @Entity
 @Table(name = "TB_Pro_Img")
 @Builder
-@NoArgsConstructor
+@NoArgsConstructor(access = AccessLevel.PUBLIC)
 @AllArgsConstructor
 @Getter
 @Setter

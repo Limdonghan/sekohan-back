@@ -9,6 +9,7 @@ import java.time.LocalDateTime;
 @Setter
 public class proImageDTO {
     private Long productId;
+    private Long catId;
     private String proName;
     private double proPrice;
     private String proInfo;

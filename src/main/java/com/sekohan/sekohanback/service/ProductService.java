@@ -1,6 +1,5 @@
 package com.sekohan.sekohanback.service;
 
-import com.sekohan.sekohanback.dto.ProductDTO;
 import com.sekohan.sekohanback.dto.ProductGetDTO;
 import com.sekohan.sekohanback.dto.proImageDTO;
 import com.sekohan.sekohanback.entity.CategoryEntity;
@@ -9,7 +8,8 @@ import com.sekohan.sekohanback.entity.UserEntity;
 import com.sekohan.sekohanback.entity.img.ProImageEntity;
 import com.sekohan.sekohanback.repository.ProductRepository;
 import com.sekohan.sekohanback.repository.ProImageRepository;
-import org.springframework.beans.factory.annotation.Autowired;
+import lombok.RequiredArgsConstructor;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
 import org.springframework.web.multipart.MultipartFile;
 
@@ -20,12 +20,11 @@ import java.nio.file.Paths;
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
-import java.util.HashSet;
 import java.util.List;
-import java.util.Set;
-import java.util.stream.Collectors;
 
 @Service
+@Slf4j  //log.info("sdfsdf")  //log.info
+@RequiredArgsConstructor
 public class ProductService {
 
     private String uploadDir = "src/main/upload/";
@@ -34,14 +33,10 @@ public class ProductService {
 
 
 
-    @Autowired
-    public ProductService(ProductRepository productRepository, ProImageRepository proImageRepository) {
-        this.productRepository = productRepository;
-        this.proImageRepository = proImageRepository;
-    }
-
+/*
     public List<ProductDTO> getAllProducts() {
         List<ProductEntity> products = productRepository.findAll();
+        log.info("product: {}",products);
         return products.stream()
                 .map(this::convertToDTO)
                 .collect(Collectors.toList());
@@ -55,9 +50,26 @@ public class ProductService {
         productDTO.setProInfo(product.getProInfo());
         return productDTO;
     }
+    //test용 코드
+*/
 
-    public List<proImageDTO> getAllImages() {
+    public List<proImageDTO> listProduct() {
         List<ProImageEntity> images = proImageRepository.findAll();
+        List<proImageDTO> result = new ArrayList<>();
+        List<Long> seenProductIds = new ArrayList<>();
+
+        for (ProImageEntity image : images) {
+            if (!seenProductIds.contains(image.getProductId().getProductId())) {
+                seenProductIds.add(image.getProductId().getProductId());
+                result.add(convertToDTO(image));
+            }
+        }
+
+        return result;
+    }
+
+    public List<proImageDTO> getcatList(long catId) {
+        List<ProImageEntity> images = proImageRepository.findImagesByCategoryId(catId);
         List<proImageDTO> result = new ArrayList<>();
         List<Long> seenProductIds = new ArrayList<>();
 
@@ -74,6 +86,7 @@ public class ProductService {
     private proImageDTO convertToDTO(ProImageEntity image) {
         proImageDTO proImageDTO = new proImageDTO();
         proImageDTO.setProductId(image.getProductId().getProductId());
+        proImageDTO.setCatId(image.getProductId().getCatId().getCatId());
         proImageDTO.setProName(image.getProductId().getProName());
         proImageDTO.setProPrice(image.getProductId().getProPrice());
         proImageDTO.setProInfo(image.getProductId().getProInfo().substring(0, Math.min(image.getProductId().getProInfo().length(), 10)));
@@ -81,6 +94,7 @@ public class ProductService {
         proImageDTO.setCreated_date(image.getProductId().getLocalDateTime());
         return proImageDTO;
     }
+    //상품 리스트 코드
 
     public ProductGetDTO getProductById(long productId) {
         return productRepository.findById(productId)
@@ -109,6 +123,7 @@ public class ProductService {
         productGetDTO.setPath(fileAddresses);
         return productGetDTO;
     }
+    //상품 상세정보 코드
 
     public ProductEntity uploadProduct(String proName, int proPrice, String proInfo, CategoryEntity categoryEntity, UserEntity userEntity, List<MultipartFile> files) {
         ProductEntity productEntity = new ProductEntity();
@@ -129,6 +144,7 @@ public class ProductService {
             proImageEntity.setProductId(savedProduct);
         }
         int i = 0;
+        //
         for (MultipartFile file : files) {
             if (!file.isEmpty()) {
                 try {
@@ -154,8 +170,10 @@ public class ProductService {
 
         return savedProduct;
     }
+    //상품 업로드 코드
 
     public void deleteProduct(long productId) {
         productRepository.deleteById(productId);
     }
+    // 상품 지우기 코드
 }
