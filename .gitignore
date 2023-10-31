@@ -3,6 +3,7 @@ node_modules
 /dist
 src/test
 .gradle
+build
 
 # local env files
 .env.local
