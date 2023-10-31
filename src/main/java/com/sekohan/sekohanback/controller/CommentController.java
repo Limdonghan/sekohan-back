@@ -32,7 +32,7 @@ public class CommentController {
         return commentService.uploadComment(content, productEntity, userEntity);
     }
 
-    @GetMapping("/comlist/{productId}")
+    @GetMapping("/list/{productId}")
     public List<CommentGetDTO> getProductById(@PathVariable long productId) {
         return commentService.getCommentsByProductId(productId);
     }

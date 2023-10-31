@@ -9,8 +9,9 @@ import org.springframework.stereotype.Repository;
 import java.util.List;
 
 @Repository
-public interface WishiListrepository extends JpaRepository<WishListEntity, Long > {
+public interface WishListrepository extends JpaRepository<WishListEntity, Long > {
 
-    @Query("SELECT p FROM WishListEntity p WHERE p.productId.uId.uId = :uId")
-    List<WishListEntity> findbyuId(@Param("uId") Long uId);
+    @Query("SELECT p FROM WishListEntity p WHERE p.uId.uId = :uId")
+    List<WishListEntity> findbyuIdList(@Param("uId") Long uId);
+
 }
