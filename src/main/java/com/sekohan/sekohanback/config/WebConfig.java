@@ -9,7 +9,7 @@ public class WebConfig implements WebMvcConfigurer {  //Global 설정
     @Override
     public void addCorsMappings(CorsRegistry registry) {
         registry.addMapping("/**")  //CORS를 적용할 URL패턴 정의
-                .allowedOrigins("http://localhost:5173") //자원 공유를 허락할 Origin을 지정
+                .allowedOrigins("http://localhost:3000") //자원 공유를 허락할 Origin을 지정
                 .allowedMethods("GET", "POST", "PUT", "DELETE") //허용할 HTTP Method를 지정
                 .allowedHeaders("Authorization", "Content-Type") //클라이언트 측의 CORS요청에 허용되는 헤더를 지정
                 .exposedHeaders("Custom-Header")  //클라이언트측 응답에서 노출되는 헤더를 지정

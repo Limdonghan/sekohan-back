@@ -1,6 +1,7 @@
 package com.sekohan.sekohanback.controller;
 
 
+import com.sekohan.sekohanback.dto.email.EmailCodeCheckDTO;
 import com.sekohan.sekohanback.dto.email.EmailMessageDTO;
 import com.sekohan.sekohanback.dto.email.EmailResponseDTO;
 import com.sekohan.sekohanback.dto.user.help.UserIdHelpDTO;
@@ -25,7 +26,7 @@ public class HelpController {
     private final EmailService emailService;
     private final PasswordEncoder passwordEncoder;
 
-    @GetMapping("/id")
+    @PostMapping("/id")
     public ResponseEntity findID(@RequestBody UserIdHelpDTO userIdHelpDTO){
         String login = userHelpService.findLogin(userIdHelpDTO);
         return ResponseEntity.ok("아이디 찾기 : " + login);
@@ -57,9 +58,22 @@ public class HelpController {
             String code = emailService.sendMail(emailMessageDTO,"email");
             EmailResponseDTO emailResponseDTO = new EmailResponseDTO();
             emailResponseDTO.setCode(code);
+            log.info("인증번호 : {}",code);
             return ResponseEntity.ok("인증번호를 전송했습니다. : "+code);
         }else{  //false
             throw new RuntimeException("존재하지 않은 이메일입니다.");
+        }
+    }
+
+    @PostMapping("/codecheck")
+    public ResponseEntity checkCode(@RequestBody EmailCodeCheckDTO emailCodeCheckDto) {
+        String userInput = emailCodeCheckDto.getCode();  //사용자가 입력한 코드를 emailCheckDto의 code속성을 통해 받음
+
+        if (emailService.checkCode(userInput)) {  //인증번호 일치여부 확인
+            return ResponseEntity.ok("인증성공");
+        } else {
+            return ResponseEntity.ok("인증실패");
+
         }
     }
 

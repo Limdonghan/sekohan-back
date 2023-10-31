@@ -42,6 +42,7 @@ public class SecurityConfig  {
                         authorizationManagerRequestMatcherRegistry
                                 .requestMatchers("/api/user/**").permitAll()   //모든 사용자에게 이 경로는 허락
                                 .requestMatchers("/api/help/**").permitAll()  //모든 사용자에게 이 경로는 허락
+                                .requestMatchers("api/email/**").permitAll()
                                 .requestMatchers("/api/my/**").hasRole("USER")  //본인만 사용가능한 경로
                                 .requestMatchers("/api/admin/**").hasRole("ADMIN")  //관리자만 사용가능한 경로
                                 .anyRequest().authenticated()
