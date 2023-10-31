@@ -14,6 +14,8 @@ import java.util.stream.Collectors;
 
 public interface EventUploadService {
 
+    @Transactional(rollbackFor = Exception.class)  //오류나면 롤백
+    List<EventImageDTO> uploadFile(MultipartFile uploadFiles) throws Exception;
 
     //dto -> entity로 변경
     default Map<String, Object> dtoToEntity(EventDTO eventDTO){
@@ -39,9 +41,6 @@ public interface EventUploadService {
         return entityMap;
     }
 
-    @Transactional(rollbackFor = Exception.class)  //오류나면 롤백
-    void register(EventDTO eventDTO);
 
-    @Transactional(rollbackFor = Exception.class)  //오류나면 롤백
-    List<EventImageDTO> uploadFile(MultipartFile uploadFiles) throws Exception;
+
 }

@@ -33,11 +33,11 @@ public class SignUpController {
 
     //사용자 ID 유효성 체크
     @PostMapping("/idcheck")
-    public ResponseEntity validIdCheck(@RequestBody ValidCheckDTO userValidCheck){
-        boolean idValid = signUpService.validID(userValidCheck);
-        if(idValid){
+    public ResponseEntity validIdCheck(@RequestBody ValidCheckDTO validCheckDTO){
+        boolean idValid = signUpService.validID(validCheckDTO);
+        if(idValid){  //true
             throw new RuntimeException("이미 사용중인 아이디 입니다.");
-        }else {
+        }else {  //false
             return ResponseEntity.ok("사용가능한 아이디입니다.");
         }
     }
@@ -46,9 +46,9 @@ public class SignUpController {
     @PostMapping("/nicknamecheck")
     public ResponseEntity validNicknameCheck(@RequestBody ValidCheckDTO validCheckDTO){
         boolean nicknameValid = signUpService.validNickName(validCheckDTO);
-        if(nicknameValid){
+        if(nicknameValid){  //true
             throw new RuntimeException("이미 사용중인 닉네임 입니다.");
-        }else {
+        }else {  //false
             return ResponseEntity.ok("사용가능한 닉네임입니다.");
         }
     }

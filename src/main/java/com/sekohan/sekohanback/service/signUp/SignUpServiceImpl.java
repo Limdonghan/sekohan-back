@@ -39,9 +39,7 @@ public class SignUpServiceImpl implements SignUpService {
 
     @Override
     @Transactional(rollbackFor = Exception.class)  //오류나면 롤백
-    public boolean validNickName(ValidCheckDTO userNicknameCheck) {  //사용자 닉네임 유효성 체크 메서드
-        return userRepository.existsByNickname(userNicknameCheck.getNickname());
+    public boolean validNickName(ValidCheckDTO validCheckDTO) {  //사용자 닉네임 유효성 체크 메서드
+        return userRepository.existsByNickname(validCheckDTO.getNickname());
     }
-
-
 }

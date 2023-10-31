@@ -1,6 +1,5 @@
 package com.sekohan.sekohanback.service.event;
 
-import com.sekohan.sekohanback.dto.event.EventDTO;
 import com.sekohan.sekohanback.dto.event.EventImageDTO;
 import com.sekohan.sekohanback.entity.admin.EventEntity;
 import com.sekohan.sekohanback.entity.admin.EventImageEntity;
@@ -23,7 +22,6 @@ import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
 import java.util.List;
-import java.util.Map;
 import java.util.UUID;
 
 @Service  //스프링 빈 등록
@@ -37,26 +35,6 @@ public class EventUploadServiceImpl implements EventUploadService{
     @Value("${com.sekohan.upload.path}")
     String uploadPath;
 
-
-    @Override
-    @Transactional(rollbackFor = Exception.class)  //오류나면 롤백
-    public void register(EventDTO eventDTO) {
-
-        log.info("DTO를 ENTITY로 변경");
-        Map<String, Object> entityMap=dtoToEntity(eventDTO);
-        log.info("entityMap1 : {}",entityMap.toString());
-
-        EventEntity eventEntity= (EventEntity) entityMap.get("event");
-        log.info("eventEntity : {}",eventEntity.toString());
-
-        List<EventImageEntity> eventImageList = (List<EventImageEntity>) entityMap.get("eventImg");
-        log.info("entityMap3 : {}",entityMap.toString());
-        log.info("imageEntityList : {}",eventImageList);
-
-        log.info("DB저장");
-        eventRepository.save(eventEntity);  //DB저장
-        eventImageList.forEach(eventImageEntity -> eventImageRepository.save(eventImageEntity));
-    }
 
     @Override
     @Transactional(rollbackFor = Exception.class)  //오류나면 롤백
