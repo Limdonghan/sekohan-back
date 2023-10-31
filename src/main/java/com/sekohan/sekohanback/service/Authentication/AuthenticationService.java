@@ -1,6 +1,6 @@
 package com.sekohan.sekohanback.service.Authentication;
 
-import com.sekohan.sekohanback.dto.user.UserSignInDTO;
+import com.sekohan.sekohanback.dto.user.sign.UserSignInDTO;
 import com.sekohan.sekohanback.dto.jwt.JsonWebTokenResponseDTO;
 
 public interface AuthenticationService {

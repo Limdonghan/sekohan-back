@@ -3,15 +3,16 @@ package com.sekohan.sekohanback.controller;
 
 import com.sekohan.sekohanback.dto.email.EmailMessageDTO;
 import com.sekohan.sekohanback.dto.email.EmailResponseDTO;
-import com.sekohan.sekohanback.dto.user.UserIdHelpDTO;
-import com.sekohan.sekohanback.dto.user.UserPwChangeDTO;
-import com.sekohan.sekohanback.dto.user.UserPwHelpDTO;
-import com.sekohan.sekohanback.dto.user.ValidCheckDTO;
+import com.sekohan.sekohanback.dto.user.help.UserIdHelpDTO;
+import com.sekohan.sekohanback.dto.user.change.UserPwChangeDTO;
+import com.sekohan.sekohanback.dto.user.help.UserPwHelpDTO;
+import com.sekohan.sekohanback.dto.user.valid.ValidCheckDTO;
 import com.sekohan.sekohanback.service.email.EmailService;
 import com.sekohan.sekohanback.service.help.userHelpService;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.web.bind.annotation.*;
 
 @RestController
@@ -22,6 +23,7 @@ public class HelpController {
 
     private final userHelpService userHelpService;
     private final EmailService emailService;
+    private final PasswordEncoder passwordEncoder;
 
     @GetMapping("/id")
     public ResponseEntity findID(@RequestBody UserIdHelpDTO userIdHelpDTO){
@@ -36,10 +38,11 @@ public class HelpController {
         return ResponseEntity.ok("패스워드 찾기 : "+password);
     }
 
-    @PatchMapping("/pwchange/{login}")
-    public ResponseEntity pwChange(@PathVariable String login,
-                                   @RequestBody UserPwChangeDTO userPwChangeDTO){
-        return null;
+    @PatchMapping("/pwchange")
+    public ResponseEntity pwChange(@RequestBody UserPwChangeDTO userPwChangeDTO){
+        String password1 = userPwChangeDTO.getPassword1();
+        String encode = passwordEncoder.encode(userPwChangeDTO.getPassword1());
+        return ResponseEntity.ok("변경된비밀번호 : "+password1+"변경된 비밀번호 인코더 : "+encode);
     }
 
     @PostMapping("/emailcheck")

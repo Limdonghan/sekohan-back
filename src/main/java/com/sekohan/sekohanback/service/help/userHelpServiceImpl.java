@@ -1,9 +1,9 @@
 package com.sekohan.sekohanback.service.help;
 
-import com.sekohan.sekohanback.dto.user.UserIdHelpDTO;
-import com.sekohan.sekohanback.dto.user.UserPwChangeDTO;
-import com.sekohan.sekohanback.dto.user.UserPwHelpDTO;
-import com.sekohan.sekohanback.dto.user.ValidCheckDTO;
+import com.sekohan.sekohanback.dto.user.help.UserIdHelpDTO;
+import com.sekohan.sekohanback.dto.user.change.UserPwChangeDTO;
+import com.sekohan.sekohanback.dto.user.help.UserPwHelpDTO;
+import com.sekohan.sekohanback.dto.user.valid.ValidCheckDTO;
 import com.sekohan.sekohanback.entity.UserEntity;
 import com.sekohan.sekohanback.exception.NotFoundUserException;
 import com.sekohan.sekohanback.repository.UserRepository;
@@ -53,6 +53,8 @@ public class userHelpServiceImpl implements userHelpService { //유저 계정찾
     @Override
     @Transactional
     public String passwordChange(UserPwChangeDTO userPwChangeDTO){
+
+        //if pw1 pw2 맞는지 비교(프론트) ->
         return null;
     }
 

@@ -1,4 +1,4 @@
-package com.sekohan.sekohanback.dto.user;
+package com.sekohan.sekohanback.dto.user.sign;
 
 import jakarta.validation.constraints.NotBlank;
 import lombok.Getter;

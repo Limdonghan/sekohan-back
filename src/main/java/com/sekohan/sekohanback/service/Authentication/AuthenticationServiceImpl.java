@@ -1,6 +1,6 @@
 package com.sekohan.sekohanback.service.Authentication;
 
-import com.sekohan.sekohanback.dto.user.UserSignInDTO;
+import com.sekohan.sekohanback.dto.user.sign.UserSignInDTO;
 import com.sekohan.sekohanback.dto.jwt.JsonWebTokenResponseDTO;
 import com.sekohan.sekohanback.entity.UserEntity;
 import com.sekohan.sekohanback.exception.TokenTypeException;

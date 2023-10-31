@@ -1,4 +1,4 @@
-package com.sekohan.sekohanback.dto.user;
+package com.sekohan.sekohanback.dto.user.change;
 
 import lombok.Getter;
 import lombok.Setter;
