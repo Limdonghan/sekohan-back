@@ -4,6 +4,7 @@ node_modules
 /out
 src/test
 .gradle
+.build
 
 # local env files
 .env.local
