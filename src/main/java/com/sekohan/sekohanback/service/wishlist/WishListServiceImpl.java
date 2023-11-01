@@ -1,4 +1,4 @@
-package com.sekohan.sekohanback.service;
+package com.sekohan.sekohanback.service.wishlist;
 
 import com.sekohan.sekohanback.dto.WishListDTO;
 import com.sekohan.sekohanback.entity.ProductEntity;

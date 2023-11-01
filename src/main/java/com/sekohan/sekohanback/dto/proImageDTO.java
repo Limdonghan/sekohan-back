@@ -11,7 +11,7 @@ public class proImageDTO {
     private Long productId;
     private Long catId;
     private String proName;
-    private double proPrice;
+    private int proPrice;
     private String proInfo;
     private String path;
     private LocalDateTime created_date;

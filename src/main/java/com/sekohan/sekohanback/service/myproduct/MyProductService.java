@@ -1,4 +1,4 @@
-package com.sekohan.sekohanback.service;
+package com.sekohan.sekohanback.service.myproduct;
 
 import com.sekohan.sekohanback.dto.proImageDTO;
 import com.sekohan.sekohanback.entity.CategoryEntity;

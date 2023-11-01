@@ -4,14 +4,13 @@ import com.sekohan.sekohanback.dto.WishListDTO;
 import com.sekohan.sekohanback.entity.ProductEntity;
 import com.sekohan.sekohanback.entity.UserEntity;
 import com.sekohan.sekohanback.entity.WishListEntity;
-import com.sekohan.sekohanback.service.WishListService;
+import com.sekohan.sekohanback.service.wishlist.WishListService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 
 @RestController
-@CrossOrigin(origins = "*")
 @RequestMapping("/wish")
 @RequiredArgsConstructor
 public class WishListController {
@@ -27,9 +26,11 @@ public class WishListController {
         userEntity.setUId(userId);
         return wishListService.uploadWishList(productEntity, userEntity);
     }
+    //찜목록 추가 URL
 
     @GetMapping("/list/{uId}")
     public List<WishListDTO> getuserWishList(@PathVariable long uId){
         return wishListService.getuserWishList(uId);
     }
+    //유저 찜목록 URL
 }

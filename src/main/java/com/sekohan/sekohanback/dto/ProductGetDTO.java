@@ -14,7 +14,7 @@ public class ProductGetDTO {
     private Long productId;
     private String proName;
     private String proInfo;
-    private double proPrice;
+    private int proPrice;
     private LocalDateTime created_time;
     private int proView;
     private byte proStatus;

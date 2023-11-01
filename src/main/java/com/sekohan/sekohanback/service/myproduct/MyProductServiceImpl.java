@@ -1,4 +1,4 @@
-package com.sekohan.sekohanback.service;
+package com.sekohan.sekohanback.service.myproduct;
 
 import com.sekohan.sekohanback.dto.proImageDTO;
 import com.sekohan.sekohanback.entity.CategoryEntity;
@@ -9,6 +9,7 @@ import com.sekohan.sekohanback.repository.ProImageRepository;
 import com.sekohan.sekohanback.repository.ProductRepository;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Service;
 import org.springframework.web.multipart.MultipartFile;
 
@@ -27,7 +28,8 @@ import java.util.List;
 @RequiredArgsConstructor
 public class MyProductServiceImpl implements MyProductService{
 
-    private String uploadDir = "src/main/upload/";
+    @Value("${com.sekohan.upload.path}")
+    String uploadDir;
     private final ProImageRepository proImageRepository;
     private final ProductRepository productRepository;
 
@@ -54,6 +56,7 @@ public class MyProductServiceImpl implements MyProductService{
         for (ProImageEntity existingImage : existingImages) {
             String existingImagePath = existingImage.getPath();
             deleteImageFile(existingImagePath);
+            //파일업데이트하기전 이미저장되어있는 이미지파일 삭제
             proImageRepository.delete(existingImage);
         }
 
@@ -83,10 +86,12 @@ public class MyProductServiceImpl implements MyProductService{
                     ProImageEntity proImageEntity = new ProImageEntity();
                     String originalFilename = file.getOriginalFilename();
                     String cleanedFilename = originalFilename.replaceAll("[^a-zA-Z0-9.-]", "_");
-
+                    //특정문자 _ 로 치환하기
                     String formattedDateTime = LocalDateTime.now().
                             format(DateTimeFormatter.ofPattern("yyyy-MM-dd_HH-mm-ss"));
+                    //날짜 포멧 형식
                     String newFileName = formattedDateTime + "_" + i + "_" + cleanedFilename;
+                    //중복 이름 방지를 위하여 변수 추가 저장시간+변수+파일이름 으로 저장
                     proImageEntity.setPath(newFileName);
                     proImageEntity.setProductId(savedProduct);
                     proImageRepository.save(proImageEntity);
@@ -114,6 +119,7 @@ public class MyProductServiceImpl implements MyProductService{
         } else {
             System.out.println("파일이 존재하지 않습니다: " + filePath);
         }
+        //파일업데이트하기전 이미저장되어있는 이미지파일 삭제
     }
 
     private proImageDTO convertToDTO(ProImageEntity image) {

@@ -12,7 +12,6 @@ import java.nio.file.Path;
 import java.nio.file.Paths;
 
 @RestController
-@CrossOrigin(origins = "*")
 @RequestMapping
 public class ImageController {
 

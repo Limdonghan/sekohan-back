@@ -1,4 +1,4 @@
-package com.sekohan.sekohanback.service;
+package com.sekohan.sekohanback.service.comment;
 
 import com.sekohan.sekohanback.dto.CommentGetDTO;
 import com.sekohan.sekohanback.entity.CommentEntity;

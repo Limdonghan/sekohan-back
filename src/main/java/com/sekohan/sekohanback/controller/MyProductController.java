@@ -4,8 +4,7 @@ import com.sekohan.sekohanback.dto.proImageDTO;
 import com.sekohan.sekohanback.entity.CategoryEntity;
 import com.sekohan.sekohanback.entity.ProductEntity;
 import com.sekohan.sekohanback.entity.UserEntity;
-import com.sekohan.sekohanback.service.MyProductService;
-import com.sekohan.sekohanback.service.ProductService;
+import com.sekohan.sekohanback.service.myproduct.MyProductService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
@@ -14,7 +13,6 @@ import org.springframework.web.multipart.MultipartFile;
 import java.util.List;
 
 @RestController
-@CrossOrigin(origins = "*")
 @RequestMapping("/myproducts")
 @RequiredArgsConstructor
 public class MyProductController {
@@ -26,6 +24,7 @@ public class MyProductController {
     public List<proImageDTO> getuserproduct(@PathVariable long uId) {
         return MyproductService.getuserproduct(uId);
     }
+    //내 상품 목록 URL
 
     @PutMapping("/update/{ProductId}")
     public ProductEntity updateProduct(@PathVariable long ProductId,
@@ -42,5 +41,6 @@ public class MyProductController {
         userEntity.setUId(userId);
         return MyproductService.updateProduct(ProductId, proName, proPrice, proInfo,userEntity, categoryEntity ,status, files);
     }
+    //상품 업데이트 URL
 
 }

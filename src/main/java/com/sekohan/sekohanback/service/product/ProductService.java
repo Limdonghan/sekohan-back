@@ -1,4 +1,4 @@
-package com.sekohan.sekohanback.service;
+package com.sekohan.sekohanback.service.product;
 
 import com.sekohan.sekohanback.dto.ProductGetDTO;
 import com.sekohan.sekohanback.dto.proImageDTO;
@@ -10,6 +10,7 @@ import com.sekohan.sekohanback.repository.ProductRepository;
 import com.sekohan.sekohanback.repository.ProImageRepository;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Service;
 import org.springframework.web.multipart.MultipartFile;
 
@@ -27,7 +28,8 @@ import java.util.List;
 @RequiredArgsConstructor
 public class ProductService {
 
-    private String uploadDir = "src/main/upload/";
+    @Value("${com.sekohan.upload.path}")
+    String uploadDir;
     private final ProductRepository productRepository;
     private final ProImageRepository proImageRepository;
 
@@ -82,6 +84,7 @@ public class ProductService {
 
         return result;
     }
+    //특정 catId 값만 출력하는 상품 리스트 서비스
 
     private proImageDTO convertToDTO(ProImageEntity image) {
         proImageDTO proImageDTO = new proImageDTO();
