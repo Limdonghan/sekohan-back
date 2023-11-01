@@ -1,8 +1,10 @@
 .DS_Store
 node_modules
 /dist
+/out
 src/test
 .gradle
+build
 
 # local env files
 .env.local

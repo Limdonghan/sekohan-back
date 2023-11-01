@@ -6,11 +6,11 @@ spring:
   datasource:
     driver-class-name: oracle.jdbc.OracleDriver
     url: jdbc:oracle:thin:@localhost:1521:xe
-    username: sekohan
-    password: sekohan
+    username: BOOTUSER
+    password: BOOTUSER
   jpa:
     hibernate:
-      ddl-auto: create
+      ddl-auto: update
     properties:
       hibernate:
         format_sql: true
@@ -19,6 +19,11 @@ spring:
   servlet:
     multipart:
       enabled: true
-      location: C:\\upload
+      location: src/main/upload/
       max-request-size: 30MB
       max-file-size: 10MB
+
+com:
+  sekohan:
+    upload:
+      path: src/main/upload/

@@ -8,32 +8,37 @@ import lombok.*;
 @Builder
 @NoArgsConstructor(access = AccessLevel.PROTECTED)
 @AllArgsConstructor
+@Setter
 @Getter
 public class CategoryEntity {
     @Id
     @GeneratedValue(strategy = GenerationType.SEQUENCE,generator = "SEQ_ATTR_REPLY")// 11번 12번줄 있으면 기본키가 1부터 시작해서 1씩 자동으로 올라감
     @SequenceGenerator(name = "SEQ_ATTR_REPLY", sequenceName = "SEQUENCE_ATTR_REPLY", allocationSize = 1) // 인덱스값 다른 조합으로 하고 싶으면 지우셈
-    private long category_id;
+    private long catId;
 
     @Column(nullable = false)
-    private String group_id;
+    private String groupId;
 
     @Column(nullable = false)
-    private int category_lev;
+    private int catLev;
 
     @Column(nullable = false)
-    private String category_nm;
+    private String catClass;
 
     @Column(nullable = false)
-    private int category_detail_lev;
+    private int catDetailLev;
 
     @Column(nullable = false)
-    private String category_detail_nm;
+    private String catDetailClass;
 
     @Column(nullable = false)
-    private int category_parent_lev;
+    private int catParentLev;
 
     @Column(nullable = false)
-    private int category_datail_parent_lev;
+    private int catDetailParentLev;
+
+    public CategoryEntity(Long catId) {
+        this.catId = catId;
+    }
 
 }
