@@ -8,7 +8,7 @@ import java.time.LocalDateTime;
 @Entity
 @Table(name = "TB_WishList")
 @Builder
-@NoArgsConstructor(access = AccessLevel.PUBLIC)
+@NoArgsConstructor(access = AccessLevel.PROTECTED)
 @AllArgsConstructor
 @Getter
 @Setter
@@ -23,11 +23,11 @@ public class WishListEntity {
 
     @ManyToOne
     @JoinColumn(name = "uId")
-    private UserEntity uId;
+    private UserEntity userEntity;
 
     @ManyToOne
     @JoinColumn(name = "productId")
-    private ProductEntity productId;
+    private ProductEntity productEntity;
 
 
 }

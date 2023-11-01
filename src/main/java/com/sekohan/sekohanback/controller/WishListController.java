@@ -20,10 +20,8 @@ public class WishListController {
     @PostMapping("/add")
     public WishListEntity uploadWishList(@RequestParam("productId") long productId,
                                         @RequestParam("userId") long userId) {
-        ProductEntity productEntity = new ProductEntity(productId);
-        productEntity.setProductId(productId);
-        UserEntity userEntity = new UserEntity(userId);
-        userEntity.setUId(userId);
+        ProductEntity productEntity = ProductEntity.builder().productId(productId).build();
+        UserEntity userEntity = UserEntity.builder().uId(userId).build();
         return wishListService.uploadWishList(productEntity, userEntity);
     }
     //찜목록 추가 URL

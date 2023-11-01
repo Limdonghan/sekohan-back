@@ -23,10 +23,8 @@ public class CommentController {
     public CommentEntity uploadComment(@RequestParam("content") String content,
                                        @RequestParam("productId") long productId,
                                        @RequestParam("userId") long userId) {
-        ProductEntity productEntity = new ProductEntity(productId);
-        productEntity.setProductId(productId);
-        UserEntity userEntity = new UserEntity(userId);
-        userEntity.setUId(userId);
+        ProductEntity productEntity = ProductEntity.builder().productId(productId).build();
+        UserEntity userEntity = UserEntity.builder().uId(userId).build();
         return commentService.uploadComment(content, productEntity, userEntity);
     }
     //댓글 입력 URL

@@ -11,13 +11,13 @@ import java.util.List;
 @Repository
 public interface ProImageRepository extends JpaRepository<ProImageEntity, Long> {
 
-    @Query("SELECT p FROM ProImageEntity p WHERE p.productId.productId = :productId")
-    List<ProImageEntity> getImagesByProductId(@Param("productId") Long productId);
+    @Query("SELECT p FROM ProImageEntity p WHERE p.productEntity.productId = :productId")
+    List<ProImageEntity> getPro_imgId(@Param("productId") Long productId);
 
-    @Query("SELECT p FROM ProImageEntity p WHERE p.productId.catId.catId = :catId")
-    List<ProImageEntity> findImagesByCategoryId(@Param("catId") Long catId);
+    @Query("SELECT p FROM ProImageEntity p WHERE p.productEntity.categoryEntity.catId = :catId")
+    List<ProImageEntity> findByCategoryList(@Param("catId") Long catId);
 
-    @Query("SELECT p FROM ProImageEntity p WHERE p.productId.uId.uId = :uId")
+    @Query("SELECT p FROM ProImageEntity p WHERE p.productEntity.userEntity.uId = :uId")
     List<ProImageEntity> findByuId(@Param("uId") Long uId);
 
 }

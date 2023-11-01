@@ -6,7 +6,6 @@ import com.sekohan.sekohanback.entity.ProductEntity;
 import com.sekohan.sekohanback.entity.UserEntity;
 import com.sekohan.sekohanback.service.myproduct.MyProductService;
 import lombok.RequiredArgsConstructor;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
 
@@ -17,8 +16,7 @@ import java.util.List;
 @RequiredArgsConstructor
 public class MyProductController {
 
-    @Autowired
-    private MyProductService MyproductService;
+    private final MyProductService MyproductService;
 
     @GetMapping("/list/{uId}")
     public List<proImageDTO> getuserproduct(@PathVariable long uId) {
@@ -35,10 +33,8 @@ public class MyProductController {
                                        @RequestParam("categoryId") long categoryId,
                                        @RequestParam("userId") long userId,
                                        @RequestPart("files") List<MultipartFile> files) {
-        CategoryEntity categoryEntity = new CategoryEntity(categoryId);
-        categoryEntity.setCatId(categoryId);
-        UserEntity userEntity = new UserEntity(userId);
-        userEntity.setUId(userId);
+        CategoryEntity categoryEntity = CategoryEntity.builder().catId(categoryId).build();
+        UserEntity userEntity = UserEntity.builder().uId(userId).build();
         return MyproductService.updateProduct(ProductId, proName, proPrice, proInfo,userEntity, categoryEntity ,status, files);
     }
     //상품 업데이트 URL

@@ -20,13 +20,11 @@ public class CommentServiceImpl implements CommentService {
 
     @Override
     public CommentEntity uploadComment(String content, ProductEntity productEntity, UserEntity userEntity) {
-        CommentEntity commentEntity = new CommentEntity();
-        commentEntity.setContent(content);
-        commentEntity.setLocalDateTime(LocalDateTime.now());
-        commentEntity.setUId(userEntity);
-        commentEntity.setProductId(productEntity);
 
-        CommentEntity savedComment = commentRepository.save(commentEntity);
+        CommentEntity build = CommentEntity.builder()
+                .content(content).localDateTime(LocalDateTime.now()).uId(userEntity).productEntity(productEntity).build();
+
+        CommentEntity savedComment = commentRepository.save(build);
 
         return savedComment;
     }

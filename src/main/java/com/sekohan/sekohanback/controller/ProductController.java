@@ -7,7 +7,6 @@ import com.sekohan.sekohanback.entity.ProductEntity;
 import com.sekohan.sekohanback.entity.UserEntity;
 import com.sekohan.sekohanback.service.product.ProductService;
 import lombok.RequiredArgsConstructor;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
 
@@ -18,8 +17,7 @@ import java.util.List;
 @RequiredArgsConstructor
 public class ProductController {
 
-    @Autowired
-    private ProductService productService;
+    private final ProductService productService;
 
     @PostMapping("/upload")
     public ProductEntity uploadProduct(@RequestParam("proName") String proName,
@@ -28,10 +26,8 @@ public class ProductController {
                                        @RequestParam("categoryId") long categoryId,
                                        @RequestParam("userId") long userId,
                                        @RequestPart("files") List<MultipartFile> files) {
-        CategoryEntity categoryEntity = new CategoryEntity(categoryId);
-        categoryEntity.setCatId(categoryId);
-        UserEntity userEntity = new UserEntity(userId);
-        userEntity.setUId(userId);
+        CategoryEntity categoryEntity = CategoryEntity.builder().catId(categoryId).build();
+        UserEntity userEntity = UserEntity.builder().uId(userId).build();
         return productService.uploadProduct(proName, proPrice, proInfo, categoryEntity, userEntity, files);
     }
     //상품 업로드 URL

@@ -11,8 +11,8 @@ import lombok.*;
 @Getter
 public class ServiceEntity {
     @Id
-    @GeneratedValue(strategy = GenerationType.SEQUENCE,generator = "SEQ_ATTR_REPLY")// 11번 12번줄 있으면 기본키가 1부터 시작해서 1씩 자동으로 올라감
-    @SequenceGenerator(name = "SEQ_ATTR_REPLY", sequenceName = "SEQUENCE_ATTR_REPLY", allocationSize = 1) // 인덱스값 다른 조합으로 하고 싶으면 지우셈
+    @GeneratedValue(strategy = GenerationType.SEQUENCE,generator = "SEQ_SERVICE")// 11번 12번줄 있으면 기본키가 1부터 시작해서 1씩 자동으로 올라감
+    @SequenceGenerator(name = "SEQ_SERVICE", sequenceName = "SEQUENCE_SERVICE", allocationSize = 1) // 인덱스값 다른 조합으로 하고 싶으면 지우셈
     private long serviceId;
 
     @ManyToOne
@@ -21,6 +21,6 @@ public class ServiceEntity {
 
     @ManyToOne
     @JoinColumn(name = "productId")
-    private ProductEntity productId;
+    private ProductEntity productEntity;
 
 }

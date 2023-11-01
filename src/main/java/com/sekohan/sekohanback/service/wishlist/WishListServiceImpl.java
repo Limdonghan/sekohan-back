@@ -21,10 +21,8 @@ public class WishListServiceImpl implements WishListService {
     private final WishListrepository wishListrepository;
     @Override
     public WishListEntity uploadWishList(ProductEntity productEntity, UserEntity userEntity) {
-        WishListEntity wishListEntity = new WishListEntity();
-        wishListEntity.setProductId(productEntity);
-        wishListEntity.setUId(userEntity);
-        wishListEntity.setLocalDateTime(LocalDateTime.now());
+        WishListEntity wishListEntity = WishListEntity.builder().productEntity(productEntity).userEntity(userEntity)
+        .localDateTime(LocalDateTime.now()).build();
 
         WishListEntity savewishList = wishListrepository.save(wishListEntity);
 
@@ -44,8 +42,8 @@ public class WishListServiceImpl implements WishListService {
         WishListDTO wishListDTO = new WishListDTO();
         wishListDTO.setWishListId(wishList.getWishListId());
         wishListDTO.setLocalDateTime(wishList.getLocalDateTime());
-        wishListDTO.setProductId(wishList.getProductId().getProductId());
-        wishListDTO.setUId(wishList.getUId().getUId());
+        wishListDTO.setProductId(wishList.getProductEntity().getProductId());
+        wishListDTO.setUId(wishList.getUserEntity().getUId());
 
         return wishListDTO;
     }

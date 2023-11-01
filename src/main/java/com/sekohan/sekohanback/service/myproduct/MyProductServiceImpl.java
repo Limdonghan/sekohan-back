@@ -33,15 +33,15 @@ public class MyProductServiceImpl implements MyProductService{
     private final ProImageRepository proImageRepository;
     private final ProductRepository productRepository;
 
+
     @Override
     public List<proImageDTO> getuserproduct(long uId) {
         List<ProImageEntity> images = proImageRepository.findByuId(uId);
         List<proImageDTO> result = new ArrayList<>();
         List<Long> seenProductIds = new ArrayList<>();
-
         for (ProImageEntity image : images) {
-            if (!seenProductIds.contains(image.getProductId().getProductId())) {
-                seenProductIds.add(image.getProductId().getProductId());
+            if (!seenProductIds.contains(image.getProductEntity().getProductId())) {
+                seenProductIds.add(image.getProductEntity().getProductId());
                 result.add(convertToDTO(image));
             }
         }
@@ -50,9 +50,12 @@ public class MyProductServiceImpl implements MyProductService{
 
     }
 
+
+
+
     @Override
     public ProductEntity updateProduct(long productId, String proName, int proPrice, String proInfo, UserEntity userEntity, CategoryEntity categoryEntity, byte status, List<MultipartFile> files) {
-        List<ProImageEntity> existingImages = proImageRepository.getImagesByProductId(productId);
+        List<ProImageEntity> existingImages = proImageRepository.getPro_imgId(productId);
         for (ProImageEntity existingImage : existingImages) {
             String existingImagePath = existingImage.getPath();
             deleteImageFile(existingImagePath);
@@ -60,30 +63,23 @@ public class MyProductServiceImpl implements MyProductService{
             proImageRepository.delete(existingImage);
         }
 
-        ProductEntity productEntity = new ProductEntity();
-        productEntity.setUId(userEntity);
-        productEntity.setProductId(productId);
-        productEntity.setProName(proName);
-        productEntity.setProPrice(proPrice);
-        productEntity.setProInfo(proInfo);
-        productEntity.setLocalDateTime(LocalDateTime.now());
-        productEntity.setProView(0);
-        productEntity.setProStatus((byte) 0);
-        productEntity.setCatId(categoryEntity);
+        ProductEntity productEntity = ProductEntity.builder().userEntity(userEntity).
+                productId(productId).proName(proName).proPrice(proPrice).
+                proInfo(proInfo).localDateTime(LocalDateTime.now()).proView(0)
+                .proStatus((byte) 0).categoryEntity(categoryEntity).
+                build();
 
         ProductEntity savedProduct = productRepository.save(productEntity);
 
         for (MultipartFile imagePath : files) {
-            ProImageEntity proImageEntity = new ProImageEntity();
-            proImageEntity.setPath(imagePath.getOriginalFilename());
-            proImageEntity.setProductId(savedProduct);
+            ProImageEntity proImageEntity = ProImageEntity.builder().path(imagePath.getOriginalFilename()).
+                    productEntity(savedProduct).build();
         }
         int i = 0;
         for (MultipartFile file : files) {
             if (!file.isEmpty()) {
                 try {
                     byte[] bytes = file.getBytes();
-                    ProImageEntity proImageEntity = new ProImageEntity();
                     String originalFilename = file.getOriginalFilename();
                     String cleanedFilename = originalFilename.replaceAll("[^a-zA-Z0-9.-]", "_");
                     //특정문자 _ 로 치환하기
@@ -92,8 +88,8 @@ public class MyProductServiceImpl implements MyProductService{
                     //날짜 포멧 형식
                     String newFileName = formattedDateTime + "_" + i + "_" + cleanedFilename;
                     //중복 이름 방지를 위하여 변수 추가 저장시간+변수+파일이름 으로 저장
-                    proImageEntity.setPath(newFileName);
-                    proImageEntity.setProductId(savedProduct);
+                    ProImageEntity proImageEntity = ProImageEntity.builder().
+                            path(newFileName).productEntity(savedProduct).build();
                     proImageRepository.save(proImageEntity);
                     i++;
                     Path path = Paths.get(uploadDir + newFileName);
@@ -124,13 +120,13 @@ public class MyProductServiceImpl implements MyProductService{
 
     private proImageDTO convertToDTO(ProImageEntity image) {
         proImageDTO proImageDTO = new proImageDTO();
-        proImageDTO.setProductId(image.getProductId().getProductId());
-        proImageDTO.setCatId(image.getProductId().getCatId().getCatId());
-        proImageDTO.setProName(image.getProductId().getProName());
-        proImageDTO.setProPrice(image.getProductId().getProPrice());
-        proImageDTO.setProInfo(image.getProductId().getProInfo().substring(0, Math.min(image.getProductId().getProInfo().length(), 10)));
+        proImageDTO.setProductId(image.getProductEntity().getProductId());
+        proImageDTO.setCatId(image.getProductEntity().getCategoryEntity().getCatId());
+        proImageDTO.setProName(image.getProductEntity().getProName());
+        proImageDTO.setProPrice(image.getProductEntity().getProPrice());
+        proImageDTO.setProInfo(image.getProductEntity().getProInfo().substring(0, Math.min(image.getProductEntity().getProInfo().length(), 10)));
         proImageDTO.setPath(image.getPath());
-        proImageDTO.setCreated_date(image.getProductId().getLocalDateTime());
+        proImageDTO.setCreated_date(image.getProductEntity().getLocalDateTime());
         return proImageDTO;
     }
 }

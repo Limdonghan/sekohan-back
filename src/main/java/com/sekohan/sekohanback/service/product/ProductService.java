@@ -61,8 +61,8 @@ public class ProductService {
         List<Long> seenProductIds = new ArrayList<>();
 
         for (ProImageEntity image : images) {
-            if (!seenProductIds.contains(image.getProductId().getProductId())) {
-                seenProductIds.add(image.getProductId().getProductId());
+            if (!seenProductIds.contains(image.getProductEntity().getProductId())) {
+                seenProductIds.add(image.getProductEntity().getProductId());
                 result.add(convertToDTO(image));
             }
         }
@@ -71,13 +71,13 @@ public class ProductService {
     }
 
     public List<proImageDTO> getcatList(long catId) {
-        List<ProImageEntity> images = proImageRepository.findImagesByCategoryId(catId);
+        List<ProImageEntity> images = proImageRepository.findByCategoryList(catId);
         List<proImageDTO> result = new ArrayList<>();
         List<Long> seenProductIds = new ArrayList<>();
 
         for (ProImageEntity image : images) {
-            if (!seenProductIds.contains(image.getProductId().getProductId())) {
-                seenProductIds.add(image.getProductId().getProductId());
+            if (!seenProductIds.contains(image.getProductEntity().getProductId())) {
+                seenProductIds.add(image.getProductEntity().getProductId());
                 result.add(convertToDTO(image));
             }
         }
@@ -88,13 +88,13 @@ public class ProductService {
 
     private proImageDTO convertToDTO(ProImageEntity image) {
         proImageDTO proImageDTO = new proImageDTO();
-        proImageDTO.setProductId(image.getProductId().getProductId());
-        proImageDTO.setCatId(image.getProductId().getCatId().getCatId());
-        proImageDTO.setProName(image.getProductId().getProName());
-        proImageDTO.setProPrice(image.getProductId().getProPrice());
-        proImageDTO.setProInfo(image.getProductId().getProInfo().substring(0, Math.min(image.getProductId().getProInfo().length(), 10)));
+        proImageDTO.setProductId(image.getProductEntity().getProductId());
+        proImageDTO.setCatId(image.getProductEntity().getCategoryEntity().getCatId());
+        proImageDTO.setProName(image.getProductEntity().getProName());
+        proImageDTO.setProPrice(image.getProductEntity().getProPrice());
+        proImageDTO.setProInfo(image.getProductEntity().getProInfo().substring(0, Math.min(image.getProductEntity().getProInfo().length(), 10)));
         proImageDTO.setPath(image.getPath());
-        proImageDTO.setCreated_date(image.getProductId().getLocalDateTime());
+        proImageDTO.setCreated_date(image.getProductEntity().getLocalDateTime());
         return proImageDTO;
     }
     //상품 리스트 코드
@@ -113,13 +113,13 @@ public class ProductService {
         productGetDTO.setProPrice(product.getProPrice());
         productGetDTO.setProView(product.getProView());
         productGetDTO.setProStatus(product.getProStatus());
-        productGetDTO.setCatId(product.getCatId().getCatId());
-        productGetDTO.setDetailName(product.getCatId().getCatDetailClass());
-        productGetDTO.setUId(product.getUId().getUId());
-        productGetDTO.setNickName(product.getUId().getNickname());
+        productGetDTO.setCatId(product.getCategoryEntity().getCatId());
+        productGetDTO.setDetailName(product.getCategoryEntity().getCatDetailClass());
+        productGetDTO.setUId(product.getUserEntity().getUId());
+        productGetDTO.setNickName(product.getUserEntity().getNickname());
 
         List<String> fileAddresses = new ArrayList<>(); // 파일 주소를 저장할 리스트
-        List<ProImageEntity> images = proImageRepository.getImagesByProductId(product.getProductId());
+        List<ProImageEntity> images = proImageRepository.getPro_imgId(product.getProductId());
         for (ProImageEntity image : images) {
             fileAddresses.add(image.getPath());
         }
@@ -129,22 +129,14 @@ public class ProductService {
     //상품 상세정보 코드
 
     public ProductEntity uploadProduct(String proName, int proPrice, String proInfo, CategoryEntity categoryEntity, UserEntity userEntity, List<MultipartFile> files) {
-        ProductEntity productEntity = new ProductEntity();
-        productEntity.setProName(proName);
-        productEntity.setProPrice(proPrice);
-        productEntity.setProInfo(proInfo);
-        productEntity.setLocalDateTime(LocalDateTime.now());
-        productEntity.setProView(0);
-        productEntity.setProStatus((byte) 0);
-        productEntity.setUId(userEntity);
-        productEntity.setCatId(categoryEntity);
+        ProductEntity productEntity = ProductEntity.builder().proName(proName).proPrice(proPrice).
+        proInfo(proInfo).localDateTime(LocalDateTime.now()).proView(0).proStatus((byte) 0).userEntity(userEntity).categoryEntity(categoryEntity).build();
 
         ProductEntity savedProduct = productRepository.save(productEntity);
 
         for (MultipartFile imagePath : files) {
-            ProImageEntity proImageEntity = new ProImageEntity();
-            proImageEntity.setPath(imagePath.getOriginalFilename());
-            proImageEntity.setProductId(savedProduct);
+            ProImageEntity proImageEntity = ProImageEntity.builder()
+                    .path(imagePath.getOriginalFilename()).productEntity(savedProduct).build();
         }
         int i = 0;
         //
@@ -152,15 +144,13 @@ public class ProductService {
             if (!file.isEmpty()) {
                 try {
                     byte[] bytes = file.getBytes();
-                    ProImageEntity proImageEntity = new ProImageEntity();
                     String originalFilename = file.getOriginalFilename();
                     String cleanedFilename = originalFilename.replaceAll("[^a-zA-Z0-9.-]", "_");
 
                     String formattedDateTime = LocalDateTime.now().
                             format(DateTimeFormatter.ofPattern("yyyy-MM-dd_HH-mm-ss"));
                     String newFileName = formattedDateTime + "_" + i + "_" + cleanedFilename;
-                    proImageEntity.setPath(newFileName);
-                    proImageEntity.setProductId(savedProduct);
+                    ProImageEntity proImageEntity = ProImageEntity.builder().path(newFileName).productEntity(savedProduct).build();
                     proImageRepository.save(proImageEntity);
                     i++;
                     Path path = Paths.get(uploadDir + newFileName);

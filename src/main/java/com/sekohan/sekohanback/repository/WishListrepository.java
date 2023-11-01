@@ -11,7 +11,7 @@ import java.util.List;
 @Repository
 public interface WishListrepository extends JpaRepository<WishListEntity, Long > {
 
-    @Query("SELECT p FROM WishListEntity p WHERE p.uId.uId = :uId")
+    @Query("SELECT p FROM WishListEntity p WHERE p.userEntity.uId = :uId")
     List<WishListEntity> findbyuIdList(@Param("uId") Long uId);
 
 }
