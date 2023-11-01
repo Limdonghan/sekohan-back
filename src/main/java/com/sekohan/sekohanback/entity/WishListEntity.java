@@ -9,9 +9,10 @@ import java.time.LocalDateTime;
 @Entity
 @Table(name = "TB_WishList")
 @Builder
-@NoArgsConstructor(access = AccessLevel.PROTECTED)
+@NoArgsConstructor(access = AccessLevel.PUBLIC)
 @AllArgsConstructor
 @Getter
+@Setter
 public class WishListEntity {
     @Id
     @GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "SEQ_WISH_LIST")

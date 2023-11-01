@@ -10,6 +10,7 @@ import lombok.*;
 @NoArgsConstructor(access = AccessLevel.PROTECTED)
 @AllArgsConstructor
 @Getter
+@Setter
 public class ProImageEntity {
     @Id
     @GeneratedValue(strategy = GenerationType.SEQUENCE,generator = "SEQ_PRO_IMG")// 11번 12번줄 있으면 기본키가 1부터 시작해서 1씩 자동으로 올라감
@@ -22,4 +23,8 @@ public class ProImageEntity {
     @ManyToOne
     @JoinColumn(name = "prodcutId")
     private ProductEntity prodcutId;
+    @JoinColumn(name = "productId")
+    private ProductEntity productId;
+
+
 }

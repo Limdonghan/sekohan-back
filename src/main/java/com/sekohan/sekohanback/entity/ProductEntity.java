@@ -3,15 +3,15 @@ package com.sekohan.sekohanback.entity;
 import jakarta.persistence.*;
 import lombok.*;
 import org.hibernate.annotations.ColumnDefault;
-import org.springframework.data.annotation.CreatedDate;
 
 import java.time.LocalDateTime;
 
 @Entity
 @Table(name = "TB_Product")
 @Builder
-@NoArgsConstructor(access = AccessLevel.PROTECTED)
+@NoArgsConstructor(access = AccessLevel.PUBLIC)
 @AllArgsConstructor
+@Setter
 @Getter
 public class ProductEntity {
     @Id
@@ -45,8 +45,7 @@ public class ProductEntity {
     private UserEntity uId;
 
     @ManyToOne
-    @JoinColumn(name = "catId")
-    private CategoryEntity catId;
-
+    @JoinColumn(name = "category_id")
+    private CategoryEntity category_id;
 
 }

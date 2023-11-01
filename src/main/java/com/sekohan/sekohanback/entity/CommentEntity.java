@@ -9,9 +9,10 @@ import java.time.LocalDateTime;
 @Entity
 @Table(name = "TB_Comment")
 @Builder
-@NoArgsConstructor(access = AccessLevel.PROTECTED)
+@NoArgsConstructor(access = AccessLevel.PUBLIC)
 @AllArgsConstructor
 @Getter
+@Setter
 public class CommentEntity {
     @Id
     @GeneratedValue(strategy = GenerationType.SEQUENCE,generator = "SEQ_COMMENT")// 11번 12번줄 있으면 기본키가 1부터 시작해서 1씩 자동으로 올라감
@@ -32,4 +33,10 @@ public class CommentEntity {
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name="productId")
     private ProductEntity productId;
+
+    @ManyToOne
+    @JoinColumn(name="productId")
+    private ProductEntity productId;
+
+    public CommentEntity(Long commentId) { this.commentId = commentId; }
 }

@@ -1,21 +1,17 @@
 package com.sekohan.sekohanback.entity;
 
-import com.sekohan.sekohanback.entity.img.UserImageEntity;
 import jakarta.persistence.*;
-import jakarta.validation.constraints.Email;
 import lombok.*;
 import org.hibernate.annotations.ColumnDefault;
-
-import java.util.HashSet;
-import java.util.Set;
 
 @Entity
 @Table(name = "TB_User")
 @Builder
-@NoArgsConstructor(access = AccessLevel.PROTECTED)
+@NoArgsConstructor(access = AccessLevel.PUBLIC)
 @AllArgsConstructor
 @Getter
 @ToString
+@Setter
 public class UserEntity {
     @Id
     @GeneratedValue(strategy = GenerationType.SEQUENCE,generator = "SEQ_USER")// 11번 12번줄 있으면 기본키가 1부터 시작해서 1씩 자동으로 올라감
@@ -49,11 +45,5 @@ public class UserEntity {
     @ElementCollection(fetch = FetchType.LAZY)
     @Builder.Default
     private Set<UserRole> roleSet = new HashSet<>();
-
-    public void addUserRole(UserRole userRole){
-        roleSet.add(userRole);
-    }
-
-
 
 }
