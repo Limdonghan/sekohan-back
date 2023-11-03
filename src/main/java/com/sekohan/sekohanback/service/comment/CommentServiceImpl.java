@@ -19,7 +19,7 @@ public class CommentServiceImpl implements CommentService {
     private final CommentRepository commentRepository;
 
     @Override
-    public CommentEntity uploadComment(String content, ProductEntity productEntity, UserEntity userEntity) {
+    public CommentEntity CommentAdd(String content, ProductEntity productEntity, UserEntity userEntity) {
 
         CommentEntity build = CommentEntity.builder()
                 .content(content).localDateTime(LocalDateTime.now()).uId(userEntity).productEntity(productEntity).build();
@@ -30,7 +30,7 @@ public class CommentServiceImpl implements CommentService {
     }
 
     @Override
-    public List<CommentGetDTO> getCommentsByProductId(long productId) {
+    public List<CommentGetDTO> CommentList(long productId) {
         List<CommentEntity> comments = commentRepository.findByProductId(productId);
         return comments.stream()
                 .map(this::comgetDTO)

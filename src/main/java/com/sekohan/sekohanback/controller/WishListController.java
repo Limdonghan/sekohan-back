@@ -18,17 +18,17 @@ public class WishListController {
     private final WishListService wishListService;
 
     @PostMapping("/add")
-    public WishListEntity uploadWishList(@RequestParam("productId") long productId,
+    public WishListEntity WishListAdd(@RequestParam("productId") long productId,
                                         @RequestParam("userId") long userId) {
         ProductEntity productEntity = ProductEntity.builder().productId(productId).build();
         UserEntity userEntity = UserEntity.builder().uId(userId).build();
-        return wishListService.uploadWishList(productEntity, userEntity);
+        return wishListService.WishListAdd(productEntity, userEntity);
     }
     //찜목록 추가 URL
 
     @GetMapping("/list/{uId}")
-    public List<WishListDTO> getuserWishList(@PathVariable long uId){
-        return wishListService.getuserWishList(uId);
+    public List<WishListDTO> UserWishList(@PathVariable long uId){
+        return wishListService.UserWishList(uId);
     }
     //유저 찜목록 URL
 }

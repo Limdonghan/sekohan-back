@@ -35,22 +35,39 @@ public class MyProductServiceImpl implements MyProductService{
 
 
     @Override
-    public List<proImageDTO> getuserproduct(long uId) {
+    public List<proImageDTO> UserProList(long uId) {
         List<ProImageEntity> images = proImageRepository.findByuId(uId);
         List<proImageDTO> result = new ArrayList<>();
         List<Long> seenProductIds = new ArrayList<>();
         for (ProImageEntity image : images) {
-            if (!seenProductIds.contains(image.getProductEntity().getProductId())) {
-                seenProductIds.add(image.getProductEntity().getProductId());
-                result.add(convertToDTO(image));
+            int proStatus = image.getProductEntity().getProStatus();
+            if (proStatus == 0 || proStatus == 1) {
+                if (!seenProductIds.contains(image.getProductEntity().getProductId())) {
+                    seenProductIds.add(image.getProductEntity().getProductId());
+                    result.add(convertToDTO(image));
+                }
             }
         }
 
         return result;
-
     }
 
+    @Override
+    public List<proImageDTO> UserProSoldoutList(long uId) {
+        List<ProImageEntity> images = proImageRepository.findByuId(uId);
+        List<proImageDTO> result = new ArrayList<>();
+        List<Long> seenProductIds = new ArrayList<>();
+        for (ProImageEntity image : images) {
+            if (image.getProductEntity().getProStatus() == 2){
+                if (!seenProductIds.contains(image.getProductEntity().getProductId())) {
+                    seenProductIds.add(image.getProductEntity().getProductId());
+                    result.add(convertToDTO(image));
+                }
+            }
+        }
 
+        return result;
+    }
 
 
     @Override

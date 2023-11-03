@@ -20,7 +20,7 @@ public class WishListServiceImpl implements WishListService {
 
     private final WishListrepository wishListrepository;
     @Override
-    public WishListEntity uploadWishList(ProductEntity productEntity, UserEntity userEntity) {
+    public WishListEntity WishListAdd(ProductEntity productEntity, UserEntity userEntity) {
         WishListEntity wishListEntity = WishListEntity.builder().productEntity(productEntity).userEntity(userEntity)
         .localDateTime(LocalDateTime.now()).build();
 
@@ -30,7 +30,7 @@ public class WishListServiceImpl implements WishListService {
     }
 
     @Override
-    public List<WishListDTO> getuserWishList(long uId) {
+    public List<WishListDTO> UserWishList(long uId) {
         List<WishListEntity> wishlist = wishListrepository.findbyuIdList(uId);
         return wishlist.stream()
                 .map(this::wishListDTO)

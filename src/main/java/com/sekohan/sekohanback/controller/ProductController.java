@@ -5,7 +5,7 @@ import com.sekohan.sekohanback.dto.proImageDTO;
 import com.sekohan.sekohanback.entity.CategoryEntity;
 import com.sekohan.sekohanback.entity.ProductEntity;
 import com.sekohan.sekohanback.entity.UserEntity;
-import com.sekohan.sekohanback.service.product.ProductService;
+import com.sekohan.sekohanback.service.product.ProductServiceImpl;
 import lombok.RequiredArgsConstructor;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
@@ -17,10 +17,10 @@ import java.util.List;
 @RequiredArgsConstructor
 public class ProductController {
 
-    private final ProductService productService;
+    private final ProductServiceImpl productService;
 
     @PostMapping("/upload")
-    public ProductEntity uploadProduct(@RequestParam("proName") String proName,
+    public ProductEntity ProductUpload(@RequestParam("proName") String proName,
                                        @RequestParam("proPrice") int proPrice,
                                        @RequestParam("proInfo") String proInfo,
                                        @RequestParam("categoryId") long categoryId,
@@ -28,26 +28,26 @@ public class ProductController {
                                        @RequestPart("files") List<MultipartFile> files) {
         CategoryEntity categoryEntity = CategoryEntity.builder().catId(categoryId).build();
         UserEntity userEntity = UserEntity.builder().uId(userId).build();
-        return productService.uploadProduct(proName, proPrice, proInfo, categoryEntity, userEntity, files);
+        return productService.ProductUpload(proName, proPrice, proInfo, categoryEntity, userEntity, files);
     }
     //상품 업로드 URL
 
 
     @GetMapping("/list")
-    public List<proImageDTO> getAllList(){
-        return productService.listProduct();
+    public List<proImageDTO> Prolist(){
+        return productService.Prolist();
     }
     //상품 리스트 URL
 
     @GetMapping("/list/{catId}")
-    public List<proImageDTO> getcatList(@PathVariable long catId){
-        return productService.getcatList(catId);
+    public List<proImageDTO> CatProList(@PathVariable long catId){
+        return productService.CatProList(catId);
     }
     //카테고리 필터 URL
 
     @GetMapping("/page/{productId}")
     public ProductGetDTO getProductById(@PathVariable long productId) {
-        return productService.getProductById(productId);
+        return productService.ProductInfo(productId);
     }
     //상품 상세 페이지 URL
 

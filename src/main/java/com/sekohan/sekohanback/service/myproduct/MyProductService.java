@@ -9,7 +9,9 @@ import org.springframework.web.multipart.MultipartFile;
 import java.util.List;
 
 public interface MyProductService {
-    List<proImageDTO> getuserproduct(long uId);
+    List<proImageDTO> UserProList(long uId);
+
+    List<proImageDTO> UserProSoldoutList(long uId);
 
 
     ProductEntity updateProduct(long productId, String proName, int proPrice, String proInfo, UserEntity userEntity, CategoryEntity categoryEntity, byte status, List<MultipartFile> files);

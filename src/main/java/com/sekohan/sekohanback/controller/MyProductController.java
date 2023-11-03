@@ -19,8 +19,13 @@ public class MyProductController {
     private final MyProductService MyproductService;
 
     @GetMapping("/list/{uId}")
-    public List<proImageDTO> getuserproduct(@PathVariable long uId) {
-        return MyproductService.getuserproduct(uId);
+    public List<proImageDTO> UserProList(@PathVariable long uId) {
+        return MyproductService.UserProList(uId);
+    }
+
+    @GetMapping("/soldout/{uId}")
+    public List<proImageDTO> UserProSoldoutList(@PathVariable long uId) {
+        return MyproductService.UserProSoldoutList(uId);
     }
     //내 상품 목록 URL
 

@@ -1,7 +1,6 @@
 package com.sekohan.sekohanback.service.wishlist;
 
 import com.sekohan.sekohanback.dto.WishListDTO;
-import com.sekohan.sekohanback.dto.proImageDTO;
 import com.sekohan.sekohanback.entity.ProductEntity;
 import com.sekohan.sekohanback.entity.UserEntity;
 import com.sekohan.sekohanback.entity.WishListEntity;
@@ -10,7 +9,7 @@ import java.util.List;
 
 public interface WishListService {
 
-    WishListEntity uploadWishList(ProductEntity productEntity, UserEntity userEntity);
+    WishListEntity WishListAdd(ProductEntity productEntity, UserEntity userEntity);
 
-    List<WishListDTO> getuserWishList(long uId);
+    List<WishListDTO> UserWishList(long uId);
 }

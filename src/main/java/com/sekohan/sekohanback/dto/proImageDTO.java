@@ -15,5 +15,6 @@ public class proImageDTO {
     private String proInfo;
     private String path;
     private LocalDateTime created_date;
+    private byte status;
 
 }

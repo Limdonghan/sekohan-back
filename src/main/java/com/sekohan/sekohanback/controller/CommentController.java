@@ -20,18 +20,18 @@ public class CommentController {
 
 
     @PostMapping("/insert")
-    public CommentEntity uploadComment(@RequestParam("content") String content,
+    public CommentEntity CommentAdd(@RequestParam("content") String content,
                                        @RequestParam("productId") long productId,
                                        @RequestParam("userId") long userId) {
         ProductEntity productEntity = ProductEntity.builder().productId(productId).build();
         UserEntity userEntity = UserEntity.builder().uId(userId).build();
-        return commentService.uploadComment(content, productEntity, userEntity);
+        return commentService.CommentAdd(content, productEntity, userEntity);
     }
     //댓글 입력 URL
 
     @GetMapping("/list/{productId}")
-    public List<CommentGetDTO> getProductById(@PathVariable long productId) {
-        return commentService.getCommentsByProductId(productId);
+    public List<CommentGetDTO> CommentList(@PathVariable long productId) {
+        return commentService.CommentList(productId);
     }
     //상품 댓글 리스트 URL
 
