@@ -16,7 +16,6 @@ import java.nio.file.Path;
 import java.nio.file.Paths;
 import java.time.LocalDate;
 import java.time.format.DateTimeFormatter;
-import java.util.Map;
 import java.util.UUID;
 
 @Service  //스프링 빈 등록
@@ -55,28 +54,8 @@ public class EventUploadServiceImpl implements EventUploadService{
             } catch (IOException e) {
                 log.info(e.toString());
             }
-
-
-//        EventEntity save = eventRepository.save(EventEntity.builder()
-//                .name("이벤트")
-//                .localDateTime(LocalDateTime.now())
-//                .build());
-//        eventImageRepository.save(EventImageEntity.builder()
-//                        .originalFileName(fileName)
-//                        .path(uploadPath)
-//                        .uuid(uuid)
-//                        .eventEntity(save)
-//                        .build()
-//            );
-        return null;
+        return (EventDTO) path;
     }
-    public void eventDtoToEntity(EventDTO eventDTO) {
-        Map<String, Object> entityMap = dtoToEntity(eventDTO);  //메서드 호출하여 매핑처리
-        log.info("entityMAP : {}", entityMap);
-        //EventEntity eventEntity = (EventEntity) entityMap.get("eventEntity");
-
-    }
-
     private String makeFolder(){  //파일 생성 메서드
         String str = LocalDate.now().format(DateTimeFormatter.ofPattern("yyyy/MM/dd"));
         log.info("날짜 생성 : {}",str);

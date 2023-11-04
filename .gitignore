@@ -1,8 +1,8 @@
 .DS_Store
 node_modules
 /dist
-/out
 src/test
+src/main/upload
 .gradle
 build
 
