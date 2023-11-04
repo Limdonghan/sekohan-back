@@ -1,6 +1,5 @@
 package com.sekohan.sekohanback.service.event.upload;
 
-import com.sekohan.sekohanback.dto.event.EventDTO;
 import com.sekohan.sekohanback.entity.EventEntity;
 import com.sekohan.sekohanback.repository.EventRepository;
 import lombok.RequiredArgsConstructor;
@@ -30,7 +29,7 @@ public class EventUploadServiceImpl implements EventUploadService{
 
     @Override
     @Transactional(rollbackFor = Exception.class)  //오류나면 롤백
-    public EventDTO uploadFile(MultipartFile uploadFiles) throws Exception {
+    public void uploadFile(MultipartFile uploadFiles) throws Exception {
         log.info("파일업로드");
             if (uploadFiles.getContentType().startsWith("image") == false) {
                 throw new Exception("잘못된 파일 형식 입니다.");
@@ -48,13 +47,14 @@ public class EventUploadServiceImpl implements EventUploadService{
             log.info("path : {}",path);
             try {
                 uploadFiles.transferTo(path);
-                EventEntity entity = EventEntity.builder().path(saveName).uuid(uuid).build();
-                eventRepository.save(entity);
+                eventRepository.save(
+                        EventEntity.builder().path(saveName).uuid(uuid).build()
+                );
 
             } catch (IOException e) {
                 log.info(e.toString());
             }
-        return (EventDTO) path;
+            log.info("리턴");
     }
     private String makeFolder(){  //파일 생성 메서드
         String str = LocalDate.now().format(DateTimeFormatter.ofPattern("yyyy/MM/dd"));

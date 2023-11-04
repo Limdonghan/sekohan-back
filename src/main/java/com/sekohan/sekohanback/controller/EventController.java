@@ -1,6 +1,5 @@
 package com.sekohan.sekohanback.controller;
 
-import com.sekohan.sekohanback.dto.event.EventDTO;
 import com.sekohan.sekohanback.dto.user.UserListDTO;
 import com.sekohan.sekohanback.service.event.upload.EventUploadService;
 import lombok.RequiredArgsConstructor;
@@ -21,15 +20,11 @@ public class EventController {
     private final EventUploadService eventUploadService;
 
     @PostMapping("/upload")
-    public ResponseEntity<EventDTO> localUploadEvent(
+    public ResponseEntity localUploadEvent(
             @RequestPart("uploadFiles") MultipartFile uploadFiles) throws Exception {
         log.info("파일포스트");
-        EventDTO eventImageDTOS = eventUploadService.uploadFile(uploadFiles);
-       // eventUploadService.register(eventDTO);
-        log.info("eventImageDTOS: {}",eventImageDTOS);
-
-        
-        return ResponseEntity.ok(eventImageDTOS);
+        eventUploadService.uploadFile(uploadFiles);
+        return ResponseEntity.ok("등록");
     }
 
     @GetMapping("/userList")
