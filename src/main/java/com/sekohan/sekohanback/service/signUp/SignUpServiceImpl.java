@@ -3,12 +3,14 @@ package com.sekohan.sekohanback.service.signUp;
 import com.sekohan.sekohanback.dto.user.sign.UserSignUpDTO;
 import com.sekohan.sekohanback.dto.user.valid.ValidCheckDTO;
 import com.sekohan.sekohanback.entity.UserEntity;
+import com.sekohan.sekohanback.repository.UserImageRepository;
 import com.sekohan.sekohanback.repository.UserRepository;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import java.util.List;
 import java.util.Map;
 
 @Service
@@ -17,13 +19,14 @@ import java.util.Map;
 public class SignUpServiceImpl implements SignUpService {
 
     private final UserRepository userRepository;
+    private final UserImageRepository userImageRepository;
+
+//    @Value("${com.sekohan.upload.userProfilePath}")
+//    String uploadPath;
 
     @Override
     @Transactional(rollbackFor = Exception.class)  //오류나면 롤백
     public void signUp(UserSignUpDTO userSignUpDTO) {
-       // String passwordEncorde=passwordEncoder.encode(userSignUpDTO.getPassword());  //사용자의 암호를 인코딩
-       // userSignUpDTO.setPassword(passwordEncorde);  //인코딩된 암호를 객체에 다시 설정
-
         Map<String, Object> entityMap = dtoToEntity(userSignUpDTO);  //메서드 호출하여 매핑처리
         log.info("entityMAP : {}", entityMap);
         UserEntity userEntity = (UserEntity) entityMap.get("user");  //user키 사용해서 추출
@@ -42,4 +45,13 @@ public class SignUpServiceImpl implements SignUpService {
     public boolean validNickName(ValidCheckDTO validCheckDTO) {  //사용자 닉네임 유효성 체크 메서드
         return userRepository.existsByNickname(validCheckDTO.getNickname());
     }
+
+    @Override
+    @Transactional
+    public List<UserEntity> findAllUser(){
+
+        return userRepository.findAll();
+    }
+
+
 }

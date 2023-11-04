@@ -1,11 +1,13 @@
 package com.sekohan.sekohanback.service.signUp;
 
-import com.sekohan.sekohanback.dto.user.valid.ValidCheckDTO;
 import com.sekohan.sekohanback.dto.user.sign.UserSignUpDTO;
+import com.sekohan.sekohanback.dto.user.valid.ValidCheckDTO;
 import com.sekohan.sekohanback.entity.UserEntity;
 import com.sekohan.sekohanback.entity.UserRole;
+import org.springframework.transaction.annotation.Transactional;
 
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 
 public interface SignUpService {
@@ -21,13 +23,26 @@ public interface SignUpService {
                 .name(userSignUpDTO.getName())
                 .email(userSignUpDTO.getEmail())
                 .nickname(userSignUpDTO.getNickname())
+                .userRole(UserRole.USER) //권한 부여 default : user
                 .build();
-        //권한 부여 default : user
-        userEntity.addUserRole(UserRole.USER);
-
-
         //userEntity 객체를 entityMap에 "user"키로 반환,  userEntity 객체는 entityMap에서 "user"키를 사용하여 액세스할 수 있음
         entityMap.put("user",userEntity);
+//
+//        List<UserImageDTO> imageDTO=userSignUpDTO.getUserImageDTO();
+//        if(imageDTO != null && imageDTO.size() >0 ){
+//            List<UserImageEntity> userImageEntityList=imageDTO.stream().map(userImageDTO -> {
+//                return UserImageEntity.builder()
+//                        .path(userImageDTO.getPath())
+//                        .originalFileName(userImageDTO.getImgName())
+//                        .uuid(userImageDTO.getUuid())
+//                        .userEntity(userEntity)
+//                        .build();
+//            }).collect(Collectors.toList());
+//            entityMap.put("userIMG",userEntity);
+//        }
+
+
+
 
         return entityMap;
     }
@@ -38,6 +53,8 @@ public interface SignUpService {
     //사용자 이메일 유효성 체크 서비스
     boolean validNickName(ValidCheckDTO userNicknameCheck);
 
+    @Transactional
+    List<UserEntity> findAllUser();
 
 
 //    api/cheker -> query string (condition == 1 || 2) -> Controller (값을 다 담아서)
