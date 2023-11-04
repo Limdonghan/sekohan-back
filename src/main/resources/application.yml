@@ -42,6 +42,7 @@ com:
       userProfilePath: src/main/upload/user
       bannerPath: src/main/upload/banner
       prodecutPath : src/main/upload/product
+      bassics : src/main/upload/bassics
 
 application:
   security:

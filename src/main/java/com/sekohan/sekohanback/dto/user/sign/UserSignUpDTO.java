@@ -1,6 +1,7 @@
 package com.sekohan.sekohanback.dto.user.sign;
 
 import lombok.*;
+import org.springframework.web.multipart.MultipartFile;
 
 @Builder
 @Getter
@@ -14,6 +15,5 @@ public class UserSignUpDTO {  //회원가입 DTO
     private String name;
     private String email;
     private String nickname;
-
-
+    private MultipartFile multipartFile;
 }

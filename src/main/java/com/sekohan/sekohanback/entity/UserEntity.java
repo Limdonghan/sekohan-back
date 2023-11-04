@@ -1,6 +1,5 @@
 package com.sekohan.sekohanback.entity;
 
-import com.sekohan.sekohanback.entity.img.UserImageEntity;
 import jakarta.persistence.*;
 import jakarta.validation.constraints.Email;
 import lombok.*;
@@ -39,12 +38,15 @@ public class UserEntity {
     @Column(nullable = false)
     private int report;
 
+    @Column(nullable = true)  //유저 프로필 : 유저가 이미지 등록 안하면 기본이미지
+    private String path;
+
     @Enumerated(EnumType.STRING)
     @Column(nullable = false)
     private UserRole userRole;
 
-    @OneToOne(mappedBy = "userEntity",fetch = FetchType.LAZY)
-    @JoinColumn(name = "userImageID")
-    private UserImageEntity userImageEntity;
+    public void basicsPath(String path){
+        this.path = path;
+    }
 
 }
