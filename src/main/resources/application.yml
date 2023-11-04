@@ -1,13 +1,8 @@
-
-server:
-  port: 7070
-
 spring:
   data:
     redis:
       host: localhost
       port: 6379
-
   datasource:
     driver-class-name: oracle.jdbc.OracleDriver
     url: jdbc:oracle:thin:@localhost:1521:xe
@@ -24,7 +19,7 @@ spring:
   servlet:
     multipart:
       enabled: true
-      location: src/main/upload/
+      location: src/main/upload
       max-request-size: 30MB
       max-file-size: 10MB
   mail:
@@ -44,7 +39,10 @@ server:
 com:
   sekohan:
     upload:
-      path: src/main/upload/
+      userProfilePath: src/main/upload/user
+      bannerPath: src/main/upload/banner
+      prodecutPath : src/main/upload/product
+
 application:
   security:
     jwt:
