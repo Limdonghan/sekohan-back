@@ -3,6 +3,7 @@ package com.sekohan.sekohanback.config;
 import com.sekohan.sekohanback.jwt.filter.JwtAuthenticationFilter;
 import com.sekohan.sekohanback.jwt.filter.JwtExceptionFilter;
 import lombok.RequiredArgsConstructor;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.security.authentication.AuthenticationManager;
@@ -17,6 +18,7 @@ import org.springframework.security.web.SecurityFilterChain;
 @Configuration
 @EnableWebSecurity
 @RequiredArgsConstructor
+@Slf4j
 public class SecurityConfig  {
 
     private final JwtAuthenticationFilter jwtAuthenticationFilter;
@@ -35,6 +37,7 @@ public class SecurityConfig  {
 
     @Bean
     public SecurityFilterChain securityFilterChain(HttpSecurity http) throws Exception {
+    log.info("Security Config");
         http
                 .csrf(AbstractHttpConfigurer::disable)  //csrf 토큰 비활성화
                 .cors(AbstractHttpConfigurer::disable)
@@ -42,7 +45,8 @@ public class SecurityConfig  {
                         authorizationManagerRequestMatcherRegistry
                                 .requestMatchers("/api/user/**").permitAll()   //모든 사용자에게 이 경로는 허락
                                 .requestMatchers("/api/help/**").permitAll()  //모든 사용자에게 이 경로는 허락
-                                .requestMatchers("api/email/**").permitAll()
+                                .requestMatchers("/api/email/**").permitAll()
+                                .requestMatchers("/api/products/**").permitAll()
                                 .requestMatchers("/api/my/**").hasRole("USER")  //본인만 사용가능한 경로
                                 .requestMatchers("/api/admin/**").hasRole("ADMIN")  //관리자만 사용가능한 경로
                                 .anyRequest().authenticated()

@@ -21,11 +21,15 @@ public class CustomUserDetailsServiceImpl implements CustomUserDetailsService{
     public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException {
         log.info("ClubUserDetailsService 사용자 아이디 :" + username);
 
+        log.info("사용자 존재 유무 확인 in DB");
         UserEntity userEntity = userRepository.findByLogin(username).orElseThrow(() -> NotFoundUserException.EXCEPTION);
 
         log.info("CustomUserDetailsServiceImplLog {}",userEntity);  //사용자의 아이디를 가져옴
-
-        return UserPrincipal.create(userEntity);  //사용자의 아이디를 UserPrincipal.create로 리턴
+        UserPrincipal userPrincipal = new UserPrincipal(userEntity);
+        
+        log.info("userPrincipal로 이동해주세요 ㅠㅠㅠㅠ");
+        return userPrincipal;
+        //return UserPrincipal.create(userEntity);  //사용자의 아이디를 UserPrincipal.create로 리턴
 
     }
 }

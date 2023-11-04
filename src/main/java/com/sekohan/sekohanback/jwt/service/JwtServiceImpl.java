@@ -67,18 +67,23 @@ public class JwtServiceImpl implements JwtService{
 
     @Override
     public Authentication getAuthentication(final String token) {  //Access Token의 구문 분석된 Claims을 기반으로 Authentication개체를 생성
+        log.info("--------getAuthentication들어왔어요--------");
         final Jws<Claims> claims = getClaims(token);
         if (isWrongType(claims, JwtType.ACCESS)) {
             throw TokenTypeException.EXCEPTION;
         }
         UserEntity userEntity = userRepository.findByLogin(claims.getBody().getSubject()).orElseThrow(() -> NotFoundUserException.EXCEPTION);
-        UserPrincipal userPrincipal = UserPrincipal.create(userEntity);
-        log.info("--------getAuthentication--------");
-        return new UsernamePasswordAuthenticationToken(userPrincipal, null, userPrincipal.getAuthorities());
+        //UserPrincipal userPrincipal = UserPrincipal.create(userEntity);
+        UserPrincipal userPrincipal = new UserPrincipal(userEntity);
+
+        log.info("--------getAuthentication처리완료--------");
+        return new UsernamePasswordAuthenticationToken(userPrincipal.getUserEntity(),null,userPrincipal.getAuthorities());
+       // return new UsernamePasswordAuthenticationToken(userPrincipal, null, userPrincipal.getAuthorities());
     }
 
     @Override
     public String extractTokenFromRequest(HttpServletRequest request) {  //Http 요청의 authorization헤더에서 JWT토큰을 추출
+        log.info("extractTokenFromRequest_request : {}",request);
         return extractToken(request.getHeader(HttpHeaders.AUTHORIZATION));
     }
 

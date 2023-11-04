@@ -1,16 +1,17 @@
 package com.sekohan.sekohanback.entity;
 
+import com.sekohan.sekohanback.entity.img.UserImageEntity;
 import jakarta.persistence.*;
+import jakarta.validation.constraints.Email;
 import lombok.*;
 import org.hibernate.annotations.ColumnDefault;
 
 @Entity
 @Table(name = "TB_User")
 @Builder
-@NoArgsConstructor(access = AccessLevel.PUBLIC)
+@NoArgsConstructor(access = AccessLevel.PROTECTED)
 @AllArgsConstructor
 @Getter
-@ToString
 @Setter
 public class UserEntity {
     @Id
@@ -38,12 +39,12 @@ public class UserEntity {
     @Column(nullable = false)
     private int report;
 
-    @OneToOne
-    @JoinColumn(name = "userImageID")
-    private UserImageEntity userImage;
+    @Enumerated(EnumType.STRING)
+    @Column(nullable = false)
+    private UserRole userRole;
 
-    @ElementCollection(fetch = FetchType.LAZY)
-    @Builder.Default
-    private Set<UserRole> roleSet = new HashSet<>();
+    @OneToOne(mappedBy = "userEntity",fetch = FetchType.LAZY)
+    @JoinColumn(name = "userImageID")
+    private UserImageEntity userImageEntity;
 
 }

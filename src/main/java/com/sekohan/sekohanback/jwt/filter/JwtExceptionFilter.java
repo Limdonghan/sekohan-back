@@ -18,17 +18,22 @@ import java.util.Map;
 @Slf4j
 public class JwtExceptionFilter extends OncePerRequestFilter { //OncePerRequestFilter : 요청 당 한 번만 적용되도록 도와주는 필터
 
-    @Override
+    @Override  //요청 할때마다 들어옴
     protected void doFilterInternal(HttpServletRequest request, HttpServletResponse response, FilterChain filterChain) throws ServletException, IOException {
         log.info("-----Jwt예외필터-----");
         try {
             log.info("-----try-----");
+            log.info("request : {}",request);
+            log.info("response : {}",response);
+            log.info("filterChain : {}",filterChain);
             filterChain.doFilter(request, response);
         } catch (IllegalArgumentException e) {
             log.info("-----catch1-----");
+            log.info(e.getMessage());
             setErrorResponse(HttpStatus.UNAUTHORIZED, response, e);
         } catch (ServletException e) {
             log.info("-----catch2-----");
+            log.info(e.getMessage());
             setErrorResponse(HttpStatus.BAD_REQUEST, response, e);
         }
 

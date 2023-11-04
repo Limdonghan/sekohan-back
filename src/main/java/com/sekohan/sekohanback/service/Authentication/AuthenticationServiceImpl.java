@@ -1,7 +1,7 @@
-package com.sekohan.sekohanback.service.Authentication;
+package com.sekohan.sekohanback.service.authentication;
 
-import com.sekohan.sekohanback.dto.user.sign.UserSignInDTO;
 import com.sekohan.sekohanback.dto.jwt.JsonWebTokenResponseDTO;
+import com.sekohan.sekohanback.dto.user.sign.UserSignInDTO;
 import com.sekohan.sekohanback.entity.UserEntity;
 import com.sekohan.sekohanback.exception.TokenTypeException;
 import com.sekohan.sekohanback.jwt.enums.JwtType;
@@ -19,14 +19,14 @@ import org.springframework.stereotype.Service;
 @Service
 @RequiredArgsConstructor
 @Slf4j
-public class AuthenticationServiceImpl implements AuthenticationService{
+public class AuthenticationServiceImpl implements AuthenticationService {
 
     private final JwtService jwtService;
     private final AuthenticationManager authenticationManager;  //사용하기 위해 빈 설정
 
     @Override
     public JsonWebTokenResponseDTO auth(UserSignInDTO authRequset) {
-        log.info("인증서비스 start");
+        log.info("UserPasswordAuthenticationToken 발급");  // 사용자의 ID,PW로 인증토큰 발급
         Authentication authenticate = authenticationManager.authenticate(new UsernamePasswordAuthenticationToken(authRequset.getLogin(), authRequset.getPassword()));
         log.info("Authenticate정보 : {}",authenticate);
         UserEntity user = ((UserPrincipal) authenticate.getPrincipal()).getUserEntity();
