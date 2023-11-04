@@ -1,8 +1,9 @@
-package com.sekohan.sekohanback.entity.admin;
+package com.sekohan.sekohanback.entity;
 
 import jakarta.persistence.*;
 import lombok.*;
 import org.springframework.data.annotation.CreatedDate;
+import org.springframework.data.jpa.domain.support.AuditingEntityListener;
 
 import java.time.LocalDateTime;
 
@@ -10,6 +11,7 @@ import java.time.LocalDateTime;
 @Table(name = "TB_Event")
 @Builder
 @NoArgsConstructor(access = AccessLevel.PROTECTED)
+@EntityListeners(AuditingEntityListener.class)
 @AllArgsConstructor
 @Getter
 
@@ -20,13 +22,14 @@ public class EventEntity {
     private long eid;
 
     @Column(nullable = false)
-    private String name;  //이벤트 이름
+    private String path;
+
+    @Column(nullable = false)
+    private String uuid;
 
     @CreatedDate
     @Column(nullable = false,updatable = false)
     private LocalDateTime localDateTime;  //생성일자
 
-    @OneToOne(mappedBy = "eventEntity",fetch = FetchType.LAZY)
-    private EventImageEntity eventImageEntity;
 
 }

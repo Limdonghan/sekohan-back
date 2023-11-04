@@ -1,10 +1,9 @@
 package com.sekohan.sekohanback.dto.event;
 
 import lombok.*;
+import org.springframework.web.multipart.MultipartFile;
 
 import java.time.LocalDateTime;
-import java.util.ArrayList;
-import java.util.List;
 
 @Builder
 @NoArgsConstructor //
@@ -12,11 +11,14 @@ import java.util.List;
 @Getter
 @Setter
 public class EventDTO {
-    private String eventID;
-    private String eventName;
+    private long eid;
+
+    private String uuid;
+
+    private String path;
 
     private LocalDateTime localDateTime;
-    
-    @Builder.Default  //초기화값 정할 수 있음
-    private List<EventImageDTO> eventImageDTO = new ArrayList<>();
+
+    private MultipartFile multipartFile;
+
 }

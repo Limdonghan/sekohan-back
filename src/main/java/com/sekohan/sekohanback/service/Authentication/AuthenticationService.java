@@ -1,4 +1,4 @@
-package com.sekohan.sekohanback.service.Authentication;
+package com.sekohan.sekohanback.service.authentication;
 
 import com.sekohan.sekohanback.dto.user.sign.UserSignInDTO;
 import com.sekohan.sekohanback.dto.jwt.JsonWebTokenResponseDTO;
