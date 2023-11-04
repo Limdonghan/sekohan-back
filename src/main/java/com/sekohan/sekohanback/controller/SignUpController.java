@@ -24,7 +24,7 @@ public class SignUpController {
     //회원가입
     @PostMapping("/signup")
     @ResponseStatus(HttpStatus.CREATED)  //회원가입메서드 이니깐 status = 201
-    public ResponseEntity signup(@RequestBody UserSignUpDTO userSignUpDTO){
+    public ResponseEntity signup(UserSignUpDTO userSignUpDTO){
         String encode = passwordEncoder.encode(userSignUpDTO.getPassword());
         userSignUpDTO.setPassword(encode);
         signUpService.signUp(userSignUpDTO);
