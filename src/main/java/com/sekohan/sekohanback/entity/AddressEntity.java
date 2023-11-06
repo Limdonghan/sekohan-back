@@ -26,5 +26,5 @@ public class AddressEntity {
 
     @ManyToOne
     @JoinColumn(name = "uId")
-    private UserEntity uId;
+    private UserEntity userEntity;
 }

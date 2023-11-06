@@ -15,7 +15,6 @@ import java.io.File;
 import java.io.IOException;
 import java.nio.file.Path;
 import java.nio.file.Paths;
-import java.util.List;
 
 @Service
 @RequiredArgsConstructor  //생성자를 자동으로 생성해주는 어노테이션
@@ -86,13 +85,5 @@ public class SignUpServiceImpl implements SignUpService {
     public boolean validNickName(ValidCheckDTO validCheckDTO) {  //사용자 닉네임 유효성 체크 메서드
         return userRepository.existsByNickname(validCheckDTO.getNickname());
     }
-
-    @Override
-    @Transactional
-    public List<UserEntity> findAllUser(){
-
-        return userRepository.findAll();
-    }
-
 
 }

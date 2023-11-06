@@ -3,16 +3,19 @@ package com.sekohan.sekohanback.entity;
 import jakarta.persistence.*;
 import lombok.*;
 import org.hibernate.annotations.ColumnDefault;
+import org.springframework.data.annotation.CreatedDate;
+import org.springframework.data.jpa.domain.support.AuditingEntityListener;
 
 import java.time.LocalDateTime;
 
 @Entity
 @Table(name = "TB_Product")
 @Builder
-@NoArgsConstructor(access = AccessLevel.PUBLIC)
+@NoArgsConstructor(access = AccessLevel.PROTECTED)
 @AllArgsConstructor
 @Setter
 @Getter
+@EntityListeners(AuditingEntityListener.class)
 public class ProductEntity {
     @Id
     @GeneratedValue(strategy = GenerationType.SEQUENCE,generator = "SEQ_PRODUCT")// 11번 12번줄 있으면 기본키가 1부터 시작해서 1씩 자동으로 올라감
@@ -42,10 +45,10 @@ public class ProductEntity {
 
     @ManyToOne
     @JoinColumn(name = "uId")
-    private UserEntity uId;
+    private UserEntity userEntity;
 
     @ManyToOne
     @JoinColumn(name = "category_id")
-    private CategoryEntity category_id;
+    private CategoryEntity categoryEntity;
 
 }

@@ -22,9 +22,8 @@ public class ProImageEntity {
 
     @ManyToOne
     @JoinColumn(name = "prodcutId")
-    private ProductEntity prodcutId;
-    @JoinColumn(name = "productId")
-    private ProductEntity productId;
+    private ProductEntity productEntity;
+
 
 
 }

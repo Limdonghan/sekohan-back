@@ -8,6 +8,7 @@ import lombok.*;
 @Builder
 @NoArgsConstructor(access = AccessLevel.PROTECTED)
 @AllArgsConstructor
+@Setter
 @Getter
 public class CategoryEntity {
     @Id

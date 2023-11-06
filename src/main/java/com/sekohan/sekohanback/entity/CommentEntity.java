@@ -9,7 +9,7 @@ import java.time.LocalDateTime;
 @Entity
 @Table(name = "TB_Comment")
 @Builder
-@NoArgsConstructor(access = AccessLevel.PUBLIC)
+@NoArgsConstructor(access = AccessLevel.PROTECTED)
 @AllArgsConstructor
 @Getter
 @Setter
@@ -28,15 +28,10 @@ public class CommentEntity {
 
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "uId")
-    private UserEntity uId;
+    private UserEntity userEntity;
 
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name="productId")
-    private ProductEntity productId;
+    private ProductEntity productEntity;
 
-    @ManyToOne
-    @JoinColumn(name="productId")
-    private ProductEntity productId;
-
-    public CommentEntity(Long commentId) { this.commentId = commentId; }
 }

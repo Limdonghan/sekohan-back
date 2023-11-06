@@ -17,10 +17,10 @@ public class ServiceEntity {
 
     @ManyToOne
     @JoinColumn(name = "uId")
-    private UserEntity uId;
+    private UserEntity userEntity;
 
     @ManyToOne
     @JoinColumn(name = "productId")
-    private ProductEntity productId;
+    private ProductEntity productEntity;
 
 }
