@@ -3,6 +3,7 @@ package com.sekohan.sekohanback.controller;
 import com.sekohan.sekohanback.dto.PageRequestDTO;
 import com.sekohan.sekohanback.entity.UserEntity;
 import com.sekohan.sekohanback.security.repository.UserSecurityRepository;
+import com.sekohan.sekohanback.service.event.delete.EventDeleteService;
 import com.sekohan.sekohanback.service.event.upload.EventUploadService;
 import com.sekohan.sekohanback.service.event.view.EventViewService;
 import com.sekohan.sekohanback.service.user.view.UserViewService;
@@ -21,6 +22,7 @@ public class AdminController {
     private final UserSecurityRepository userSecurityRepository;
     private final EventUploadService eventUploadService;
     private final EventViewService eventViewService;
+    private final EventDeleteService eventDeleteService;
     private final UserViewService userViewService;
 
     /* 어드민 필터 테스트 전체 출력 */
@@ -56,5 +58,13 @@ public class AdminController {
     @GetMapping("/banner")
     public ResponseEntity bannerList(PageRequestDTO pageRequestDTO){
         return ResponseEntity.ok(eventViewService.getBannerList(pageRequestDTO));
+    }
+
+    /* 이벤트 삭체 */
+    @DeleteMapping("/eventdelete/{eid}")
+    public ResponseEntity removeEvent(@PathVariable("eid") long eid){
+        eventDeleteService.remove(eid);
+        return ResponseEntity.ok("삭제완료");
+
     }
 }
