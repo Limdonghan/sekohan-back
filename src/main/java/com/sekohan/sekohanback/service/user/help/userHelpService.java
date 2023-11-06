@@ -1,4 +1,4 @@
-package com.sekohan.sekohanback.service.help;
+package com.sekohan.sekohanback.service.user.help;
 
 import com.sekohan.sekohanback.dto.user.help.UserIdHelpDTO;
 import com.sekohan.sekohanback.dto.user.change.UserPwChangeDTO;

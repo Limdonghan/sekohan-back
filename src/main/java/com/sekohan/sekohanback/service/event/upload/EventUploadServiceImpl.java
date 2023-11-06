@@ -27,6 +27,9 @@ public class EventUploadServiceImpl implements EventUploadService{
     @Value("${com.sekohan.upload.bannerPath}")
     String uploadPath;
 
+
+
+
     @Override
     @Transactional(rollbackFor = Exception.class)  //오류나면 롤백
     public void uploadFile(MultipartFile uploadFiles) throws Exception {
@@ -48,9 +51,11 @@ public class EventUploadServiceImpl implements EventUploadService{
             try {
                 uploadFiles.transferTo(path);
                 eventRepository.save(
-                        EventEntity.builder().path(saveName).uuid(uuid).build()
+                        EventEntity.builder()
+                                .path(saveName)
+                                .uuid(uuid)
+                                .build()
                 );
-
             } catch (IOException e) {
                 log.info(e.toString());
             }

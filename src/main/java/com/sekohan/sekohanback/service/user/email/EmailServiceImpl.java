@@ -1,4 +1,4 @@
-package com.sekohan.sekohanback.service.email;
+package com.sekohan.sekohanback.service.user.email;
 
 import com.sekohan.sekohanback.dto.email.EmailMessageDTO;
 import jakarta.mail.MessagingException;

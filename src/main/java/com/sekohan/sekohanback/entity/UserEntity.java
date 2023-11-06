@@ -45,8 +45,5 @@ public class UserEntity {
     @Column(nullable = false)
     private UserRole userRole;
 
-    public void basicsPath(String path){
-        this.path = path;
-    }
 
 }

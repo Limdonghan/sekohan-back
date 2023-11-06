@@ -1,4 +1,4 @@
-package com.sekohan.sekohanback.service.signUp;
+package com.sekohan.sekohanback.service.user.signup;
 
 import com.sekohan.sekohanback.dto.user.sign.UserSignUpDTO;
 import com.sekohan.sekohanback.dto.user.valid.ValidCheckDTO;
@@ -93,5 +93,6 @@ public class SignUpServiceImpl implements SignUpService {
 
         return userRepository.findAll();
     }
+
 
 }

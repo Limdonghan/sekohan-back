@@ -1,4 +1,4 @@
-package com.sekohan.sekohanback.service.signUp;
+package com.sekohan.sekohanback.service.user.signup;
 
 import com.sekohan.sekohanback.dto.user.sign.UserSignUpDTO;
 import com.sekohan.sekohanback.dto.user.valid.ValidCheckDTO;
@@ -19,6 +19,7 @@ public interface SignUpService {
 
     @Transactional
     List<UserEntity> findAllUser();
+
 
 
 //    api/cheker -> query string (condition == 1 || 2) -> Controller (값을 다 담아서)

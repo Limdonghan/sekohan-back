@@ -8,8 +8,8 @@ import com.sekohan.sekohanback.dto.user.help.UserIdHelpDTO;
 import com.sekohan.sekohanback.dto.user.change.UserPwChangeDTO;
 import com.sekohan.sekohanback.dto.user.help.UserPwHelpDTO;
 import com.sekohan.sekohanback.dto.user.valid.ValidCheckDTO;
-import com.sekohan.sekohanback.service.email.EmailService;
-import com.sekohan.sekohanback.service.help.userHelpService;
+import com.sekohan.sekohanback.service.user.email.EmailService;
+import com.sekohan.sekohanback.service.user.help.userHelpService;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.http.ResponseEntity;
@@ -26,6 +26,7 @@ public class HelpController {
     private final EmailService emailService;
     private final PasswordEncoder passwordEncoder;
 
+    /* 유저 아이디 찾기 컨트롤러 */
     @PostMapping("/id")
     public ResponseEntity findID(@RequestBody UserIdHelpDTO userIdHelpDTO){
         String login = userHelpService.findLogin(userIdHelpDTO);
@@ -33,19 +34,22 @@ public class HelpController {
 
     }
 
+    /* 유저 비밀번호 찾기 컨트롤러 */
     @GetMapping("/pw")
     public ResponseEntity findPW(@RequestBody UserPwHelpDTO userPwHelpDTO){
         String password = userHelpService.findPassword(userPwHelpDTO);
         return ResponseEntity.ok("패스워드 찾기 : "+password);
     }
 
-    @PatchMapping("/pwchange")
+    /* 유저 비밀번호 변경 컨트롤러 */
+    @PatchMapping("/pwchange")   //비밀번호 변경
     public ResponseEntity pwChange(@RequestBody UserPwChangeDTO userPwChangeDTO){
         String password1 = userPwChangeDTO.getPassword1();
         String encode = passwordEncoder.encode(userPwChangeDTO.getPassword1());
         return ResponseEntity.ok("변경된비밀번호 : "+password1+"변경된 비밀번호 인코더 : "+encode);
     }
 
+    /* 유저 확인 컨트롤러 */
     @PostMapping("/emailcheck")
     public ResponseEntity validEmailCheck(@RequestBody ValidCheckDTO validCheckDTO){
         log.info("이메일 유효성 체크");
@@ -65,6 +69,7 @@ public class HelpController {
         }
     }
 
+    /* 이메일 인증번호 확인 컨트롤러 */
     @PostMapping("/codecheck")
     public ResponseEntity checkCode(@RequestBody EmailCodeCheckDTO emailCodeCheckDto) {
         String userInput = emailCodeCheckDto.getCode();  //사용자가 입력한 코드를 emailCheckDto의 code속성을 통해 받음

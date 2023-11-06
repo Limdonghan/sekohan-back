@@ -1,7 +1,6 @@
 package com.sekohan.sekohanback.dto.event;
 
 import lombok.*;
-import org.springframework.web.multipart.MultipartFile;
 
 import java.time.LocalDateTime;
 
@@ -10,13 +9,10 @@ import java.time.LocalDateTime;
 @AllArgsConstructor //
 @Getter
 @Setter
-public class EventDTO {
+public class EventListDTO {
+    private long eid;
     private String uuid;
-
     private String path;
-
     private LocalDateTime localDateTime;
-
-    private MultipartFile multipartFile;
 
 }

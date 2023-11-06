@@ -1,8 +1,8 @@
 package com.sekohan.sekohanback.controller;
 
-import com.sekohan.sekohanback.dto.user.valid.ValidCheckDTO;
 import com.sekohan.sekohanback.dto.user.sign.UserSignUpDTO;
-import com.sekohan.sekohanback.service.signUp.SignUpService;
+import com.sekohan.sekohanback.dto.user.valid.ValidCheckDTO;
+import com.sekohan.sekohanback.service.user.signup.SignUpService;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.http.HttpStatus;
@@ -17,7 +17,6 @@ import org.springframework.web.bind.annotation.*;
 public class SignUpController {
 
     private final SignUpService signUpService;
-
     private final PasswordEncoder passwordEncoder;
 
 
@@ -42,7 +41,7 @@ public class SignUpController {
         }
     }
 
-    //사용자 닉네임 유효성 체크
+    /* 사용자 닉네임 유효성 체크 */
     @PostMapping("/nicknamecheck")
     public ResponseEntity validNicknameCheck(@RequestBody ValidCheckDTO validCheckDTO){
         boolean nicknameValid = signUpService.validNickName(validCheckDTO);
@@ -52,4 +51,8 @@ public class SignUpController {
             return ResponseEntity.ok("사용가능한 닉네임입니다.");
         }
     }
+
+
+
+
 }

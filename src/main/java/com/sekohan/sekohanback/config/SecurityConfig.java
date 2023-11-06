@@ -47,8 +47,9 @@ public class SecurityConfig  {
                                 .requestMatchers("/api/help/**").permitAll()  //모든 사용자에게 이 경로는 허락
                                 .requestMatchers("/api/email/**").permitAll()
                                 .requestMatchers("/api/products/**").permitAll()
+                                .requestMatchers("/api/admin/**").permitAll()
                                 .requestMatchers("/api/my/**").hasRole("USER")  //본인만 사용가능한 경로
-                                .requestMatchers("/api/admin/**").hasRole("ADMIN")  //관리자만 사용가능한 경로
+                               // .requestMatchers("/api/admin/**").hasRole("ADMIN")  //관리자만 사용가능한 경로
                                 .anyRequest().authenticated()
                 );
                 //addFilterBefore : 필터처리를 하기전에 필요한 것

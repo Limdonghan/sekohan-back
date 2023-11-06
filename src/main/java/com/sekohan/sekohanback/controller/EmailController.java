@@ -4,7 +4,7 @@ import com.sekohan.sekohanback.dto.email.EmailCodeCheckDTO;
 import com.sekohan.sekohanback.dto.email.EmailMessageDTO;
 import com.sekohan.sekohanback.dto.email.EmailPostDTO;
 import com.sekohan.sekohanback.dto.email.EmailResponseDTO;
-import com.sekohan.sekohanback.service.email.EmailService;
+import com.sekohan.sekohanback.service.user.email.EmailService;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.http.ResponseEntity;

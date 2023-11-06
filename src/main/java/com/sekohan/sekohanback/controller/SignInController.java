@@ -4,7 +4,7 @@ import com.sekohan.sekohanback.dto.jwt.JsonWebTokenResponseDTO;
 import com.sekohan.sekohanback.dto.user.sign.UserSignInDTO;
 import com.sekohan.sekohanback.entity.UserEntity;
 import com.sekohan.sekohanback.security.repository.UserSecurityRepository;
-import com.sekohan.sekohanback.service.authentication.AuthenticationService;
+import com.sekohan.sekohanback.service.user.signin.SignInService;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.validation.annotation.Validated;
@@ -17,7 +17,7 @@ import org.springframework.web.bind.annotation.*;
 public class SignInController {
 
     private final UserSecurityRepository userSecurityRepository;
-    private final AuthenticationService authenticationService;
+    private final SignInService authenticationService;
 
     @PostMapping("/signin")
     public JsonWebTokenResponseDTO auth(@Validated @RequestBody UserSignInDTO authRequest) {
