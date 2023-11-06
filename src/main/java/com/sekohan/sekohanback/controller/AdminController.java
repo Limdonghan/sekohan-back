@@ -51,4 +51,10 @@ public class AdminController {
         log.info("get Users");
         return ResponseEntity.ok(eventViewService.getList(pageRequestDTO));
     }
+
+    /* 이벤트 경로 목록 출력 */
+    @GetMapping("/banner")
+    public ResponseEntity bannerList(PageRequestDTO pageRequestDTO){
+        return ResponseEntity.ok(eventViewService.getBannerList(pageRequestDTO));
+    }
 }

@@ -2,7 +2,7 @@ package com.sekohan.sekohanback.service.event.view;
 
 import com.sekohan.sekohanback.dto.PageRequestDTO;
 import com.sekohan.sekohanback.dto.PageResultDTO;
-import com.sekohan.sekohanback.dto.event.EventDTO;
+import com.sekohan.sekohanback.dto.event.BannerDTO;
 import com.sekohan.sekohanback.dto.event.EventListDTO;
 import com.sekohan.sekohanback.entity.EventEntity;
 import com.sekohan.sekohanback.repository.EventRepository;
@@ -31,6 +31,21 @@ public class EventViewServiceImpl implements EventViewService{
         Page<EventEntity> result = eventRepository.findAll(pageable);
 
         Function<EventEntity, EventListDTO> fn = (eventEntity -> entityToDto(eventEntity));
+        return new PageResultDTO<>(result,fn);
+    }
+
+    /* 메인화면에 출력될 이벤트 경로 목록 */
+    @Override
+    public PageResultDTO<BannerDTO,EventEntity> getBannerList(PageRequestDTO pageRequestDTO){
+        Pageable pageable = pageRequestDTO.getPageable(Sort.by("eid").ascending());
+        Page<EventEntity> result = eventRepository.findAll(pageable);
+
+        Function<EventEntity, BannerDTO> fn=(eventEntity -> {
+            BannerDTO build = BannerDTO.builder()
+                    .path(eventEntity.getPath())
+                    .build();
+            return build;
+        });
         return new PageResultDTO<>(result,fn);
     }
 

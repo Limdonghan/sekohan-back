@@ -2,6 +2,7 @@ package com.sekohan.sekohanback.service.event.view;
 
 import com.sekohan.sekohanback.dto.PageRequestDTO;
 import com.sekohan.sekohanback.dto.PageResultDTO;
+import com.sekohan.sekohanback.dto.event.BannerDTO;
 import com.sekohan.sekohanback.dto.event.EventDTO;
 import com.sekohan.sekohanback.dto.event.EventListDTO;
 import com.sekohan.sekohanback.entity.EventEntity;
@@ -29,4 +30,7 @@ public interface EventViewService {
                 .build();
         return build;
     }
+
+    /* 메인화면에 출력될 이벤트 경로 목록 */
+    PageResultDTO<BannerDTO,EventEntity> getBannerList(PageRequestDTO pageRequestDTO);
 }
