@@ -83,7 +83,7 @@ public class MyProductServiceImpl implements MyProductService{
         ProductEntity productEntity = ProductEntity.builder().userEntity(userEntity).
                 productId(productId).proName(proName).proPrice(proPrice).
                 proInfo(proInfo).localDateTime(LocalDateTime.now()).proView(0)
-                .proStatus((byte) 0).categoryEntity(categoryEntity).
+                .proStatus((byte) 0).categoryEntity(categoryEntity).proStatus(status).
                 build();
 
         ProductEntity savedProduct = productRepository.save(productEntity);
@@ -144,6 +144,7 @@ public class MyProductServiceImpl implements MyProductService{
         proImageDTO.setProInfo(image.getProductEntity().getProInfo().substring(0, Math.min(image.getProductEntity().getProInfo().length(), 10)));
         proImageDTO.setPath(image.getPath());
         proImageDTO.setCreated_date(image.getProductEntity().getLocalDateTime());
+        proImageDTO.setStatus(image.getProductEntity().getProStatus());
         return proImageDTO;
     }
 }

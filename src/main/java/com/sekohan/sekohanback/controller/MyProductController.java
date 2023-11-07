@@ -12,7 +12,7 @@ import org.springframework.web.multipart.MultipartFile;
 import java.util.List;
 
 @RestController
-@RequestMapping("/myproducts")
+@RequestMapping("/mypage")
 @RequiredArgsConstructor
 public class MyProductController {
 

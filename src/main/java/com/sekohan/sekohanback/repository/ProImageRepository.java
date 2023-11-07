@@ -20,4 +20,7 @@ public interface ProImageRepository extends JpaRepository<ProImageEntity, Long> 
     @Query("SELECT p FROM ProImageEntity p WHERE p.productEntity.userEntity.uId = :uId")
     List<ProImageEntity> findByuId(@Param("uId") Long uId);
 
+    @Query("SELECT p FROM ProImageEntity p WHERE p.productEntity.productId = :productId ORDER BY p.proImgId ASC")
+    List<ProImageEntity> findAllByProductIdOrderByProImgIdAsc(@Param("productId") Long productId);
+
 }

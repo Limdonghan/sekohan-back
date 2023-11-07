@@ -7,6 +7,10 @@ import com.sekohan.sekohanback.entity.ProductEntity;
 import com.sekohan.sekohanback.entity.UserEntity;
 import com.sekohan.sekohanback.service.product.ProductServiceImpl;
 import lombok.RequiredArgsConstructor;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
+import org.springframework.data.domain.Sort;
+import org.springframework.data.web.PageableDefault;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
 
@@ -18,6 +22,11 @@ import java.util.List;
 public class ProductController {
 
     private final ProductServiceImpl productService;
+
+    @GetMapping("/pagelist")
+    public Page<proImageDTO> Prolistpage(@PageableDefault(size = 12, sort = "productId", direction = Sort.Direction.DESC) Pageable pageable) {
+        return productService.Prolistpage(pageable);
+    }
 
     @PostMapping("/upload")
     public ProductEntity ProductUpload(@RequestParam("proName") String proName,
@@ -31,7 +40,6 @@ public class ProductController {
         return productService.ProductUpload(proName, proPrice, proInfo, categoryEntity, userEntity, files);
     }
     //상품 업로드 URL
-
 
     @GetMapping("/list")
     public List<proImageDTO> Prolist(){

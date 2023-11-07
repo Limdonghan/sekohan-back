@@ -6,11 +6,13 @@ import com.sekohan.sekohanback.entity.CategoryEntity;
 import com.sekohan.sekohanback.entity.ProductEntity;
 import com.sekohan.sekohanback.entity.UserEntity;
 import com.sekohan.sekohanback.entity.img.ProImageEntity;
-import com.sekohan.sekohanback.repository.ProductRepository;
 import com.sekohan.sekohanback.repository.ProImageRepository;
+import com.sekohan.sekohanback.repository.ProductRepository;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Value;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 import org.springframework.web.multipart.MultipartFile;
 
@@ -54,6 +56,30 @@ public class ProductServiceImpl implements ProductService {
     }
     //test용 코드
 */
+
+    public Page<proImageDTO> Prolistpage(Pageable pageable) {
+        Page<ProductEntity> products = productRepository.findAll(pageable);
+        return products.map(this::convertToDTO);
+    }
+
+    private proImageDTO convertToDTO(ProductEntity product) {
+        proImageDTO proImageDTO = new proImageDTO();
+        proImageDTO.setProductId(product.getProductId());
+        proImageDTO.setCatId(product.getCategoryEntity().getCatId());
+        proImageDTO.setProName(product.getProName());
+        proImageDTO.setProPrice(product.getProPrice());
+        proImageDTO.setProInfo(product.getProInfo());
+        proImageDTO.setCreated_date(product.getLocalDateTime());
+        proImageDTO.setStatus(product.getProStatus());
+
+        List<ProImageEntity> proImageEntities = proImageRepository.findAllByProductIdOrderByProImgIdAsc(product.getProductId());
+        if (!proImageEntities.isEmpty()) {
+            ProImageEntity proImageEntity = proImageEntities.get(0); // 가장 오래된 항목 선택
+            proImageDTO.setPath(proImageEntity.getPath());
+        }
+
+        return proImageDTO;
+    }
 
     public List<proImageDTO> Prolist() {
         List<ProImageEntity> images = proImageRepository.findAll();
