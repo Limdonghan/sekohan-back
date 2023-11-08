@@ -1,4 +1,4 @@
-package com.sekohan.sekohanback.dto;
+package com.sekohan.sekohanback.dto.product;
 
 import lombok.Getter;
 import lombok.Setter;
@@ -15,5 +15,6 @@ public class proImageDTO {
     private String proInfo;
     private String path;
     private LocalDateTime created_date;
+    private byte status;
 
 }

@@ -1,7 +1,7 @@
 package com.sekohan.sekohanback.service.user.view;
 
-import com.sekohan.sekohanback.dto.PageRequestDTO;
-import com.sekohan.sekohanback.dto.PageResultDTO;
+import com.sekohan.sekohanback.dto.page.PageRequestDTO;
+import com.sekohan.sekohanback.dto.page.PageResultDTO;
 import com.sekohan.sekohanback.dto.user.UserListDTO;
 import com.sekohan.sekohanback.entity.UserEntity;
 import com.sekohan.sekohanback.repository.UserRepository;

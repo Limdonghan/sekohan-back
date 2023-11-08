@@ -1,4 +1,4 @@
-package com.sekohan.sekohanback.dto;
+package com.sekohan.sekohanback.dto.page;
 
 import lombok.*;
 import org.springframework.data.domain.PageRequest;

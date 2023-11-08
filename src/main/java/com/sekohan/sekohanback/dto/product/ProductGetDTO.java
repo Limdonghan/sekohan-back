@@ -1,4 +1,4 @@
-package com.sekohan.sekohanback.dto;
+package com.sekohan.sekohanback.dto.product;
 
 
 import lombok.Getter;
