@@ -1,6 +1,6 @@
 package com.sekohan.sekohanback.controller;
 
-import com.sekohan.sekohanback.dto.PageRequestDTO;
+import com.sekohan.sekohanback.dto.page.PageRequestDTO;
 import com.sekohan.sekohanback.entity.UserEntity;
 import com.sekohan.sekohanback.security.repository.UserSecurityRepository;
 import com.sekohan.sekohanback.service.event.delete.EventDeleteService;

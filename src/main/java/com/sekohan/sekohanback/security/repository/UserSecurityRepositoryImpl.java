@@ -15,7 +15,13 @@ public class UserSecurityRepositoryImpl implements UserSecurityRepository{
     public UserEntity getUser() {
         log.info("사용자 권한 조회");
         //UserEntity에서 아이디와 권한을 조회
-        UserEntity userEntity = ((UserPrincipal) SecurityContextHolder.getContext().getAuthentication().getPrincipal()).getUserEntity();
+        Object principal = SecurityContextHolder.getContext().getAuthentication().getPrincipal();
+        log.info("principal : {}",principal);
+
+
+        UserEntity userEntity = ((UserPrincipal) principal).getUserEntity();
+
+      //  UserEntity userEntity = ((UserPrincipal) SecurityContextHolder.getContext().getAuthentication().getPrincipal()).getUserEntity();
         log.info("사용자 권한 검사 완료");
         return userEntity;
     }

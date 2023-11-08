@@ -27,7 +27,7 @@ public class CustomUserDetailsServiceImpl implements CustomUserDetailsService{
         log.info("CustomUserDetailsServiceImplLog {}",userEntity);  //사용자의 아이디를 가져옴
         UserPrincipal userPrincipal = new UserPrincipal(userEntity);
         
-        log.info("userPrincipal로 이동해주세요 ㅠㅠㅠㅠ");
+        log.info("userPrincipal 이동");
         return userPrincipal;
         //return UserPrincipal.create(userEntity);  //사용자의 아이디를 UserPrincipal.create로 리턴
 

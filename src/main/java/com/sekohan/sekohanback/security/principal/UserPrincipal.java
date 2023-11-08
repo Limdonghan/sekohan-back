@@ -16,7 +16,7 @@ import java.util.Collection;
 public class UserPrincipal implements UserDetails {  //로그인된 유저의 계정 정보
 
     private final UserEntity userEntity;  //사용자 정보
-   // private Collection<? extends GrantedAuthority> authorities;  //사용자의 권한 목록
+    // private Collection<? extends GrantedAuthority> authorities;  //사용자의 권한 목록
 
 //    public static UserPrincipal create(UserEntity userEntity){
 //        log.info("UserPrincipalLog {}",userEntity);
@@ -28,16 +28,20 @@ public class UserPrincipal implements UserDetails {  //로그인된 유저의 �
 
     public UserPrincipal(UserEntity userEntity){
         this.userEntity =userEntity;
+        //this.authorities=authorities;
 
     }
 
     @Override
     public Collection<? extends GrantedAuthority> getAuthorities() {  //계정의 권한 목록을 리턴
+//        return authorities;
         Collection<GrantedAuthority> grantedAuthorities = new ArrayList<>();
         grantedAuthorities.add(() -> {
-            return "ROLE_"+userEntity.getUserRole().getKey();
+            String role = userEntity.getUserRole().getKey();
+            log.info("role : {}",role);
+            return role;
         });
-        log.info("UserPrincipal로 들어와서 사용자의 권한을 반환했어요 : {}",grantedAuthorities.stream().toList());
+        log.info("UserPrincipal로 들어와서 사용자의 권한을 반환했어요 : {}",grantedAuthorities.toString());
         return grantedAuthorities;
     }
 
