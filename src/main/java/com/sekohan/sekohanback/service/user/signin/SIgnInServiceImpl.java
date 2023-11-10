@@ -47,6 +47,7 @@ public class SIgnInServiceImpl implements SignInService {
     @Override
     public JsonWebTokenResponseDTO refresh(String refreshToken) {
         log.info("--------Access token 재생성--------");
+
         //Refresh Token 검증
         Jws<Claims> claims = jwtService.getClaims(jwtService.extractToken(refreshToken));
         log.info("JWT<Claims> : {}",claims);
@@ -59,15 +60,18 @@ public class SIgnInServiceImpl implements SignInService {
 
         /* Redis에 저장된 RefreshToken 값을 가져옴*/
         String redisRefreshToken = redisTemplate.opsForValue().get(claims.getBody().getSubject());
-        //String redisRefreshToken = redisTemplate.opsForValue().get(authentication.getName());
+
         log.info("redisToken : {}",redisRefreshToken);
 
         if(!redisRefreshToken.equals(refreshToken)){
+            log.info("여기 오류 던져");
              throw TokenTypeException.EXCEPTION;
         }
 
         //AccessToken 재생성
         String accessToken = jwtService.generateAccessToken(claims.getBody().getSubject());
+        log.info("accessToken생성했나? : {}",accessToken);
+
 
         return JsonWebTokenResponseDTO.builder()
                 .accessToken(accessToken).build();

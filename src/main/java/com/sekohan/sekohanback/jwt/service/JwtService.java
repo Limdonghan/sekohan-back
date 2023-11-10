@@ -24,4 +24,6 @@ public interface JwtService {
             Jws<Claims> claims,
             JwtType jwtType
     );
+
+    Long getExpiration(String accessToken);
 }

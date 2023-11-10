@@ -1,9 +1,11 @@
 package com.sekohan.sekohanback.controller;
 
+import com.sekohan.sekohanback.dto.jwt.AccessTokenBlackListDTO;
 import com.sekohan.sekohanback.dto.jwt.JsonWebTokenResponseDTO;
 import com.sekohan.sekohanback.dto.jwt.RefreshTokenRequest;
 import com.sekohan.sekohanback.dto.user.sign.UserSignInDTO;
 import com.sekohan.sekohanback.service.user.signin.SignInService;
+import com.sekohan.sekohanback.service.user.signout.SignOutService;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.validation.annotation.Validated;
@@ -20,6 +22,7 @@ public class SignInController {
 
 
     private final SignInService signInService;
+    private final SignOutService signOutService;
 
     @PostMapping("/signin")
     public JsonWebTokenResponseDTO auth(@Validated @RequestBody UserSignInDTO authRequest) {
@@ -33,6 +36,12 @@ public class SignInController {
         log.info("들어옴?");
 
         return signInService.refresh(refreshTokenRequest.getRefreshToken());
+    }
+
+    @PostMapping("/out")
+    public void logout(@Validated @RequestBody AccessTokenBlackListDTO accessTokenBlackListDTO)
+    {
+        signOutService.logout(accessTokenBlackListDTO.getAccessToken());
     }
 
 

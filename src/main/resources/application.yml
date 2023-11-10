@@ -47,6 +47,12 @@ com:
 application:
   security:
     jwt:
-      secretKey: 25432A462D4A614E645267556A586E3272357538782F413F4428472B4B625065
+      secretKey: 시크릿키
       expiration: 900000 #15분
-      refreshExpiration: 86400000 #24시간
+      refreshExpiration: 86400000 #refresh token 토큰 만료 시간 24시간
+      #expiration: 300 #access token 만료시간 2.5초
+
+management:
+  health:
+    mail:
+      enabled: false

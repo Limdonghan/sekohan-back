@@ -5,6 +5,7 @@ import com.sekohan.sekohanback.exception.NotFoundUserException;
 import com.sekohan.sekohanback.exception.TokenTypeException;
 import com.sekohan.sekohanback.jwt.config.JwtProperties;
 import com.sekohan.sekohanback.jwt.enums.JwtType;
+import com.sekohan.sekohanback.redis.RedisService;
 import com.sekohan.sekohanback.repository.UserRepository;
 import com.sekohan.sekohanback.security.principal.UserPrincipal;
 import io.jsonwebtoken.*;
@@ -29,6 +30,7 @@ public class JwtServiceImpl implements JwtService{
     private final JwtProperties jwtProperties;
     private final UserRepository userRepository;
     private final RedisTemplate<String, String> redisTemplate;
+    private final RedisService redisService;
 
     /* jwt 토큰을 구문 분석하고 Claims을 반환, 토큰 유효성 확인  , Access Token 검증 */
     @Override
@@ -40,6 +42,10 @@ public class JwtServiceImpl implements JwtService{
 
             Jws<Claims> claimsJws = Jwts.parser().setSigningKey(jwtProperties.getSecretKey()).parseClaimsJws(token);
             log.info("claimsJws : {}",claimsJws);
+
+            if (redisService.hasKeyBlackList(token)){
+                throw new RuntimeException("로그아웃");
+            }
 
             return claimsJws;
         } catch (ExpiredJwtException e) {
@@ -144,5 +150,19 @@ public class JwtServiceImpl implements JwtService{
             final JwtType jwtType
     ) {  //Claims에서 JWT유형이 jwtType과 일치하는지 확인
         return !(claims.getHeader().get(Header.JWT_TYPE).equals(jwtType.toString()));
+    }
+
+    /* JWT 토큰의 남은 유효시간을 얻어오는 메서드 */
+    @Override
+    public Long getExpiration(String token){
+        Date expiration = Jwts.parserBuilder()
+                .setSigningKey(jwtProperties.getSecretKey())
+                .build()
+                .parseClaimsJws(token)
+                .getBody()
+                .getExpiration();
+
+        long time = new Date().getTime();
+        return expiration.getTime() - time;
     }
 }
