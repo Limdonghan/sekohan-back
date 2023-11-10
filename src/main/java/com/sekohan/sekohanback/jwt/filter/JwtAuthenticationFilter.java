@@ -1,6 +1,7 @@
 package com.sekohan.sekohanback.jwt.filter;
 
 import com.sekohan.sekohanback.jwt.service.JwtService;
+import com.sekohan.sekohanback.redis.RedisService;
 import jakarta.servlet.FilterChain;
 import jakarta.servlet.ServletException;
 import jakarta.servlet.http.HttpServletRequest;
@@ -18,6 +19,7 @@ import java.io.IOException;
 @Slf4j
 public class JwtAuthenticationFilter extends OncePerRequestFilter {
     private final JwtService jwtService;
+    private final RedisService redisService;
 
 
     @Override
@@ -33,9 +35,14 @@ public class JwtAuthenticationFilter extends OncePerRequestFilter {
         String token = jwtService.extractTokenFromRequest(request);
         log.info("token : {}",token);
 
+
         if (token != null) {
             /* 토큰이 널이 아니라면 jwtService.getAuthentication() 토큰을 매개변수로 받고 이동
             * 정상 토큰이면 SecurityContext에 저장*/
+            /* 로그아웃 요청시 이미 로그아웃 처리된 블랙 리스트된 JWT 토큰인지를 검증 */
+            if (redisService.hasKeyBlackList(token)) {
+                throw new RuntimeException("블랙리스트 토큰");
+            }
             SecurityContextHolder.getContext().setAuthentication(jwtService.getAuthentication(token));
         }
 
