@@ -26,7 +26,7 @@ import java.util.List;
 @Service
 @Slf4j  //log.info("sdfsdf")  //log.info
 @RequiredArgsConstructor
-public class MyProductServiceImpl implements MyProductService{
+public class MypageServiceImpl implements MypageService {
 
     @Value("${com.sekohan.upload.path}")
     String uploadDir;
@@ -147,4 +147,41 @@ public class MyProductServiceImpl implements MyProductService{
         proImageDTO.setStatus(image.getProductEntity().getProStatus());
         return proImageDTO;
     }
+
+    public ProductEntity ProductUpload(String proName, int proPrice, String proInfo, CategoryEntity categoryEntity, UserEntity userEntity, List<MultipartFile> files) {
+        ProductEntity productEntity = ProductEntity.builder().proName(proName).proPrice(proPrice).
+                proInfo(proInfo).localDateTime(LocalDateTime.now()).proView(0).proStatus((byte) 0).userEntity(userEntity).categoryEntity(categoryEntity).build();
+
+        ProductEntity savedProduct = productRepository.save(productEntity);
+
+        for (MultipartFile imagePath : files) {
+            ProImageEntity proImageEntity = ProImageEntity.builder()
+                    .path(imagePath.getOriginalFilename()).productEntity(savedProduct).build();
+        }
+        int i = 0;
+        //
+        for (MultipartFile file : files) {
+            if (!file.isEmpty()) {
+                try {
+                    byte[] bytes = file.getBytes();
+                    String originalFilename = file.getOriginalFilename();
+                    String cleanedFilename = originalFilename.replaceAll("[^a-zA-Z0-9.-]", "_");
+
+                    String formattedDateTime = LocalDateTime.now().
+                            format(DateTimeFormatter.ofPattern("yyyy-MM-dd_HH-mm-ss"));
+                    String newFileName = formattedDateTime + "_" + i + "_" + cleanedFilename;
+                    ProImageEntity proImageEntity = ProImageEntity.builder().path(newFileName).productEntity(savedProduct).build();
+                    proImageRepository.save(proImageEntity);
+                    i++;
+                    Path path = Paths.get(uploadDir + newFileName);
+                    Files.write(path, bytes);
+                } catch (IOException e) {
+                    e.printStackTrace();
+                }
+            }
+        }
+
+        return savedProduct;
+    }
+    //상품 업로드 코드
 }

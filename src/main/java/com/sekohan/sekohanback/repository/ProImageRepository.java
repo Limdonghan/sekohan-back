@@ -14,13 +14,15 @@ public interface ProImageRepository extends JpaRepository<ProImageEntity, Long> 
     @Query("SELECT p FROM ProImageEntity p WHERE p.productEntity.productId = :productId")
     List<ProImageEntity> getPro_imgId(@Param("productId") Long productId);
 
+    /*
     @Query("SELECT p FROM ProImageEntity p WHERE p.productEntity.categoryEntity.catId = :catId")
     List<ProImageEntity> findByCategoryList(@Param("catId") Long catId);
+     */
 
     @Query("SELECT p FROM ProImageEntity p WHERE p.productEntity.userEntity.uId = :uId")
     List<ProImageEntity> findByuId(@Param("uId") Long uId);
 
     @Query("SELECT p FROM ProImageEntity p WHERE p.productEntity.productId = :productId ORDER BY p.proImgId ASC")
-    List<ProImageEntity> findAllByProductIdOrderByProImgIdAsc(@Param("productId") Long productId);
+    List<ProImageEntity> findproid(@Param("productId") Long productId);
 
 }

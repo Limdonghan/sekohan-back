@@ -2,9 +2,7 @@ package com.sekohan.sekohanback.service.product;
 
 import com.sekohan.sekohanback.dto.ProductGetDTO;
 import com.sekohan.sekohanback.dto.proImageDTO;
-import com.sekohan.sekohanback.entity.CategoryEntity;
 import com.sekohan.sekohanback.entity.ProductEntity;
-import com.sekohan.sekohanback.entity.UserEntity;
 import com.sekohan.sekohanback.entity.img.ProImageEntity;
 import com.sekohan.sekohanback.repository.ProImageRepository;
 import com.sekohan.sekohanback.repository.ProductRepository;
@@ -14,14 +12,7 @@ import org.springframework.beans.factory.annotation.Value;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
-import org.springframework.web.multipart.MultipartFile;
 
-import java.io.IOException;
-import java.nio.file.Files;
-import java.nio.file.Path;
-import java.nio.file.Paths;
-import java.time.LocalDateTime;
-import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -35,30 +26,15 @@ public class ProductServiceImpl implements ProductService {
     private final ProductRepository productRepository;
     private final ProImageRepository proImageRepository;
 
-
-
-/*
-    public List<ProductDTO> getAllProducts() {
-        List<ProductEntity> products = productRepository.findAll();
-        log.info("product: {}",products);
-        return products.stream()
-                .map(this::convertToDTO)
-                .collect(Collectors.toList());
-    }
-
-    private ProductDTO convertToDTO(ProductEntity product) {
-        ProductDTO productDTO = new ProductDTO();
-        productDTO.setProductId(product.getProductId());
-        productDTO.setProName(product.getProName());
-        productDTO.setProPrice(product.getProPrice());
-        productDTO.setProInfo(product.getProInfo());
-        return productDTO;
-    }
-    //test용 코드
-*/
-
     public Page<proImageDTO> Prolistpage(Pageable pageable) {
         Page<ProductEntity> products = productRepository.findAll(pageable);
+
+        return products.map(this::convertToDTO);
+    }
+
+    public Page<proImageDTO> CatProlistpage(long catId, Pageable pageable) {
+        Page<ProductEntity> products = productRepository.findByCategoryList(pageable, catId);
+
         return products.map(this::convertToDTO);
     }
 
@@ -72,7 +48,7 @@ public class ProductServiceImpl implements ProductService {
         proImageDTO.setCreated_date(product.getLocalDateTime());
         proImageDTO.setStatus(product.getProStatus());
 
-        List<ProImageEntity> proImageEntities = proImageRepository.findAllByProductIdOrderByProImgIdAsc(product.getProductId());
+        List<ProImageEntity> proImageEntities = proImageRepository.findproid(product.getProductId());
         if (!proImageEntities.isEmpty()) {
             ProImageEntity proImageEntity = proImageEntities.get(0); // 가장 오래된 항목 선택
             proImageDTO.setPath(proImageEntity.getPath());
@@ -80,7 +56,7 @@ public class ProductServiceImpl implements ProductService {
 
         return proImageDTO;
     }
-
+/*
     public List<proImageDTO> Prolist() {
         List<ProImageEntity> images = proImageRepository.findAll();
         List<proImageDTO> result = new ArrayList<>();
@@ -125,7 +101,7 @@ public class ProductServiceImpl implements ProductService {
         return proImageDTO;
     }
     //상품 리스트 코드
-
+*/
     public ProductGetDTO ProductInfo(long productId) {
         return productRepository.findById(productId)
                 .map(this::ProgetDTO)
@@ -154,43 +130,6 @@ public class ProductServiceImpl implements ProductService {
         return productGetDTO;
     }
     //상품 상세정보 코드
-
-    public ProductEntity ProductUpload(String proName, int proPrice, String proInfo, CategoryEntity categoryEntity, UserEntity userEntity, List<MultipartFile> files) {
-        ProductEntity productEntity = ProductEntity.builder().proName(proName).proPrice(proPrice).
-                proInfo(proInfo).localDateTime(LocalDateTime.now()).proView(0).proStatus((byte) 0).userEntity(userEntity).categoryEntity(categoryEntity).build();
-
-        ProductEntity savedProduct = productRepository.save(productEntity);
-
-        for (MultipartFile imagePath : files) {
-            ProImageEntity proImageEntity = ProImageEntity.builder()
-                    .path(imagePath.getOriginalFilename()).productEntity(savedProduct).build();
-        }
-        int i = 0;
-        //
-        for (MultipartFile file : files) {
-            if (!file.isEmpty()) {
-                try {
-                    byte[] bytes = file.getBytes();
-                    String originalFilename = file.getOriginalFilename();
-                    String cleanedFilename = originalFilename.replaceAll("[^a-zA-Z0-9.-]", "_");
-
-                    String formattedDateTime = LocalDateTime.now().
-                            format(DateTimeFormatter.ofPattern("yyyy-MM-dd_HH-mm-ss"));
-                    String newFileName = formattedDateTime + "_" + i + "_" + cleanedFilename;
-                    ProImageEntity proImageEntity = ProImageEntity.builder().path(newFileName).productEntity(savedProduct).build();
-                    proImageRepository.save(proImageEntity);
-                    i++;
-                    Path path = Paths.get(uploadDir + newFileName);
-                    Files.write(path, bytes);
-                } catch (IOException e) {
-                    e.printStackTrace();
-                }
-            }
-        }
-
-        return savedProduct;
-    }
-    //상품 업로드 코드
 
     public void deleteProduct(long productId) {
         productRepository.deleteById(productId);
