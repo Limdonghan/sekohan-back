@@ -44,6 +44,7 @@ public class SecurityConfig  {
                 .cors(AbstractHttpConfigurer::disable)
                 .authorizeHttpRequests(authorizationManagerRequestMatcherRegistry ->
                         authorizationManagerRequestMatcherRegistry
+                                .requestMatchers("/**").permitAll()
                                 .requestMatchers("/api/user/**").permitAll()   //모든 사용자에게 이 경로는 허락
                                 .requestMatchers("/api/help/**").permitAll()  //모든 사용자에게 이 경로는 허락
                                 .requestMatchers("/api/email/**").permitAll()

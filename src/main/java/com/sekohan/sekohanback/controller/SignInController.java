@@ -25,10 +25,10 @@ public class SignInController {
     private final SignOutService signOutService;
 
     @PostMapping("/signin")
-    public JsonWebTokenResponseDTO auth(@Validated @RequestBody UserSignInDTO authRequest) {
+    public JsonWebTokenResponseDTO auth(@Validated @RequestBody UserSignInDTO userSignInDTO) {
         log.info("--------SigninController--------");
 
-        return signInService.auth(authRequest);
+        return signInService.auth(userSignInDTO);
     }
 
     @PostMapping("/refresh")
