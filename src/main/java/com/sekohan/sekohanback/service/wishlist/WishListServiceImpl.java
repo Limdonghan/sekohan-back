@@ -7,6 +7,7 @@ import com.sekohan.sekohanback.entity.WishListEntity;
 import com.sekohan.sekohanback.repository.WishListrepository;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
+import org.springframework.dao.DataIntegrityViolationException;
 import org.springframework.stereotype.Service;
 
 import java.time.LocalDateTime;
@@ -21,12 +22,24 @@ public class WishListServiceImpl implements WishListService {
     private final WishListrepository wishListrepository;
     @Override
     public WishListEntity WishListAdd(ProductEntity productEntity, UserEntity userEntity) {
-        WishListEntity wishListEntity = WishListEntity.builder().productEntity(productEntity).userEntity(userEntity)
-        .localDateTime(LocalDateTime.now()).build();
 
-        WishListEntity savewishList = wishListrepository.save(wishListEntity);
+        if (wishListrepository.findByProductEntityAndUserEntity(productEntity, userEntity).isPresent()) {
+            log.info("중복값");
+            return null;
+        }
 
-        return savewishList;
+        try {
+            WishListEntity wishListEntity = WishListEntity.builder()
+                    .productEntity(productEntity)
+                    .userEntity(userEntity)
+                    .localDateTime(LocalDateTime.now())
+                    .build();
+
+            return wishListrepository.save(wishListEntity);
+        } catch (DataIntegrityViolationException e) {
+            log.info("중복값");
+            return null;
+        }
     }
 
     @Override
@@ -37,6 +50,20 @@ public class WishListServiceImpl implements WishListService {
                 .collect(Collectors.toList());
     }
 
+    @Override
+    public int checkWish(long uId, long proId) {
+        int status = '1';
+        if (wishListrepository.findByProIdUId(proId, uId).isPresent()) {
+            status = 0;
+            return status;
+        }
+        return status;
+    }
+
+    @Override
+    public void DeleteWishList(long wishId) {
+        wishListrepository.deleteById(wishId);
+    }
 
     public WishListDTO wishListDTO(WishListEntity wishList){
         WishListDTO wishListDTO = new WishListDTO();

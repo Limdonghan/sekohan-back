@@ -12,4 +12,8 @@ public interface WishListService {
     WishListEntity WishListAdd(ProductEntity productEntity, UserEntity userEntity);
 
     List<WishListDTO> UserWishList(long uId);
+
+    int checkWish(long uId, long proId);
+
+    void DeleteWishList(long wishId);
 }

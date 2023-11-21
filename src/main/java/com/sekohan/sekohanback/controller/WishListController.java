@@ -31,4 +31,9 @@ public class WishListController {
         return wishListService.UserWishList(uId);
     }
     //유저 찜목록 URL
+
+    @GetMapping("/check/{uId},{proId}")
+    public int wishList(@PathVariable long uId, @PathVariable long proId){
+        return wishListService.checkWish(uId, proId);
+    }
 }
