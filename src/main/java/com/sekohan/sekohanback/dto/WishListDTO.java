@@ -13,4 +13,9 @@ public class WishListDTO {
     private LocalDateTime localDateTime;
     private long uId;
     private long productId;
+    private String title;
+    private int price;
+    private String info;
+    private String path;
+
 }

@@ -13,7 +13,6 @@ import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Service;
 import org.springframework.web.multipart.MultipartFile;
 
-import java.io.File;
 import java.io.IOException;
 import java.nio.file.Files;
 import java.nio.file.Path;
@@ -75,7 +74,7 @@ public class MypageServiceImpl implements MypageService {
         List<ProImageEntity> existingImages = proImageRepository.getPro_imgId(productId);
         for (ProImageEntity existingImage : existingImages) {
             String existingImagePath = existingImage.getPath();
-            deleteImageFile(existingImagePath);
+            /*deleteImageFile(existingImagePath);*/
             //파일업데이트하기전 이미저장되어있는 이미지파일 삭제
             proImageRepository.delete(existingImage);
         }
@@ -120,6 +119,8 @@ public class MypageServiceImpl implements MypageService {
         return savedProduct;
     }
 
+
+    /*
     private void deleteImageFile(String imageName) {
         String filePath = uploadDir + imageName;
         File file = new File(filePath);
@@ -132,9 +133,8 @@ public class MypageServiceImpl implements MypageService {
         } else {
             System.out.println("파일이 존재하지 않습니다: " + filePath);
         }
-        //파일업데이트하기전 이미저장되어있는 이미지파일 삭제
     }
-
+*/
     private proImageDTO convertToDTO(ProImageEntity image) {
         proImageDTO proImageDTO = new proImageDTO();
         proImageDTO.setProductId(image.getProductEntity().getProductId());

@@ -13,7 +13,6 @@ public interface WishListService {
 
     List<WishListDTO> UserWishList(long uId);
 
-    int checkWish(long uId, long proId);
 
     void DeleteWishList(long wishId);
 }

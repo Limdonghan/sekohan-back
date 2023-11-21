@@ -4,6 +4,8 @@ import com.sekohan.sekohanback.dto.WishListDTO;
 import com.sekohan.sekohanback.entity.ProductEntity;
 import com.sekohan.sekohanback.entity.UserEntity;
 import com.sekohan.sekohanback.entity.WishListEntity;
+import com.sekohan.sekohanback.entity.img.ProImageEntity;
+import com.sekohan.sekohanback.repository.ProImageRepository;
 import com.sekohan.sekohanback.repository.WishListrepository;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
@@ -20,6 +22,7 @@ import java.util.stream.Collectors;
 public class WishListServiceImpl implements WishListService {
 
     private final WishListrepository wishListrepository;
+    private final ProImageRepository proImageRepository;
     @Override
     public WishListEntity WishListAdd(ProductEntity productEntity, UserEntity userEntity) {
 
@@ -51,16 +54,6 @@ public class WishListServiceImpl implements WishListService {
     }
 
     @Override
-    public int checkWish(long uId, long proId) {
-        int status = '1';
-        if (wishListrepository.findByProIdUId(proId, uId).isPresent()) {
-            status = 0;
-            return status;
-        }
-        return status;
-    }
-
-    @Override
     public void DeleteWishList(long wishId) {
         wishListrepository.deleteById(wishId);
     }
@@ -71,6 +64,15 @@ public class WishListServiceImpl implements WishListService {
         wishListDTO.setLocalDateTime(wishList.getLocalDateTime());
         wishListDTO.setProductId(wishList.getProductEntity().getProductId());
         wishListDTO.setUId(wishList.getUserEntity().getUId());
+        wishListDTO.setTitle(wishList.getProductEntity().getProName());
+        wishListDTO.setInfo(wishList.getProductEntity().getProInfo());
+        wishListDTO.setPrice(wishList.getProductEntity().getProPrice());
+
+        List<ProImageEntity> proImageEntities = proImageRepository.findproid(wishList.getProductEntity().getProductId());
+                if (!proImageEntities.isEmpty()) {
+                    ProImageEntity proImageEntity = proImageEntities.get(0); // 가장 오래된 항목 선택
+                    wishListDTO.setPath(proImageEntity.getPath());
+                }
 
         return wishListDTO;
     }

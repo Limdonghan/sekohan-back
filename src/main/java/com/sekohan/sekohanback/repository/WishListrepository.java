@@ -19,5 +19,6 @@ public interface WishListrepository extends JpaRepository<WishListEntity, Long >
 
     Optional<WishListEntity> findByProductEntityAndUserEntity(ProductEntity productEntity, UserEntity userEntity);
 
-    Optional<WishListEntity> findByProIdUId(long productEntity, long userEntity);
+    @Query("SELECT p FROM WishListEntity p WHERE p.productEntity.productId = :productId")
+    List<WishListEntity> getproId(@Param("productId") Long productId);
 }
