@@ -3,7 +3,6 @@ package com.sekohan.sekohanback.controller;
 import com.sekohan.sekohanback.dto.WishListDTO;
 import com.sekohan.sekohanback.entity.ProductEntity;
 import com.sekohan.sekohanback.entity.UserEntity;
-import com.sekohan.sekohanback.entity.WishListEntity;
 import com.sekohan.sekohanback.service.wishlist.WishListService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.web.bind.annotation.*;
@@ -18,7 +17,7 @@ public class WishListController {
     private final WishListService wishListService;
 
     @PostMapping("/add")
-    public WishListEntity WishListAdd(@RequestParam("productId") long productId,
+    public String WishListAdd(@RequestParam("productId") long productId,
                                         @RequestParam("userId") long userId) {
         ProductEntity productEntity = ProductEntity.builder().productId(productId).build();
         UserEntity userEntity = UserEntity.builder().uId(userId).build();

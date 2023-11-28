@@ -24,24 +24,22 @@ public class WishListServiceImpl implements WishListService {
     private final WishListrepository wishListrepository;
     private final ProImageRepository proImageRepository;
     @Override
-    public WishListEntity WishListAdd(ProductEntity productEntity, UserEntity userEntity) {
+    public String WishListAdd(ProductEntity productEntity, UserEntity userEntity) {
 
         if (wishListrepository.findByProductEntityAndUserEntity(productEntity, userEntity).isPresent()) {
             log.info("중복값");
-            return null;
-        }
-
-        try {
+            return "중복값";
+        }try {
             WishListEntity wishListEntity = WishListEntity.builder()
                     .productEntity(productEntity)
                     .userEntity(userEntity)
                     .localDateTime(LocalDateTime.now())
                     .build();
-
-            return wishListrepository.save(wishListEntity);
+            WishListEntity Wishlist = wishListrepository.save(wishListEntity);
+            return (Wishlist != null) ? "성공" : "실패";
         } catch (DataIntegrityViolationException e) {
             log.info("중복값");
-            return null;
+            return "중복값";
         }
     }
 

@@ -4,12 +4,10 @@ import com.sekohan.sekohanback.dto.ProductGetDTO;
 import com.sekohan.sekohanback.dto.proImageDTO;
 import com.sekohan.sekohanback.entity.CommentEntity;
 import com.sekohan.sekohanback.entity.ProductEntity;
+import com.sekohan.sekohanback.entity.ServiceEntity;
 import com.sekohan.sekohanback.entity.WishListEntity;
 import com.sekohan.sekohanback.entity.img.ProImageEntity;
-import com.sekohan.sekohanback.repository.CommentRepository;
-import com.sekohan.sekohanback.repository.ProImageRepository;
-import com.sekohan.sekohanback.repository.ProductRepository;
-import com.sekohan.sekohanback.repository.WishListrepository;
+import com.sekohan.sekohanback.repository.*;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Value;
@@ -33,6 +31,7 @@ public class ProductServiceImpl implements ProductService {
     private final ProImageRepository proImageRepository;
     private final WishListrepository wishListrepository;
     private final CommentRepository commentRepository;
+    private final SupportRepository supportRepository;
 
     public Page<proImageDTO> Prolistpage(Pageable pageable) {
         Page<ProductEntity> products = productRepository.findAll(pageable);
@@ -146,18 +145,19 @@ public class ProductServiceImpl implements ProductService {
     public void Productdelete(long productId) {
         List<ProImageEntity> existingImages = proImageRepository.getPro_imgId(productId);
         for (ProImageEntity existingImage : existingImages) {
-            String existingImagePath = existingImage.getPath();
             proImageRepository.delete(existingImage);
         }
         List<WishListEntity> wishdelete = wishListrepository.getproId(productId);
         for (WishListEntity wishdelet : wishdelete){
-            long wish = wishdelet.getProductEntity().getProductId();
             wishListrepository.delete(wishdelet);
         }
         List<CommentEntity> commentDelete = commentRepository.getproId(productId);
         for (CommentEntity commentDelet : commentDelete){
-            long comt = commentDelet.getProductEntity().getProductId();
             commentRepository.delete(commentDelet);
+        }
+        List<ServiceEntity> reportDelete = supportRepository.getproid(productId);
+        for (ServiceEntity serviceEntity : reportDelete){
+            supportRepository.delete(serviceEntity);
         }
         //상품 지우기전에 상품 productid를 참고하는 모든테이블의 값 삭제.
             productRepository.deleteById(productId);

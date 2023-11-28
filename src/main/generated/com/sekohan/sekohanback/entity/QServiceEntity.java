@@ -26,7 +26,7 @@ public class QServiceEntity extends EntityPathBase<ServiceEntity> {
 
     public final NumberPath<Long> serviceId = createNumber("serviceId", Long.class);
 
-    public final QUserEntity uId;
+    public final QUserEntity userEntity;
 
     public QServiceEntity(String variable) {
         this(ServiceEntity.class, forVariable(variable), INITS);
@@ -47,7 +47,7 @@ public class QServiceEntity extends EntityPathBase<ServiceEntity> {
     public QServiceEntity(Class<? extends ServiceEntity> type, PathMetadata metadata, PathInits inits) {
         super(type, metadata, inits);
         this.productEntity = inits.isInitialized("productEntity") ? new QProductEntity(forProperty("productEntity"), inits.get("productEntity")) : null;
-        this.uId = inits.isInitialized("uId") ? new QUserEntity(forProperty("uId")) : null;
+        this.userEntity = inits.isInitialized("userEntity") ? new QUserEntity(forProperty("userEntity")) : null;
     }
 
 }
