@@ -14,5 +14,5 @@ public interface WishListService {
     List<WishListDTO> UserWishList(long uId);
 
 
-    void DeleteWishList(long wishId);
+    void WishListDelete(long wishId);
 }

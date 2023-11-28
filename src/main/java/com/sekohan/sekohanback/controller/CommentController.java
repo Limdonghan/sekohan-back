@@ -37,7 +37,7 @@ public class CommentController {
 
     @DeleteMapping("/delete/{comId}")
     public void deleteProduct(@PathVariable long comId) {
-        commentService.deleteComment(comId);
+        commentService.Commentdelete(comId);
     }
     //댓글 삭제 URL
 }

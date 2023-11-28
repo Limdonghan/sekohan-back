@@ -70,7 +70,7 @@ public class MypageServiceImpl implements MypageService {
 
 
     @Override
-    public ProductEntity updateProduct(long productId, String proName, int proPrice, String proInfo, UserEntity userEntity, CategoryEntity categoryEntity, byte status, List<MultipartFile> files) {
+    public ProductEntity Productupdate(long productId, String proName, int proPrice, String proInfo, UserEntity userEntity, CategoryEntity categoryEntity, byte status, List<MultipartFile> files) {
         List<ProImageEntity> existingImages = proImageRepository.getPro_imgId(productId);
         for (ProImageEntity existingImage : existingImages) {
             String existingImagePath = existingImage.getPath();

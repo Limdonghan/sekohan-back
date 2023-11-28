@@ -4,7 +4,6 @@ package com.sekohan.sekohanback.dto;
 import lombok.Getter;
 import lombok.Setter;
 
-import java.time.LocalDateTime;
 import java.util.List;
 
 @Getter
@@ -15,7 +14,7 @@ public class ProductGetDTO {
     private String proName;
     private String proInfo;
     private int proPrice;
-    private LocalDateTime created_time;
+    private String created_time;
     private int proView;
     private byte proStatus;
     private Long catId;

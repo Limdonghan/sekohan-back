@@ -16,16 +16,16 @@ import java.util.List;
 @RequiredArgsConstructor
 public class MyProductController {
 
-    private final MypageService MyproductService;
+    private final MypageService myproductService;
 
     @GetMapping("/list/{uId}")
     public List<proImageDTO> UserProList(@PathVariable long uId) {
-        return MyproductService.UserProList(uId);
+        return myproductService.UserProList(uId);
     }
 
     @GetMapping("/soldout/{uId}")
     public List<proImageDTO> UserProSoldoutList(@PathVariable long uId) {
-        return MyproductService.UserProSoldoutList(uId);
+        return myproductService.UserProSoldoutList(uId);
     }
     //내 상품 목록 URL
 
@@ -40,7 +40,7 @@ public class MyProductController {
                                        @RequestPart("files") List<MultipartFile> files) {
         CategoryEntity categoryEntity = CategoryEntity.builder().catId(categoryId).build();
         UserEntity userEntity = UserEntity.builder().uId(userId).build();
-        return MyproductService.updateProduct(ProductId, proName, proPrice, proInfo,userEntity, categoryEntity ,status, files);
+        return myproductService.Productupdate(ProductId, proName, proPrice, proInfo,userEntity, categoryEntity ,status, files);
     }
     //상품 업데이트 URL
 
@@ -53,7 +53,7 @@ public class MyProductController {
                                        @RequestPart("files") List<MultipartFile> files) {
         CategoryEntity categoryEntity = CategoryEntity.builder().catId(categoryId).build();
         UserEntity userEntity = UserEntity.builder().uId(userId).build();
-        return MyproductService.ProductUpload(proName, proPrice, proInfo, categoryEntity, userEntity, files);
+        return myproductService.ProductUpload(proName, proPrice, proInfo, categoryEntity, userEntity, files);
     }
     //상품 업로드 URL
 

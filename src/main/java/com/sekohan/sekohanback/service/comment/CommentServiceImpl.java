@@ -9,12 +9,13 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
 import java.time.LocalDateTime;
+import java.time.format.DateTimeFormatter;
 import java.util.List;
 import java.util.stream.Collectors;
 
 @Service
 @RequiredArgsConstructor
-public class CommentServiceImpl implements CommentService {
+public class CommentServiceImpl implements CommentService{
 
     private final CommentRepository commentRepository;
 
@@ -39,16 +40,18 @@ public class CommentServiceImpl implements CommentService {
 
     public CommentGetDTO comgetDTO(CommentEntity comment){
         CommentGetDTO commentGetDTO = new CommentGetDTO();
+        LocalDateTime currentDateTime = comment.getLocalDateTime();
+        String submittime = currentDateTime.format(DateTimeFormatter.ofPattern("yyyy년MM월dd일 HH시mm분"));
         commentGetDTO.setCommentId(comment.getCommentId());
         commentGetDTO.setContent(comment.getContent());
-        commentGetDTO.setLocalDateTime(comment.getLocalDateTime());
+        commentGetDTO.setLocalDateTime(submittime);
         commentGetDTO.setUID(comment.getUId().getUId());
         commentGetDTO.setUsername(comment.getUId().getNickname());
         return commentGetDTO;
     }
 
     @Override
-    public void deleteComment(long CommentId) {
+    public void Commentdelete(long CommentId) {
         commentRepository.deleteById(CommentId);
     }
 }

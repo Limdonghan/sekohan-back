@@ -52,7 +52,7 @@ public class ProductController {
 
     @DeleteMapping("/delete/{productId}")
     public void deleteProduct(@PathVariable long productId) {
-        productService.deleteProduct(productId);
+        productService.Productdelete(productId);
     }
     //재품 삭제 URL
 }

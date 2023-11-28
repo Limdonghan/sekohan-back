@@ -33,7 +33,7 @@ public class WishListController {
     //유저 찜목록 URL
 
     @DeleteMapping("/{wishId}")
-    public void DeleteWishList(@PathVariable long wishId) { wishListService.DeleteWishList(wishId);}
+    public void DeleteWishList(@PathVariable long wishId) { wishListService.WishListDelete(wishId);}
 
 
 }

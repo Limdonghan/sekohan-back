@@ -20,5 +20,5 @@ public interface ProductService {
     ProductGetDTO ProductInfo(long productId);
 
 
-    void deleteProduct(long productId);
+    void Productdelete(long productId);
 }

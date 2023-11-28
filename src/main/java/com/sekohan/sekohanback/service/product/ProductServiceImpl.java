@@ -17,6 +17,8 @@ import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 
+import java.time.LocalDateTime;
+import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -109,6 +111,7 @@ public class ProductServiceImpl implements ProductService {
     //상품 리스트 코드
 */
     public ProductGetDTO ProductInfo(long productId) {
+        productRepository.viewup(productId);
         return productRepository.findById(productId)
                 .map(this::ProgetDTO)
                 .orElse(null); // or throw an exception if required
@@ -116,11 +119,14 @@ public class ProductServiceImpl implements ProductService {
 
     private ProductGetDTO ProgetDTO(ProductEntity product){
         ProductGetDTO productGetDTO = new ProductGetDTO();
+        LocalDateTime currentDateTime = product.getLocalDateTime();
+        String submittime = currentDateTime.format(DateTimeFormatter.ofPattern("yyyy년MM월dd일 HH시mm분"));
         productGetDTO.setProductId(product.getProductId());
         productGetDTO.setProName(product.getProName());
         productGetDTO.setProInfo(product.getProInfo());
         productGetDTO.setProPrice(product.getProPrice());
         productGetDTO.setProView(product.getProView());
+        productGetDTO.setCreated_time(submittime);
         productGetDTO.setProStatus(product.getProStatus());
         productGetDTO.setCatId(product.getCategoryEntity().getCatId());
         productGetDTO.setDetailName(product.getCategoryEntity().getCatDetailClass());
@@ -137,7 +143,7 @@ public class ProductServiceImpl implements ProductService {
     }
     //상품 상세정보 코드
 
-    public void deleteProduct(long productId) {
+    public void Productdelete(long productId) {
         List<ProImageEntity> existingImages = proImageRepository.getPro_imgId(productId);
         for (ProImageEntity existingImage : existingImages) {
             String existingImagePath = existingImage.getPath();
