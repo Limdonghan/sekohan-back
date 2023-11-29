@@ -4,10 +4,7 @@ import com.sekohan.sekohanback.entity.ProductEntity;
 import com.sekohan.sekohanback.entity.UserEntity;
 import com.sekohan.sekohanback.service.support.SupportService;
 import lombok.RequiredArgsConstructor;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestParam;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 @RestController
 @RequestMapping("/sup")
@@ -22,5 +19,10 @@ public class UserSupportController {
         ProductEntity productEntity = ProductEntity.builder().productId(productId).build();
         UserEntity userEntity = UserEntity.builder().uId(userId).build();
         return supportService.productreport(productEntity, userEntity);
+    }
+
+    @GetMapping("/searching")
+    public String userSearching(@RequestParam("nickname") String nickname){
+        return String.valueOf(supportService.userSearching(nickname));
     }
 }

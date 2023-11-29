@@ -15,6 +15,7 @@ import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 
+import java.io.File;
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
@@ -146,6 +147,21 @@ public class ProductServiceImpl implements ProductService {
         List<ProImageEntity> existingImages = proImageRepository.getPro_imgId(productId);
         for (ProImageEntity existingImage : existingImages) {
             proImageRepository.delete(existingImage);
+            String imagePath = existingImage.getPath();
+            String fullImagePath = uploadDir + File.separator + imagePath;
+
+            File imageFile = new File(fullImagePath);
+            //저장되어있는 이미지파일 삭제
+            if (imageFile.exists()) {
+                boolean deleted = imageFile.delete();
+                if (deleted) {
+                    System.out.println("이미지 파일 삭제 성공");
+                } else {
+                    System.out.println("이미지 파일 삭제 실패");
+                }
+            } else {
+                System.out.println("이미지 파일이 이미 없음");
+            }
         }
         List<WishListEntity> wishdelete = wishListrepository.getproId(productId);
         for (WishListEntity wishdelet : wishdelete){
@@ -156,11 +172,13 @@ public class ProductServiceImpl implements ProductService {
             commentRepository.delete(commentDelet);
         }
         List<ServiceEntity> reportDelete = supportRepository.getproid(productId);
-        for (ServiceEntity serviceEntity : reportDelete){
+        for (ServiceEntity serviceEntity : reportDelete)
+        try{
             supportRepository.delete(serviceEntity);
+        } catch (Exception e){
+            log.info("리포트 클래스를 삭제하지못함");
         }
         //상품 지우기전에 상품 productid를 참고하는 모든테이블의 값 삭제.
             productRepository.deleteById(productId);
-    }
-
+}
 }

@@ -17,8 +17,10 @@ public class SupportServiceImp implements SupportService{
     private final SupportRepository supportRepository;
     
     @Override
-    public void userSearching(Long uId) {
+    public String userSearching(String nickname) {
+        String value = supportRepository.findByNicknamecount(nickname);
 
+        return value;
     }
 
     @Override

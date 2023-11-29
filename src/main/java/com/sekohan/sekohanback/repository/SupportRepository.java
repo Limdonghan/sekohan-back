@@ -14,7 +14,7 @@ import java.util.List;
 import java.util.Optional;
 
 @Repository
-public interface SupportRepository extends JpaRepository<ServiceEntity, Long > {
+public interface SupportRepository extends JpaRepository<ServiceEntity, Long> {
     Optional<ServiceEntity> findByProductEntityAndUserEntity(ProductEntity productEntity, UserEntity userEntity);
 
     @Transactional
@@ -22,6 +22,9 @@ public interface SupportRepository extends JpaRepository<ServiceEntity, Long > {
     @Query("UPDATE UserEntity p SET p.report = p.report + 1 WHERE p.uId = :uId")
     int reportup(@Param("uId") Long uId);
 
-    @Query("SELECT p FROM ServiceEntity p WHERE p.productEntity.productId = :productId")
-    List<ServiceEntity> getproid(long productId);
+    @Query("SELECT s FROM ServiceEntity s WHERE s.productEntity.productId = :productId")
+    List<ServiceEntity> getproid(@Param("productId") long productId);
+
+    @Query("SELECT u.report FROM UserEntity u WHERE u.nickname = :nickname")
+    String findByNicknamecount(@Param("nickname") String nickname);
 }

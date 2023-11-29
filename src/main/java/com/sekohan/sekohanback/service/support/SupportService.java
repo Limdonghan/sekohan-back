@@ -5,7 +5,7 @@ import com.sekohan.sekohanback.entity.UserEntity;
 
 public interface SupportService {
 
-    void userSearching(Long uId);
+    String userSearching(String nickname);
 
     String productreport(ProductEntity productEntity, UserEntity userEntity);
 }
