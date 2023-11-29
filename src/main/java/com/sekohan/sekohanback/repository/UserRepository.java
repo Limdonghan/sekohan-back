@@ -15,6 +15,12 @@ public interface UserRepository extends JpaRepository<UserEntity, Long> { //<Ent
     @Query("select m from UserEntity m where m.login=:login")
     Optional<UserEntity> findByLogin(@Param("login") String login);  //UserEntity 조회 시 로그인아이디를 기준으로 조회
 
+    // 회원 프로필 사진 변경 때 씀
+    @EntityGraph(attributePaths = {"userRole"}, type = EntityGraph.EntityGraphType.LOAD)
+    @Query("select m from UserEntity m where m.login=:login")
+    UserEntity findByLogin2(@Param("login") String login);  //UserEntity 조회 시 로그인아이디를 기준으로 조회
+
+
     @Query("select m from UserEntity m where m.name=:name and m.email=:email ")
     Optional<UserEntity> findByLogin(@Param("email") String email,
                                      @Param("name") String name);
@@ -28,4 +34,11 @@ public interface UserRepository extends JpaRepository<UserEntity, Long> { //<Ent
     boolean existsByEmail (String s3);  //인증번호 전송전에 유효한 이메일인지 체크
     @Query("SELECT m from UserEntity m")
     List<UserEntity> findAll();
+
+
+
+    // test
+    @Query("select m from UserEntity m where m.uId=:uId")
+    UserEntity findByUId(@Param("uId")long uId);
+
 }

@@ -64,7 +64,7 @@ public class SignUpServiceImpl implements SignUpService {
     }
 
     private String makeFolder(UserSignUpDTO userSignUpDTO){  //파일 생성 메서드
-        String name = userSignUpDTO.getName();
+        String name = userSignUpDTO.getLoginId();
         //String str = LocalDate.now().format(DateTimeFormatter.ofPattern("yyyy/MM/dd"));
         String folderPath = name.replace("//", File.separator);
         File uploadPathFolder = new File(uploadPath, folderPath);

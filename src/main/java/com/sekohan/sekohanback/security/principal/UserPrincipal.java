@@ -16,20 +16,9 @@ import java.util.Collection;
 public class UserPrincipal implements UserDetails {  //로그인된 유저의 계정 정보
 
     private final UserEntity userEntity;  //사용자 정보
-    // private Collection<? extends GrantedAuthority> authorities;  //사용자의 권한 목록
-
-//    public static UserPrincipal create(UserEntity userEntity){
-//        log.info("UserPrincipalLog {}",userEntity);
-//        return new UserPrincipal(
-//                userEntity,
-//                userEntity.getRoleSet().stream().map(
-//                        userRole -> new SimpleGrantedAuthority(userRole.getKey())).collect(Collectors.toList()));
-//    }
 
     public UserPrincipal(UserEntity userEntity){
         this.userEntity =userEntity;
-        //this.authorities=authorities;
-
     }
 
     @Override

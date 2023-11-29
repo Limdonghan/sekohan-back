@@ -28,12 +28,10 @@ public class JwtAuthenticationFilter extends OncePerRequestFilter {
                                     FilterChain filterChain
     ) throws ServletException, IOException {
 
-        log.info("-----Jwt인증필터-----");
         /* Http 요청이 오면 인증필터로 먼저 오고 
         토큰을 인증 하기위해 jwtService.extractTokenFromRequest()로 이동  
         Bearer을 뺀 토큰을 token에 저장 */
         String token = jwtService.extractTokenFromRequest(request);
-        log.info("token : {}",token);
 
 
         if (token != null) {
@@ -46,10 +44,6 @@ public class JwtAuthenticationFilter extends OncePerRequestFilter {
             SecurityContextHolder.getContext().setAuthentication(jwtService.getAuthentication(token));
         }
 
-        log.info("token2 : {}",token);
-        log.info("request : {}",request);
-        log.info("response : {}",response);
-        log.info("filterChain : {}",filterChain);
 
         filterChain.doFilter(request, response);
     }

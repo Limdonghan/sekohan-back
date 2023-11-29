@@ -20,18 +20,13 @@ public class JwtExceptionFilter extends OncePerRequestFilter { //OncePerRequestF
 
     @Override  //요청 할 때마다 들어옴
     protected void doFilterInternal(HttpServletRequest request, HttpServletResponse response, FilterChain filterChain) throws ServletException, IOException {
-        log.info("-----Jwt예외필터-----");
         try {
-            log.info("-----try-----");
-
             filterChain.doFilter(request, response);
         } catch (IllegalArgumentException e) {
-            log.info("-----catch1-----");
-            log.info(e.getMessage());
+            log.info("IllegalArgumentException : {}",e.getMessage());
             setErrorResponse(HttpStatus.UNAUTHORIZED, response, e);
         } catch (ServletException e) {
-            log.info("-----catch2-----");
-            log.info(e.getMessage());
+            log.info("ServletException : {}",e.getMessage());
             setErrorResponse(HttpStatus.BAD_REQUEST, response, e);
         }
 

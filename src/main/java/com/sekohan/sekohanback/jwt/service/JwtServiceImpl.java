@@ -36,12 +36,7 @@ public class JwtServiceImpl implements JwtService{
     @Override
     public Jws<Claims> getClaims(final String token) {
         try {
-            log.info("Jws<Claims> 검증 ");
-
-            //시발 만료가 되면 재발급 하라고
-
             Jws<Claims> claimsJws = Jwts.parser().setSigningKey(jwtProperties.getSecretKey()).parseClaimsJws(token);
-            log.info("claimsJws : {}",claimsJws);
 
             if (redisService.hasKeyBlackList(token)){
                 throw new RuntimeException("로그아웃");
@@ -61,7 +56,6 @@ public class JwtServiceImpl implements JwtService{
     /* 유저의 로그인ID 값을 가져와 Access Token 생성 */
     @Override
     public String generateAccessToken(final String loginID) {
-        log.info("--------generateAccessToken--------");
         String accessToken = Jwts.builder()
                 .setHeaderParam(Header.JWT_TYPE, JwtType.ACCESS)   //헤더 메개변수 설정
                 .setSubject(loginID)  //내용
@@ -76,7 +70,6 @@ public class JwtServiceImpl implements JwtService{
     /* Refresh Token 생성 */
     @Override
     public String generateRefreshToken(final String loginID) {
-        log.info("--------generateRefreshToken--------");
         String refreshToken = Jwts.builder()
                 .setHeaderParam(Header.JWT_TYPE, JwtType.REFRESH)
                 .setSubject(loginID)
@@ -100,8 +93,6 @@ public class JwtServiceImpl implements JwtService{
     /* 토큰으로 부터 클레임을 만들고, 이를 통해 User 객체 생성해 Authentication 객체 반환 */
     @Override
     public Authentication getAuthentication(final String token) {  //Access Token의 구문 분석된 Claims을 기반으로 Authentication개체를 생성
-        log.info("--------getAuthentication들어왔어요--------");
-
         /* 토큰 유효성 검증(getClaims()로 이동 후)을 먼저 하고 Jws<Claims>타입의 claims 생성*/
         final Jws<Claims> claims = getClaims(token);
 
@@ -110,10 +101,9 @@ public class JwtServiceImpl implements JwtService{
         }
 
         UserEntity userEntity = userRepository.findByLogin(claims.getBody().getSubject()).orElseThrow(() -> NotFoundUserException.EXCEPTION);
-       //UserPrincipal userPrincipal = UserPrincipal.create(userEntity);
+
         UserPrincipal userPrincipal = new UserPrincipal(userEntity);
 
-        log.info("--------getAuthentication처리완료--------");
         return new UsernamePasswordAuthenticationToken(userPrincipal,null,userPrincipal.getAuthorities());
     }
 
@@ -122,8 +112,6 @@ public class JwtServiceImpl implements JwtService{
         extractToken으로 리턴 */
     @Override
     public String extractTokenFromRequest(HttpServletRequest request) {
-        log.info("extractTokenFromRequest검사");
-        log.info("extractTokenFromRequest_request : {}",request);
 
         String extractToken = extractToken(request.getHeader(HttpHeaders.AUTHORIZATION));
         log.info("extractToken: {}", extractToken);
@@ -137,7 +125,7 @@ public class JwtServiceImpl implements JwtService{
     public String extractToken(final String token) {
         if (StringUtils.hasText(token)
                 && token.startsWith("Bearer ")) {
-            log.info("extractToken 검사");
+
             return token.substring(7);
         }
         return token;
