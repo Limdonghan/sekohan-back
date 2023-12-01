@@ -11,14 +11,13 @@ public interface ProductService {
 
     Page<proImageDTO> CatProlistpage(long catId, Pageable pageable);
 
-    /*
-    List<proImageDTO> Prolist();
+    Page<proImageDTO> Searchpage(String values, Pageable pageable);
 
-    List<proImageDTO> CatProList(long catId);
-     */
+    /*Page<proImageDTO> addSearchpage(String values, Pageable pageable);*/
 
     ProductGetDTO ProductInfo(long productId);
 
 
     void Productdelete(long productId);
+
 }

@@ -12,7 +12,7 @@ import java.util.List;
 import java.util.Optional;
 
 @Repository
-public interface WishListrepository extends JpaRepository<WishListEntity, Long > {
+public interface WishListrepository extends JpaRepository<WishListEntity, Long> {
 
     @Query("SELECT p FROM WishListEntity p WHERE p.userEntity.uId = :uId")
     List<WishListEntity> findbyuIdList(@Param("uId") Long uId);

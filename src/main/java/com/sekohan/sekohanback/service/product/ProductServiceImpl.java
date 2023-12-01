@@ -46,15 +46,28 @@ public class ProductServiceImpl implements ProductService {
         return products.map(this::convertToDTO);
     }
 
+    @Override
+    public Page<proImageDTO> Searchpage(String searchvalues, Pageable pageable) {
+        Page<ProductEntity> products = productRepository.findByProNameContainingOrProInfoContaining(pageable, searchvalues, searchvalues);
+        return products.map(this::convertToDTO);
+    }
+
+    /*@Override
+    public Page<proImageDTO> addSearchpage(String searchvalues, Pageable pageable) {
+        Page<ProductEntity> products = productRepository.
+                findByMainInfoContainingOrSubInfoContainingOrDetailInfoContaining(pageable, searchvalues,searchvalues,searchvalues);
+        return products.map(this::convertToDTO);
+    }*/
+
     private proImageDTO convertToDTO(ProductEntity product) {
-        proImageDTO proImageDTO = new proImageDTO();
-        proImageDTO.setProductId(product.getProductId());
-        proImageDTO.setCatId(product.getCategoryEntity().getCatId());
-        proImageDTO.setProName(product.getProName());
-        proImageDTO.setProPrice(product.getProPrice());
-        proImageDTO.setProInfo(product.getProInfo());
-        proImageDTO.setCreated_date(product.getLocalDateTime());
-        proImageDTO.setStatus(product.getProStatus());
+        proImageDTO proImageDTO = com.sekohan.sekohanback.dto.proImageDTO.builder().
+                productId(product.getProductId()).
+                catId(product.getCategoryEntity().getCatId()).
+                proName(product.getProName()).
+                proPrice(product.getProPrice()).
+                proInfo(product.getProInfo()).
+                created_date(product.getLocalDateTime()).
+                status(product.getProStatus()).build();
 
         List<ProImageEntity> proImageEntities = proImageRepository.findproid(product.getProductId());
         if (!proImageEntities.isEmpty()) {
@@ -64,52 +77,7 @@ public class ProductServiceImpl implements ProductService {
 
         return proImageDTO;
     }
-/*
-    public List<proImageDTO> Prolist() {
-        List<ProImageEntity> images = proImageRepository.findAll();
-        List<proImageDTO> result = new ArrayList<>();
-        List<Long> seenProductIds = new ArrayList<>();
 
-        for (ProImageEntity image : images) {
-            if (!seenProductIds.contains(image.getProductEntity().getProductId())) {
-                seenProductIds.add(image.getProductEntity().getProductId());
-                result.add(convertToDTO(image));
-            }
-        }
-
-        return result;
-    }
-
-    public List<proImageDTO> CatProList(long catId) {
-        List<ProImageEntity> images = proImageRepository.findByCategoryList(catId);
-        List<proImageDTO> result = new ArrayList<>();
-        List<Long> seenProductIds = new ArrayList<>();
-
-        for (ProImageEntity image : images) {
-            if (!seenProductIds.contains(image.getProductEntity().getProductId())) {
-                seenProductIds.add(image.getProductEntity().getProductId());
-                result.add(convertToDTO(image));
-            }
-        }
-
-        return result;
-    }
-    //특정 catId 값만 출력하는 상품 리스트 서비스
-
-    private proImageDTO convertToDTO(ProImageEntity image) {
-        proImageDTO proImageDTO = new proImageDTO();
-        proImageDTO.setProductId(image.getProductEntity().getProductId());
-        proImageDTO.setCatId(image.getProductEntity().getCategoryEntity().getCatId());
-        proImageDTO.setProName(image.getProductEntity().getProName());
-        proImageDTO.setProPrice(image.getProductEntity().getProPrice());
-        proImageDTO.setProInfo(image.getProductEntity().getProInfo().substring(0, Math.min(image.getProductEntity().getProInfo().length(), 10)));
-        proImageDTO.setPath(image.getPath());
-        proImageDTO.setCreated_date(image.getProductEntity().getLocalDateTime());
-        proImageDTO.setStatus(image.getProductEntity().getProStatus());
-        return proImageDTO;
-    }
-    //상품 리스트 코드
-*/
     public ProductGetDTO ProductInfo(long productId) {
         productRepository.viewup(productId);
         return productRepository.findById(productId)
@@ -117,21 +85,22 @@ public class ProductServiceImpl implements ProductService {
                 .orElse(null); // or throw an exception if required
     }
 
-    private ProductGetDTO ProgetDTO(ProductEntity product){
-        ProductGetDTO productGetDTO = new ProductGetDTO();
+    private ProductGetDTO ProgetDTO(ProductEntity product) {
         LocalDateTime currentDateTime = product.getLocalDateTime();
         String submittime = currentDateTime.format(DateTimeFormatter.ofPattern("yyyy년MM월dd일 HH시mm분"));
-        productGetDTO.setProductId(product.getProductId());
-        productGetDTO.setProName(product.getProName());
-        productGetDTO.setProInfo(product.getProInfo());
-        productGetDTO.setProPrice(product.getProPrice());
-        productGetDTO.setProView(product.getProView());
-        productGetDTO.setCreated_time(submittime);
-        productGetDTO.setProStatus(product.getProStatus());
-        productGetDTO.setCatId(product.getCategoryEntity().getCatId());
-        productGetDTO.setDetailName(product.getCategoryEntity().getCatDetailClass());
-        productGetDTO.setUId(product.getUserEntity().getUId());
-        productGetDTO.setNickName(product.getUserEntity().getNickname());
+        ProductGetDTO productGetDTO = ProductGetDTO.builder().
+                productId(product.getProductId()).
+                proName(product.getProName()).
+                proInfo(product.getProInfo()).
+                proPrice(product.getProPrice()).
+                proView(product.getProView()).
+                created_time(submittime).
+                proStatus(product.getProStatus()).
+                catId(product.getCategoryEntity().getCatId()).
+                DetailName(product.getCategoryEntity().getCatDetailClass()).
+                uId(product.getUserEntity().getUId()).
+                nickName(product.getUserEntity().getNickname()).
+                build();
 
         List<String> fileAddresses = new ArrayList<>(); // 파일 주소를 저장할 리스트
         List<ProImageEntity> images = proImageRepository.getPro_imgId(product.getProductId());
@@ -154,31 +123,21 @@ public class ProductServiceImpl implements ProductService {
             //저장되어있는 이미지파일 삭제
             if (imageFile.exists()) {
                 boolean deleted = imageFile.delete();
-                if (deleted) {
-                    System.out.println("이미지 파일 삭제 성공");
-                } else {
-                    System.out.println("이미지 파일 삭제 실패");
-                }
-            } else {
-                System.out.println("이미지 파일이 이미 없음");
             }
-        }
-        List<WishListEntity> wishdelete = wishListrepository.getproId(productId);
-        for (WishListEntity wishdelet : wishdelete){
-            wishListrepository.delete(wishdelet);
-        }
-        List<CommentEntity> commentDelete = commentRepository.getproId(productId);
-        for (CommentEntity commentDelet : commentDelete){
-            commentRepository.delete(commentDelet);
-        }
-        List<ServiceEntity> reportDelete = supportRepository.getproid(productId);
-        for (ServiceEntity serviceEntity : reportDelete)
-        try{
-            supportRepository.delete(serviceEntity);
-        } catch (Exception e){
-            log.info("리포트 클래스를 삭제하지못함");
-        }
-        //상품 지우기전에 상품 productid를 참고하는 모든테이블의 값 삭제.
+            List<WishListEntity> wishdelete = wishListrepository.getproId(productId);
+            for (WishListEntity wishdelet : wishdelete) {
+                wishListrepository.delete(wishdelet);
+            }
+            List<CommentEntity> commentDelete = commentRepository.getproId(productId);
+            for (CommentEntity commentDelet : commentDelete) {
+                commentRepository.delete(commentDelet);
+            }
+            List<ServiceEntity> reportDelete = supportRepository.getproid(productId);
+            for (ServiceEntity serviceEntity : reportDelete)
+                supportRepository.delete(serviceEntity);
+            //상품 지우기전에 상품 productid를 참고하는 모든테이블의 값 삭제.
             productRepository.deleteById(productId);
-}
+        }
+    }
+
 }

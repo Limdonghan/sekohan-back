@@ -18,7 +18,7 @@ public class WishListController {
 
     @PostMapping("/add")
     public String WishListAdd(@RequestParam("productId") long productId,
-                                        @RequestParam("userId") long userId) {
+                              @RequestParam("userId") long userId) {
         ProductEntity productEntity = ProductEntity.builder().productId(productId).build();
         UserEntity userEntity = UserEntity.builder().uId(userId).build();
         return wishListService.WishListAdd(productEntity, userEntity);
@@ -26,13 +26,15 @@ public class WishListController {
     //찜목록 추가 URL
 
     @GetMapping("/list/{uId}")
-    public List<WishListDTO> UserWishList(@PathVariable long uId){
+    public List<WishListDTO> UserWishList(@PathVariable long uId) {
         return wishListService.UserWishList(uId);
     }
     //유저 찜목록 URL
 
     @DeleteMapping("/{wishId}")
-    public void DeleteWishList(@PathVariable long wishId) { wishListService.WishListDelete(wishId);}
+    public void DeleteWishList(@PathVariable long wishId) {
+        wishListService.WishListDelete(wishId);
+    }
 
 
 }

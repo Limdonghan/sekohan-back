@@ -15,14 +15,14 @@ public class UserSupportController {
 
     @PostMapping("/report")
     public String productreport(@RequestParam("productId") long productId,
-                                     @RequestParam("userId") long userId) {
+                                @RequestParam("userId") long userId) {
         ProductEntity productEntity = ProductEntity.builder().productId(productId).build();
         UserEntity userEntity = UserEntity.builder().uId(userId).build();
         return supportService.productreport(productEntity, userEntity);
     }
 
     @GetMapping("/searching")
-    public String userSearching(@RequestParam("nickname") String nickname){
+    public String userSearching(@RequestParam("nickname") String nickname) {
         return String.valueOf(supportService.userSearching(nickname));
     }
 }

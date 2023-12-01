@@ -20,4 +20,10 @@ public interface ProductRepository extends JpaRepository<ProductEntity, Long> {
     @Modifying
     @Query("UPDATE ProductEntity p SET p.proView = p.proView + 1 WHERE p.productId = :productId")
     int viewup(@Param("productId") Long productId);
+
+
+    Page<ProductEntity> findByProNameContainingOrProInfoContaining(Pageable pageable, String proName, String proinfo);
+
+    //Page<ProductEntity> findByMainInfoContainingOrSubInfoContainingOrDetailInfoContaining(Pageable pageable, String mainInfo, String subInfo, String detailInfo);
+
 }

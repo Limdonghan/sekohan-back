@@ -9,6 +9,8 @@ import java.util.List;
 
 public interface CommentService {
     CommentEntity CommentAdd(String content, ProductEntity productEntity, UserEntity userEntity);
+
     List<CommentGetDTO> CommentList(long productId);
+
     void Commentdelete(long CommentId);
 }

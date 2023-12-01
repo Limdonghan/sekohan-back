@@ -58,7 +58,7 @@ public class MypageServiceImpl implements MypageService {
         List<proImageDTO> result = new ArrayList<>();
         List<Long> seenProductIds = new ArrayList<>();
         for (ProImageEntity image : images) {
-            if (image.getProductEntity().getProStatus() == 2){
+            if (image.getProductEntity().getProStatus() == 2) {
                 if (!seenProductIds.contains(image.getProductEntity().getProductId())) {
                     seenProductIds.add(image.getProductEntity().getProductId());
                     result.add(convertToDTO(image));
@@ -149,16 +149,16 @@ public class MypageServiceImpl implements MypageService {
     }
 */
     private proImageDTO convertToDTO(ProImageEntity image) {
-        proImageDTO proImageDTO = new proImageDTO();
-        proImageDTO.setProductId(image.getProductEntity().getProductId());
-        proImageDTO.setCatId(image.getProductEntity().getCategoryEntity().getCatId());
-        proImageDTO.setProName(image.getProductEntity().getProName());
-        proImageDTO.setProPrice(image.getProductEntity().getProPrice());
-        proImageDTO.setProInfo(image.getProductEntity().getProInfo().substring(0, Math.min(image.getProductEntity().getProInfo().length(), 10)));
-        proImageDTO.setPath(image.getPath());
-        proImageDTO.setCreated_date(image.getProductEntity().getLocalDateTime());
-        proImageDTO.setStatus(image.getProductEntity().getProStatus());
-        return proImageDTO;
+        return proImageDTO.builder().
+                productId(image.getProductEntity().getProductId()).
+                catId(image.getProductEntity().getCategoryEntity().getCatId()).
+                proName(image.getProductEntity().getProName()).
+                proPrice(image.getProductEntity().getProPrice()).
+                proInfo(image.getProductEntity().getProInfo().substring(0, Math.min(image.getProductEntity().getProInfo().length(), 10))).
+                path(image.getPath()).
+                created_date(image.getProductEntity().getLocalDateTime()).
+                status(image.getProductEntity().getProStatus()).
+                build();
     }
 
     public ProductEntity ProductUpload(String proName, int proPrice, String proInfo, CategoryEntity categoryEntity, UserEntity userEntity, List<MultipartFile> files) {

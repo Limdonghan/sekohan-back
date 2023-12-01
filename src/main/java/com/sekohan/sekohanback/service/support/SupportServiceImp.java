@@ -12,10 +12,10 @@ import org.springframework.stereotype.Service;
 @Service
 @Slf4j  //log.info("sdfsdf")  //log.info
 @RequiredArgsConstructor
-public class SupportServiceImp implements SupportService{
-    
+public class SupportServiceImp implements SupportService {
+
     private final SupportRepository supportRepository;
-    
+
     @Override
     public String userSearching(String nickname) {
         String value = supportRepository.findByNicknamecount(nickname);

@@ -23,13 +23,15 @@ public class WishListServiceImpl implements WishListService {
 
     private final WishListrepository wishListrepository;
     private final ProImageRepository proImageRepository;
+
     @Override
     public String WishListAdd(ProductEntity productEntity, UserEntity userEntity) {
 
         if (wishListrepository.findByProductEntityAndUserEntity(productEntity, userEntity).isPresent()) {
             log.info("중복값");
             return "중복값";
-        }try {
+        }
+        try {
             WishListEntity wishListEntity = WishListEntity.builder()
                     .productEntity(productEntity)
                     .userEntity(userEntity)
@@ -56,21 +58,22 @@ public class WishListServiceImpl implements WishListService {
         wishListrepository.deleteById(wishId);
     }
 
-    public WishListDTO wishListDTO(WishListEntity wishList){
-        WishListDTO wishListDTO = new WishListDTO();
-        wishListDTO.setWishListId(wishList.getWishListId());
-        wishListDTO.setLocalDateTime(wishList.getLocalDateTime());
-        wishListDTO.setProductId(wishList.getProductEntity().getProductId());
-        wishListDTO.setUId(wishList.getUserEntity().getUId());
-        wishListDTO.setTitle(wishList.getProductEntity().getProName());
-        wishListDTO.setInfo(wishList.getProductEntity().getProInfo());
-        wishListDTO.setPrice(wishList.getProductEntity().getProPrice());
+    public WishListDTO wishListDTO(WishListEntity wishList) {
+        WishListDTO wishListDTO = WishListDTO.builder().
+                wishListId(wishList.getWishListId()).
+                localDateTime(wishList.getLocalDateTime()).
+                productId(wishList.getProductEntity().getProductId()).
+                uId(wishList.getUserEntity().getUId()).
+                title(wishList.getProductEntity().getProName()).
+                info(wishList.getProductEntity().getProInfo()).
+                price(wishList.getProductEntity().getProPrice())
+                .build();
 
         List<ProImageEntity> proImageEntities = proImageRepository.findproid(wishList.getProductEntity().getProductId());
-                if (!proImageEntities.isEmpty()) {
-                    ProImageEntity proImageEntity = proImageEntities.get(0); // 가장 오래된 항목 선택
-                    wishListDTO.setPath(proImageEntity.getPath());
-                }
+        if (!proImageEntities.isEmpty()) {
+            ProImageEntity proImageEntity = proImageEntities.get(0); // 가장 오래된 항목 선택
+            wishListDTO.setPath(proImageEntity.getPath());
+        }
 
         return wishListDTO;
     }

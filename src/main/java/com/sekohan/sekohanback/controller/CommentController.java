@@ -21,8 +21,8 @@ public class CommentController {
 
     @PostMapping("/insert")
     public CommentEntity CommentAdd(@RequestParam("content") String content,
-                                       @RequestParam("productId") long productId,
-                                       @RequestParam("userId") long userId) {
+                                    @RequestParam("productId") long productId,
+                                    @RequestParam("userId") long userId) {
         ProductEntity productEntity = ProductEntity.builder().productId(productId).build();
         UserEntity userEntity = UserEntity.builder().uId(userId).build();
         return commentService.CommentAdd(content, productEntity, userEntity);

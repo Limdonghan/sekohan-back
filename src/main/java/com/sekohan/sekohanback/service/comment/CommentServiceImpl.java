@@ -15,7 +15,7 @@ import java.util.stream.Collectors;
 
 @Service
 @RequiredArgsConstructor
-public class CommentServiceImpl implements CommentService{
+public class CommentServiceImpl implements CommentService {
 
     private final CommentRepository commentRepository;
 
@@ -38,16 +38,16 @@ public class CommentServiceImpl implements CommentService{
                 .collect(Collectors.toList());
     }
 
-    public CommentGetDTO comgetDTO(CommentEntity comment){
-        CommentGetDTO commentGetDTO = new CommentGetDTO();
+    public CommentGetDTO comgetDTO(CommentEntity comment) {
         LocalDateTime currentDateTime = comment.getLocalDateTime();
         String submittime = currentDateTime.format(DateTimeFormatter.ofPattern("yyyy년MM월dd일 HH시mm분"));
-        commentGetDTO.setCommentId(comment.getCommentId());
-        commentGetDTO.setContent(comment.getContent());
-        commentGetDTO.setLocalDateTime(submittime);
-        commentGetDTO.setUID(comment.getUId().getUId());
-        commentGetDTO.setUsername(comment.getUId().getNickname());
-        return commentGetDTO;
+        return CommentGetDTO.builder().
+                commentId(comment.getCommentId()).
+                content(comment.getContent()).
+                localDateTime(submittime).
+                UID(comment.getUId().getUId()).
+                username(comment.getUId().getNickname()).
+                build();
     }
 
     @Override

@@ -40,7 +40,7 @@ public class MyProductController {
                                        @RequestPart("files") List<MultipartFile> files) {
         CategoryEntity categoryEntity = CategoryEntity.builder().catId(categoryId).build();
         UserEntity userEntity = UserEntity.builder().uId(userId).build();
-        return myproductService.Productupdate(ProductId, proName, proPrice, proInfo,userEntity, categoryEntity ,status, files);
+        return myproductService.Productupdate(ProductId, proName, proPrice, proInfo, userEntity, categoryEntity, status, files);
     }
     //상품 업데이트 URL
 

@@ -23,26 +23,22 @@ public class ProductController {
     }
 
     @GetMapping("/list/{catId}")
-    public Page<proImageDTO> Prolistpage(@PageableDefault(size = 12, sort = "productId", direction = Sort.Direction.DESC) Pageable pageable,
+    public Page<proImageDTO> CatProlistpage(@PageableDefault(size = 12, sort = "productId", direction = Sort.Direction.DESC) Pageable pageable,
                                          @PathVariable long catId) {
         return productService.CatProlistpage(catId, pageable);
     }
 
-
-    /*
-    @GetMapping("/list")
-    public List<proImageDTO> Prolist(){
-        return productService.Prolist();
+    @GetMapping("/list/search/{values}")
+    public Page<proImageDTO> Searchpage(@PageableDefault(size = 12, sort = "productId", direction = Sort.Direction.DESC) Pageable pageable,
+                                         @PathVariable String values){
+        return productService.Searchpage(values, pageable);
     }
-    //상품 리스트 URL
 
-    @GetMapping("/list/{catId}")
-    public List<proImageDTO> CatProList(@PathVariable long catId){
-        return productService.CatProList(catId);
-    }
-    //카테고리 필터 URL
-
-     */
+    /*@GetMapping("/list/addsearch/{values}")
+    public Page<proImageDTO> addSearchpage(@PageableDefault(size = 12, sort = "productId", direction = Sort.Direction.DESC) Pageable pageable,
+                                        @PathVariable String values){
+        return productService.addSearchpage(values, pageable);
+    }*/
 
     @GetMapping("/page/{productId}")
     public ProductGetDTO getProductById(@PathVariable long productId) {
