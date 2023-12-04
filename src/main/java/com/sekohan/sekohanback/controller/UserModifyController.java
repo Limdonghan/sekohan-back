@@ -1,6 +1,6 @@
 package com.sekohan.sekohanback.controller;
 
-import com.sekohan.sekohanback.dto.user.UserModifyDTO;
+import com.sekohan.sekohanback.dto.user.modify.UserModifyDTO;
 import com.sekohan.sekohanback.jwt.service.JwtService;
 import com.sekohan.sekohanback.service.user.modify.UserModifyService;
 import lombok.RequiredArgsConstructor;

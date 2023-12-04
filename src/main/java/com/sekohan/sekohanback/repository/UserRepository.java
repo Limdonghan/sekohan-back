@@ -18,7 +18,7 @@ public interface UserRepository extends JpaRepository<UserEntity, Long> { //<Ent
     // 회원 프로필 사진 변경 때 씀
     @EntityGraph(attributePaths = {"userRole"}, type = EntityGraph.EntityGraphType.LOAD)
     @Query("select m from UserEntity m where m.login=:login")
-    UserEntity findByLogin2(@Param("login") String login);  //UserEntity 조회 시 로그인아이디를 기준으로 조회
+    UserEntity findByLogin2(@Param("login") String login);  //UserEntity 조회 시 아이디를 기준으로 조회
 
 
     @Query("select m from UserEntity m where m.name=:name and m.email=:email ")
@@ -29,8 +29,8 @@ public interface UserRepository extends JpaRepository<UserEntity, Long> { //<Ent
                                         @Param("login") String login,
                                         @Param("name") String name);
 
-    boolean existsByLogin(String s1);  //사용자 로그인아이디 유효성체크
-    boolean existsByNickname(String s2);  //사용자 닉네임 유효성체크
+    boolean existsByLogin(String s1);  //사용자 아이디 유효성 체크
+    boolean existsByNickname(String s2);  //사용자 닉네임 유효성 체크
     boolean existsByEmail (String s3);  //인증번호 전송전에 유효한 이메일인지 체크
     @Query("SELECT m from UserEntity m")
     List<UserEntity> findAll();

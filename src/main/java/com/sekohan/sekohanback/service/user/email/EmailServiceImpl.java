@@ -16,7 +16,6 @@ import java.util.Random;
 @RequiredArgsConstructor
 public class EmailServiceImpl implements EmailService{
 
-
     private final JavaMailSender javaMailSender;
 
     private String authNum;  //인증번호를 저장할 변수

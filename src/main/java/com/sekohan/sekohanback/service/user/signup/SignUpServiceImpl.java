@@ -65,7 +65,6 @@ public class SignUpServiceImpl implements SignUpService {
 
     private String makeFolder(UserSignUpDTO userSignUpDTO){  //파일 생성 메서드
         String name = userSignUpDTO.getLoginId();
-        //String str = LocalDate.now().format(DateTimeFormatter.ofPattern("yyyy/MM/dd"));
         String folderPath = name.replace("//", File.separator);
         File uploadPathFolder = new File(uploadPath, folderPath);
         if (uploadPathFolder.exists() == false) {  //폴더가 존재하면 만들지 생성안함
@@ -85,5 +84,4 @@ public class SignUpServiceImpl implements SignUpService {
     public boolean validNickName(ValidCheckDTO validCheckDTO) {  //사용자 닉네임 유효성 체크 메서드
         return userRepository.existsByNickname(validCheckDTO.getNickname());
     }
-
 }

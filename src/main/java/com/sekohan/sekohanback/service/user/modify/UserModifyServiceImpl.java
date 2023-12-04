@@ -1,8 +1,7 @@
 package com.sekohan.sekohanback.service.user.modify;
 
-import com.sekohan.sekohanback.dto.user.UserModifyDTO;
+import com.sekohan.sekohanback.dto.user.modify.UserModifyDTO;
 import com.sekohan.sekohanback.entity.UserEntity;
-import com.sekohan.sekohanback.jwt.service.JwtService;
 import com.sekohan.sekohanback.repository.UserRepository;
 import com.sekohan.sekohanback.security.repository.UserSecurityRepositoryImpl;
 import lombok.RequiredArgsConstructor;
@@ -19,7 +18,6 @@ import java.nio.file.Paths;
 @RequiredArgsConstructor
 @Slf4j
 public class UserModifyServiceImpl implements UserModifyService{
-    private final JwtService jwtService;
     private final UserRepository userRepository;
     private final UserSecurityRepositoryImpl userSecurityRepository;
 
@@ -30,10 +28,8 @@ public class UserModifyServiceImpl implements UserModifyService{
     @Override
     public void modify(UserModifyDTO userModifyDTO){
         UserEntity user = userSecurityRepository.getUser();
-        log.info("user.getLogin : {}",user.getLogin());
 
         UserEntity result = userRepository.findByLogin2(user.getLogin());
-        log.info("result : {}" , result);
 
         String folderPath=makeFolder();
         String saveName = uploadPath + File.separator + folderPath+File.separator + userModifyDTO.getMultipartFile().getOriginalFilename(); // 새로 저장
@@ -50,10 +46,8 @@ public class UserModifyServiceImpl implements UserModifyService{
             log.info(e.toString());
         }
 
-        if(result.getEmail() != ""){
+        if(result.getEmail() == null){
             UserEntity userEntity = result;
-            log.info(userEntity.toString());
-            //먼저 있는 이미지 지우는 작업
             userEntity.update(userModifyDTO.getNickname(),userModifyDTO.getEmail(), path.toString());
             userRepository.save(userEntity);
         }

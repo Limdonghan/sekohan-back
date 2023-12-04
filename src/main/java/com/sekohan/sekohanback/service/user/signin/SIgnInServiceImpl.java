@@ -46,32 +46,21 @@ public class SIgnInServiceImpl implements SignInService {
     /* Refresh token 으로 Access Token 재생성 */
     @Override
     public JsonWebTokenResponseDTO refresh(String refreshToken) {
-        log.info("--------Access token 재생성--------");
-
         //Refresh Token 검증
         Jws<Claims> claims = jwtService.getClaims(jwtService.extractToken(refreshToken));
-        log.info("JWT<Claims> : {}",claims);
-
-//        Authentication authentication = jwtService.getAuthentication(refreshToken);
-
         if(jwtService.isWrongType(claims, JwtType.REFRESH)) {
             throw TokenTypeException.EXCEPTION;
         }
-
-        /* Redis에 저장된 RefreshToken 값을 가져옴*/
+        /* Redis에 저장된 RefreshToken 값을 가져와서
+        * body에 있는 RefreshToken과 값을 비교 */
         String redisRefreshToken = redisTemplate.opsForValue().get(claims.getBody().getSubject());
 
-        log.info("redisToken : {}",redisRefreshToken);
-
         if(!redisRefreshToken.equals(refreshToken)){
-            log.info("여기 오류 던져");
-             throw TokenTypeException.EXCEPTION;
+             throw TokenTypeException.EXCEPTION; //RefreshToken가 일치하지 않으면 오류 던지기
         }
 
         //AccessToken 재생성
         String accessToken = jwtService.generateAccessToken(claims.getBody().getSubject());
-        log.info("accessToken생성했나? : {}",accessToken);
-
 
         return JsonWebTokenResponseDTO.builder()
                 .accessToken(accessToken).build();

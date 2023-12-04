@@ -8,6 +8,7 @@ import lombok.extern.slf4j.Slf4j;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.crypto.password.PasswordEncoder;
+import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
 
 @RestController
@@ -18,12 +19,13 @@ public class SignUpController {
 
     private final SignUpService signUpService;
     private final PasswordEncoder passwordEncoder;
-
+    
+    // RequestDTO <- @Validated(DTO에서 유효성검사) : 유지보수에 용이함
 
     //회원가입
     @PostMapping("/signup")
     @ResponseStatus(HttpStatus.CREATED)  //회원가입메서드 이니깐 status = 201
-    public ResponseEntity signup(UserSignUpDTO userSignUpDTO){
+    public ResponseEntity signup(@Validated UserSignUpDTO userSignUpDTO){
         String encode = passwordEncoder.encode(userSignUpDTO.getPassword());
         userSignUpDTO.setPassword(encode);
         signUpService.signUp(userSignUpDTO);
@@ -32,7 +34,7 @@ public class SignUpController {
 
     //사용자 ID 유효성 체크
     @PostMapping("/idcheck")
-    public ResponseEntity validIdCheck(@RequestBody ValidCheckDTO validCheckDTO){
+    public ResponseEntity validIdCheck(@Validated @RequestBody ValidCheckDTO validCheckDTO){
         boolean idValid = signUpService.validID(validCheckDTO);
         if(idValid){  //true
             throw new RuntimeException("이미 사용중인 아이디 입니다.");
@@ -43,7 +45,7 @@ public class SignUpController {
 
     /* 사용자 닉네임 유효성 체크 */
     @PostMapping("/nicknamecheck")
-    public ResponseEntity validNicknameCheck(@RequestBody ValidCheckDTO validCheckDTO){
+    public ResponseEntity validNicknameCheck(@Validated @RequestBody ValidCheckDTO validCheckDTO){
         boolean nicknameValid = signUpService.validNickName(validCheckDTO);
         if(nicknameValid){  //true
             throw new RuntimeException("이미 사용중인 닉네임 입니다.");

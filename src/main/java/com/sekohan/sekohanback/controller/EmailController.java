@@ -8,6 +8,7 @@ import com.sekohan.sekohanback.service.user.email.EmailService;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.http.ResponseEntity;
+import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -24,7 +25,7 @@ public class EmailController {
 
     // 회원가입 이메일 인증 - 요청 시 body로 인증번호 반환하도록 작성하였음
     @PostMapping("/send")
-    public ResponseEntity sendJoinMail(@RequestBody EmailPostDTO emailPostDto) { //클라이언트로부터 전달된 EmilPostDto객체를 요청의 본문에서 읽어옴
+    public ResponseEntity sendJoinMail(@Validated @RequestBody EmailPostDTO emailPostDto) { //클라이언트로부터 전달된 EmilPostDto객체를 요청의 본문에서 읽어옴
         EmailMessageDTO emailMessage = EmailMessageDTO.builder()  //객체 생성, 수신자 이메일 주소와 이메일 제목을 설정
                 .to(emailPostDto.getEmail())  //수신자 이메일 주소
                 .subject("이메일 인증을 위한 인증 코드 발송")
@@ -41,7 +42,7 @@ public class EmailController {
     }
 
     @PostMapping("/check")
-    public ResponseEntity checkCode(@RequestBody EmailCodeCheckDTO emailCodeCheckDto) {
+    public ResponseEntity checkCode(@Validated @RequestBody EmailCodeCheckDTO emailCodeCheckDto) {
         String userInput = emailCodeCheckDto.getCode();  //사용자가 입력한 코드를 emailCheckDto의 code속성을 통해 받음
 
         if (emailService.checkCode(userInput)) {  //인증번호 일치여부 확인

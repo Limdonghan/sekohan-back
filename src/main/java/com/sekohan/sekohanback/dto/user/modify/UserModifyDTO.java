@@ -1,4 +1,4 @@
-package com.sekohan.sekohanback.dto.user;
+package com.sekohan.sekohanback.dto.user.modify;
 
 import lombok.*;
 import org.springframework.web.multipart.MultipartFile;

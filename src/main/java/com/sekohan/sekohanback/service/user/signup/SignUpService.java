@@ -12,9 +12,4 @@ public interface SignUpService {
 
     //사용자 이메일 유효성 체크 서비스
     boolean validNickName(ValidCheckDTO userNicknameCheck);
-
-
-//    api/cheker -> query string (condition == 1 || 2) -> Controller (값을 다 담아서)
-//    -> Service condition == 1 ?  return userRepository.existsByLogin(userIdCheck.getLoginId()) :  return userRepository.existsByNickname(userNicknameValidCheck.getNickname());
-
 }

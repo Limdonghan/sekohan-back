@@ -1,7 +1,6 @@
 package com.sekohan.sekohanback.entity;
 
 import jakarta.persistence.*;
-import jakarta.validation.constraints.Email;
 import lombok.*;
 import org.hibernate.annotations.ColumnDefault;
 
@@ -18,20 +17,19 @@ public class UserEntity {
     @SequenceGenerator(name = "SEQ_USER", sequenceName = "SEQUENCE_USER", allocationSize = 1) // 인덱스값 다른 조합으로 하고 싶으면 지우셈
     private long uId;
 
-    @Column(unique = true)  //NotNull
+    @Column(nullable = false, unique = true)  //NotNull
     private String login;
 
     @Column(nullable = false)
     private String password;
 
-    @Column(unique = true)
-    @Email
+    @Column(unique = true, nullable = true)
     private String email;
 
-    @Column(nullable = false)
+    @Column(nullable = true)
     private String name;
 
-    @Column(unique = true)
+    @Column(nullable = false, unique = true)
     private String nickname;
 
     @ColumnDefault("0")  //default 0
@@ -49,5 +47,8 @@ public class UserEntity {
         this.nickname=nickname;
         this.email=email;
         this.path = path;
+    }
+    public void pwUpdate(String password) {
+        this.password = password;
     }
 }

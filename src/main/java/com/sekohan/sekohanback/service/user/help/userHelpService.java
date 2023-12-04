@@ -14,11 +14,11 @@ public interface userHelpService  {
     String findLogin (UserIdHelpDTO userIdHelpDTO);
 
     @Transactional
-    String findPassword (UserPwHelpDTO userPwHelpDTO);
+    void findPassword (UserPwHelpDTO userPwHelpDTO);
 
     @Transactional
     boolean validEmail(ValidCheckDTO validCheckDTO);
 
     @Transactional
-    String passwordChange(UserPwChangeDTO userPwChangeDTO);
+    String passwordChange(UserPwChangeDTO userPwChangeDTO, String login);
 }

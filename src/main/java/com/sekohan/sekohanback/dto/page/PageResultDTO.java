@@ -28,6 +28,7 @@ public class PageResultDTO<DTO, EN> {   //페이지 결과 처리 DTO <dto, enti
 
     //현재 페이지 번호
     private int page;
+
     //목록 사이즈
     private int size;
 

@@ -1,6 +1,6 @@
 package com.sekohan.sekohanback.service.user.modify;
 
-import com.sekohan.sekohanback.dto.user.UserModifyDTO;
+import com.sekohan.sekohanback.dto.user.modify.UserModifyDTO;
 import com.sekohan.sekohanback.entity.UserEntity;
 
 public interface UserModifyService {
