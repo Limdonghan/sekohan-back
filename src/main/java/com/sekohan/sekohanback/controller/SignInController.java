@@ -8,6 +8,7 @@ import com.sekohan.sekohanback.service.user.signin.SignInService;
 import com.sekohan.sekohanback.service.user.signout.SignOutService;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
+import org.springframework.http.ResponseEntity;
 import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
@@ -26,22 +27,18 @@ public class SignInController {
 
     @PostMapping("/signin")
     public JsonWebTokenResponseDTO auth(@Validated @RequestBody UserSignInDTO userSignInDTO) {
-        log.info("--------SigninController--------");
-
         return signInService.auth(userSignInDTO);
     }
 
     @PostMapping("/refresh")
     public JsonWebTokenResponseDTO refresh(@Validated @RequestBody RefreshTokenRequest refreshTokenRequest){
-        log.info("들어옴?");
-
         return signInService.refresh(refreshTokenRequest.getRefreshToken());
     }
 
-    @PostMapping("/out")
-    public void logout(@Validated @RequestBody AccessTokenBlackListDTO accessTokenBlackListDTO)
-    {
+    @PostMapping("/logout")
+    public ResponseEntity logout(@Validated @RequestBody AccessTokenBlackListDTO accessTokenBlackListDTO) {
         signOutService.logout(accessTokenBlackListDTO.getAccessToken());
+        return ResponseEntity.ok("Logout Success");
     }
 
 

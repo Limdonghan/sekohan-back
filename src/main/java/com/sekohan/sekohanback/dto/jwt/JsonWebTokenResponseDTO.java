@@ -8,6 +8,7 @@ import lombok.Setter;
 @Getter
 @Builder
 public class JsonWebTokenResponseDTO {
+    private String message;
     private String accessToken;
     private String refreshToken;
 }

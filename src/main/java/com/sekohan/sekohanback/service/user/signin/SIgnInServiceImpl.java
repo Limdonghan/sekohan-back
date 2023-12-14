@@ -38,6 +38,7 @@ public class SIgnInServiceImpl implements SignInService {
         log.info("User정보 : {}",user);
 
         return JsonWebTokenResponseDTO.builder()
+                .message("Login Success")
                 .accessToken(jwtService.generateAccessToken(user.getLogin()))   //로그인 정보를 가지고 액세트 토큰 생성
                 .refreshToken(jwtService.generateRefreshToken(user.getLogin()))  //로그인 정보를 가지고 리프레쉬 토큰 생성
                 .build();

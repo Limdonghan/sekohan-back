@@ -37,7 +37,6 @@ public class EmailController {
         //EmailResponseDto 객체를 생성하고, 이메일로 전송된 인증 코드를 이 객체에 설정합니다.
         EmailResponseDTO emailResponseDto = new EmailResponseDTO();
         emailResponseDto.setCode(code);
-        log.info("이메일 인증코드 : {}",code);
         return ResponseEntity.ok(emailResponseDto); //객체와 함께 200 OK 상태 코드를 클라이언트에 반환
     }
 

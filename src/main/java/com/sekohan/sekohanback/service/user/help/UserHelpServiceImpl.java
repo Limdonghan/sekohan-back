@@ -7,7 +7,6 @@ import com.sekohan.sekohanback.dto.user.valid.ValidCheckDTO;
 import com.sekohan.sekohanback.entity.UserEntity;
 import com.sekohan.sekohanback.exception.NotFoundUserException;
 import com.sekohan.sekohanback.repository.UserRepository;
-import com.sekohan.sekohanback.security.repository.UserSecurityRepositoryImpl;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.security.crypto.password.PasswordEncoder;
@@ -17,11 +16,10 @@ import org.springframework.transaction.annotation.Transactional;
 @Service
 @RequiredArgsConstructor
 @Slf4j
-public class userHelpServiceImpl implements userHelpService { //유저 계정찾기 서비스
+public class UserHelpServiceImpl implements UserHelpService { //유저 계정찾기 서비스
 
     private final UserRepository userRepository;
     private final PasswordEncoder passwordEncoder;
-    private final UserSecurityRepositoryImpl userSecurityRepository;
     
     /*아이디찾기 : 이름, 이메일 입력 -> 이메일 인증 -> 이메일 유효성 확인 ->
      인증번호 전송 -> 인증번호 체크 -> 확인버튼클릭 -> 입력한 이름,이메일로 DB 비교 ->
@@ -62,23 +60,13 @@ public class userHelpServiceImpl implements userHelpService { //유저 계정찾
         * 본인인증이 완료되면 유저의 비밀번호 변경 URL로 이동
         * */
 
-
-//        login = userSecurityRepository.getUser().getLogin();
-//        log.info("login : {}", login);
-
         UserEntity byLogin2 = userRepository.findByLogin2(login);
-        log.info("byLogin2 : {}", byLogin2);
 
         String encode = passwordEncoder.encode(userPwChangeDTO.getPassword2());
-        log.info("encode : {}", encode);
 
         if(byLogin2.getEmail() != null){
             UserEntity byLogin21 = byLogin2;
-            log.info("byLogin21333 : {}", byLogin21);
-
             byLogin21.pwUpdate(encode);
-            log.info("byLogin21444 : {}", byLogin21);
-
             userRepository.save(byLogin21);
         }
         return encode;

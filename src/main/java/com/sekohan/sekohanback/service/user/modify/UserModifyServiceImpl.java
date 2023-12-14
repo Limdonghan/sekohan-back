@@ -1,6 +1,7 @@
 package com.sekohan.sekohanback.service.user.modify;
 
 import com.sekohan.sekohanback.dto.user.modify.UserModifyDTO;
+import com.sekohan.sekohanback.dto.user.modify.UserViewDTO;
 import com.sekohan.sekohanback.entity.UserEntity;
 import com.sekohan.sekohanback.repository.UserRepository;
 import com.sekohan.sekohanback.security.repository.UserSecurityRepositoryImpl;
@@ -27,6 +28,7 @@ public class UserModifyServiceImpl implements UserModifyService{
     /* 회원이 회원수정을 누르면 토크으로 회원정보를 검색해서 일치하는 회원의 정보를 표시*/
     @Override
     public void modify(UserModifyDTO userModifyDTO){
+
         UserEntity user = userSecurityRepository.getUser();
 
         UserEntity result = userRepository.findByLogin2(user.getLogin());
@@ -35,7 +37,6 @@ public class UserModifyServiceImpl implements UserModifyService{
         String saveName = uploadPath + File.separator + folderPath+File.separator + userModifyDTO.getMultipartFile().getOriginalFilename(); // 새로 저장
         Path path = Paths.get(saveName);
         String originalProfilePath = result.getPath();
-
         try {
             File file = new File(originalProfilePath);
             if (file.exists()) {
@@ -48,15 +49,24 @@ public class UserModifyServiceImpl implements UserModifyService{
 
         if(result.getEmail() == null){
             UserEntity userEntity = result;
-            userEntity.update(userModifyDTO.getNickname(),userModifyDTO.getEmail(), path.toString());
+            userEntity.update(userModifyDTO.getNickname(),userModifyDTO.getEmail());
+            userEntity.pathUpdate(path.toString());
             userRepository.save(userEntity);
         }
     }
 
     @Override
-    public UserEntity getList(Long id){
-        UserEntity byUId = userRepository.findByUId(id);
-        return byUId;
+    public UserViewDTO getList(){
+        String userId = userSecurityRepository.getUser().getLogin();
+        UserEntity userEntity = userRepository.findByLogin2(userId);
+        return UserViewDTO.builder()
+                .email(userEntity.getEmail())
+                .name(userEntity.getName())
+                .login(userEntity.getLogin())
+                .nickname(userEntity.getNickname())
+                .path(userEntity.getPath())
+                .build();
+
     }
 
     private String makeFolder(){  //파일 생성 메서드

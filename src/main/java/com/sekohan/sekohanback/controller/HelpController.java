@@ -9,7 +9,7 @@ import com.sekohan.sekohanback.dto.user.help.UserIdHelpDTO;
 import com.sekohan.sekohanback.dto.user.help.UserPwHelpDTO;
 import com.sekohan.sekohanback.dto.user.valid.ValidCheckDTO;
 import com.sekohan.sekohanback.service.user.email.EmailService;
-import com.sekohan.sekohanback.service.user.help.userHelpService;
+import com.sekohan.sekohanback.service.user.help.UserHelpService;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.http.ResponseEntity;
@@ -22,19 +22,19 @@ import org.springframework.web.bind.annotation.*;
 @Slf4j
 public class HelpController {
 
-    private final userHelpService userHelpService;
+    private final UserHelpService userHelpService;
     private final EmailService emailService;
 
     /* 유저 아이디 찾기 컨트롤러 */
     @PostMapping("/id")
     public ResponseEntity findID(@RequestBody @Validated UserIdHelpDTO userIdHelpDTO){
         String login = userHelpService.findLogin(userIdHelpDTO);
-        return ResponseEntity.ok("아이디 찾기 : " + login);
+        return ResponseEntity.ok(userIdHelpDTO.getName()+"님의 아이디 : " + login);
 
     }
 
-    /* 유저 비밀번호 찾기 컨트롤러 */
-    @GetMapping("/pw")
+    /* 유저 비밀번호 찾기전 유저 확인 컨트롤러 */
+    @PostMapping("/pw")
     public ResponseEntity findPW(@RequestBody UserPwHelpDTO userPwHelpDTO){
         userHelpService.findPassword(userPwHelpDTO);
         return ResponseEntity.ok("비밀번호 변경하러가기");
@@ -44,13 +44,13 @@ public class HelpController {
     @PatchMapping("/pwChange/{login}")   //비밀번호 변경
     public ResponseEntity pwChange(@Validated @RequestBody UserPwChangeDTO userPwChangeDTO,
                                    @PathVariable String login){
-        return ResponseEntity.ok(userHelpService.passwordChange(userPwChangeDTO,login));
+        userHelpService.passwordChange(userPwChangeDTO,login);
+        return ResponseEntity.ok("Password Change Success");
     }
 
     /* 유저 확인 컨트롤러 */
     @PostMapping("/emailCheck")
     public ResponseEntity validEmailCheck(@RequestBody @Validated ValidCheckDTO validCheckDTO){
-        log.info("이메일 유효성 체크");
         boolean emailValid = userHelpService.validEmail(validCheckDTO);
         if(emailValid){  //true 이메일이 존재하면 인증번호 전송
             EmailMessageDTO emailMessageDTO = EmailMessageDTO.builder()

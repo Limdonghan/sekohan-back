@@ -18,10 +18,10 @@ public class PageResultDTO<DTO, EN> {   //페이지 결과 처리 DTO <dto, enti
     * Page<Entity>의 엔티티 객체들을 DTO 객체로 변환
     * 화면 출력에 필요한 페이지 정보들을 구성*/
     public PageResultDTO(Page<EN> result, Function<EN, DTO> fn){
-        dtoList = result.stream().map(fn).collect(Collectors.toList());
+        list = result.stream().map(fn).collect(Collectors.toList());
     }
     //DTO리스트
-    private List<DTO> dtoList;
+    private List<DTO> list;
 
     //총 페이지 번호
     private int totalPage;
