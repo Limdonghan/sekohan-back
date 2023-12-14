@@ -34,11 +34,11 @@ public class ProductController {
         return productService.Searchpage(values, pageable);
     }
 
-    /*@GetMapping("/list/addsearch/{values}")
+    @GetMapping("/list/addsearch/{values}")
     public Page<proImageDTO> addSearchpage(@PageableDefault(size = 12, sort = "productId", direction = Sort.Direction.DESC) Pageable pageable,
                                         @PathVariable String values){
         return productService.addSearchpage(values, pageable);
-    }*/
+    }
 
     @GetMapping("/page/{productId}")
     public ProductGetDTO getProductById(@PathVariable long productId) {
@@ -46,9 +46,4 @@ public class ProductController {
     }
     //상품 상세 페이지 URL
 
-    @DeleteMapping("/delete/{productId}")
-    public void deleteProduct(@PathVariable long productId) {
-        productService.Productdelete(productId);
-    }
-    //재품 삭제 URL
 }

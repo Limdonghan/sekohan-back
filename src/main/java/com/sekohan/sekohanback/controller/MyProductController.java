@@ -57,4 +57,10 @@ public class MyProductController {
     }
     //상품 업로드 URL
 
+    @DeleteMapping("/delete/{productId}")
+    public void deleteProduct(@PathVariable long productId) {
+        myproductService.Productdelete(productId);
+    }
+    //재품 삭제 URL
+
 }

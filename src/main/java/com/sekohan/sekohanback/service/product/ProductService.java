@@ -13,11 +13,9 @@ public interface ProductService {
 
     Page<proImageDTO> Searchpage(String values, Pageable pageable);
 
-    /*Page<proImageDTO> addSearchpage(String values, Pageable pageable);*/
+    Page<proImageDTO> addSearchpage(String values, Pageable pageable);
 
     ProductGetDTO ProductInfo(long productId);
 
-
-    void Productdelete(long productId);
 
 }

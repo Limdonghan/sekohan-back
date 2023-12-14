@@ -24,7 +24,7 @@ public class AddressEntity {
     @Column(nullable = false)
     private String detailInfo;
 
-    @ManyToOne
+    @OneToOne
     @JoinColumn(name = "uId")
     private UserEntity userEntity;
 }

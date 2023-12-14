@@ -36,4 +36,8 @@ public class UserEntity {
     @Column(nullable = false)
     private int report;
 
+    @OneToOne
+    @JoinColumn(name = "TB_Address")
+    private AddressEntity addressEntity;
+
 }

@@ -7,7 +7,7 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.web.bind.annotation.*;
 
 @RestController
-@RequestMapping("/sup")
+@RequestMapping("/declaration")
 @RequiredArgsConstructor
 public class UserSupportController {
 

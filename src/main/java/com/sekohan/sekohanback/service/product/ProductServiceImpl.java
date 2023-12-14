@@ -2,10 +2,7 @@ package com.sekohan.sekohanback.service.product;
 
 import com.sekohan.sekohanback.dto.ProductGetDTO;
 import com.sekohan.sekohanback.dto.proImageDTO;
-import com.sekohan.sekohanback.entity.CommentEntity;
 import com.sekohan.sekohanback.entity.ProductEntity;
-import com.sekohan.sekohanback.entity.ServiceEntity;
-import com.sekohan.sekohanback.entity.WishListEntity;
 import com.sekohan.sekohanback.entity.img.ProImageEntity;
 import com.sekohan.sekohanback.repository.*;
 import lombok.RequiredArgsConstructor;
@@ -15,7 +12,6 @@ import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 
-import java.io.File;
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
@@ -30,9 +26,6 @@ public class ProductServiceImpl implements ProductService {
     String uploadDir;
     private final ProductRepository productRepository;
     private final ProImageRepository proImageRepository;
-    private final WishListrepository wishListrepository;
-    private final CommentRepository commentRepository;
-    private final SupportRepository supportRepository;
 
     public Page<proImageDTO> Prolistpage(Pageable pageable) {
         Page<ProductEntity> products = productRepository.findAll(pageable);
@@ -48,16 +41,17 @@ public class ProductServiceImpl implements ProductService {
 
     @Override
     public Page<proImageDTO> Searchpage(String searchvalues, Pageable pageable) {
-        Page<ProductEntity> products = productRepository.findByProNameContainingOrProInfoContaining(pageable, searchvalues, searchvalues);
+        Page<ProductEntity> products = productRepository.
+                findByProNameContainingOrProInfoContaining(pageable, searchvalues, searchvalues);
         return products.map(this::convertToDTO);
     }
 
-    /*@Override
+    @Override
     public Page<proImageDTO> addSearchpage(String searchvalues, Pageable pageable) {
         Page<ProductEntity> products = productRepository.
-                findByMainInfoContainingOrSubInfoContainingOrDetailInfoContaining(pageable, searchvalues,searchvalues,searchvalues);
+                findByaddressProducts(pageable, searchvalues);
         return products.map(this::convertToDTO);
-    }*/
+    }
 
     private proImageDTO convertToDTO(ProductEntity product) {
         proImageDTO proImageDTO = com.sekohan.sekohanback.dto.proImageDTO.builder().
@@ -112,32 +106,5 @@ public class ProductServiceImpl implements ProductService {
     }
     //상품 상세정보 코드
 
-    public void Productdelete(long productId) {
-        List<ProImageEntity> existingImages = proImageRepository.getPro_imgId(productId);
-        for (ProImageEntity existingImage : existingImages) {
-            proImageRepository.delete(existingImage);
-            String imagePath = existingImage.getPath();
-            String fullImagePath = uploadDir + File.separator + imagePath;
-
-            File imageFile = new File(fullImagePath);
-            //저장되어있는 이미지파일 삭제
-            if (imageFile.exists()) {
-                boolean deleted = imageFile.delete();
-            }
-            List<WishListEntity> wishdelete = wishListrepository.getproId(productId);
-            for (WishListEntity wishdelet : wishdelete) {
-                wishListrepository.delete(wishdelet);
-            }
-            List<CommentEntity> commentDelete = commentRepository.getproId(productId);
-            for (CommentEntity commentDelet : commentDelete) {
-                commentRepository.delete(commentDelet);
-            }
-            List<ServiceEntity> reportDelete = supportRepository.getproid(productId);
-            for (ServiceEntity serviceEntity : reportDelete)
-                supportRepository.delete(serviceEntity);
-            //상품 지우기전에 상품 productid를 참고하는 모든테이블의 값 삭제.
-            productRepository.deleteById(productId);
-        }
-    }
 
 }

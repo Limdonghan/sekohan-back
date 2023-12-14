@@ -24,6 +24,12 @@ public interface ProductRepository extends JpaRepository<ProductEntity, Long> {
 
     Page<ProductEntity> findByProNameContainingOrProInfoContaining(Pageable pageable, String proName, String proinfo);
 
-    //Page<ProductEntity> findByMainInfoContainingOrSubInfoContainingOrDetailInfoContaining(Pageable pageable, String mainInfo, String subInfo, String detailInfo);
+
+    @Query("SELECT p FROM ProductEntity p WHERE " +
+            "p.userEntity.addressEntity.mainInfo LIKE %:Info% OR " +
+            "p.userEntity.addressEntity.subInfo LIKE %:Info% OR " +
+            "p.userEntity.addressEntity.detailInfo LIKE %:Info%")
+    Page<ProductEntity> findByaddressProducts(Pageable pageable,
+                                              @Param("Info") String Info);
 
 }

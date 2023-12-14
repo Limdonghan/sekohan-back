@@ -50,7 +50,7 @@ public class QAddressEntity extends EntityPathBase<AddressEntity> {
 
     public QAddressEntity(Class<? extends AddressEntity> type, PathMetadata metadata, PathInits inits) {
         super(type, metadata, inits);
-        this.userEntity = inits.isInitialized("userEntity") ? new QUserEntity(forProperty("userEntity")) : null;
+        this.userEntity = inits.isInitialized("userEntity") ? new QUserEntity(forProperty("userEntity"), inits.get("userEntity")) : null;
     }
 
 }

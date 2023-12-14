@@ -17,4 +17,6 @@ public interface MypageService {
     ProductEntity Productupdate(long productId, String proName, int proPrice, String proInfo, UserEntity userEntity, CategoryEntity categoryEntity, byte status, List<MultipartFile> files);
 
     ProductEntity ProductUpload(String proName, int proPrice, String proInfo, CategoryEntity categoryEntity, UserEntity userEntity, List<MultipartFile> files);
+
+    void Productdelete(long productId);
 }
