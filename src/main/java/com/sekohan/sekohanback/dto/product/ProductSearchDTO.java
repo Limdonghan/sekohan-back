@@ -7,11 +7,10 @@ import lombok.*;
 @Builder
 @NoArgsConstructor //
 @AllArgsConstructor //
-public class ProductDTO {
-
+public class ProductSearchDTO {
     private String proName;
     private int proPrice;
-    private String createdDate;
-    private String name;
-    private String proStatus;
+    private int proView;
+    private String proDate;
+    private String state;
 }

@@ -7,6 +7,6 @@ import lombok.*;
 @AllArgsConstructor //
 @Getter
 @Setter
-public class BannerDTO {
+public class MainPageBannerDTO {
     private String path;
 }
