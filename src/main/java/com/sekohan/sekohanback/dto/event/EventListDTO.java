@@ -11,6 +11,7 @@ import java.time.LocalDateTime;
 @Setter
 public class EventListDTO {
     private long eid;
+    private String name;
     private String uuid;
     private String path;
     private LocalDateTime localDateTime;

@@ -1,12 +1,12 @@
-package com.sekohan.sekohanback.service.user.view;
+package com.sekohan.sekohanback.service.product;
 
 import com.querydsl.core.BooleanBuilder;
 import com.querydsl.core.types.dsl.BooleanExpression;
 import com.sekohan.sekohanback.dto.page.PageRequestDTO;
 import com.sekohan.sekohanback.dto.page.PageResultDTO;
-import com.sekohan.sekohanback.dto.user.list.UserListDTO;
-import com.sekohan.sekohanback.entity.UserEntity;
-import com.sekohan.sekohanback.repository.UserRepository;
+import com.sekohan.sekohanback.dto.product.ProductDTO;
+import com.sekohan.sekohanback.entity.ProductEntity;
+import com.sekohan.sekohanback.repository.ProductRepository;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.data.domain.Page;
@@ -16,20 +16,20 @@ import org.springframework.stereotype.Service;
 
 import java.util.function.Function;
 
-import static com.sekohan.sekohanback.entity.QUserEntity.userEntity;
+import static com.sekohan.sekohanback.entity.QProductEntity.productEntity;
 
 @Service
 @RequiredArgsConstructor
 @Slf4j
-public class UserViewServiceImpl implements UserViewService{
-    private final UserRepository userRepository;
+public class ProServiceImpl implements ProService {
+    private final ProductRepository productRepository;
 
     @Override
-    public PageResultDTO<UserListDTO, UserEntity> getList(PageRequestDTO pageRequestDTO){
-        Pageable pageable = pageRequestDTO.getPageable(Sort.by("uId").ascending());
+    public PageResultDTO<ProductDTO, ProductEntity> getList(PageRequestDTO pageRequestDTO) {
+        Pageable pageable = pageRequestDTO.getPageable(Sort.by("productId").ascending());
         BooleanBuilder booleanBuilder = getSearch(pageRequestDTO);
-        Page<UserEntity> page = userRepository.findAll(booleanBuilder,pageable);
-        Function<UserEntity, UserListDTO> fn= userEntity -> entityToDTO(userEntity);
+        Page<ProductEntity> page = productRepository.findAll(booleanBuilder, pageable);
+        Function<ProductEntity, ProductDTO> fn = productEntitys -> entityToDTO(productEntitys);
         return new PageResultDTO<>(page,fn);
     }
 
@@ -37,21 +37,18 @@ public class UserViewServiceImpl implements UserViewService{
         String type = requestDTO.getType();
         String keyword = requestDTO.getKeyword();
         BooleanBuilder builder = new BooleanBuilder();
-        BooleanExpression expression = userEntity.uId.gt(1);
+        BooleanExpression expression = productEntity.productId.gt(1);
         builder.and(expression);
         if(type == null || type.trim().length() == 0){
             return builder;
         }
 
         BooleanBuilder conditionBuilder = new BooleanBuilder();
-        if(type.contains("login")){
-            conditionBuilder.or(userEntity.login.contains(keyword));
+        if(type.contains("proName")){
+            conditionBuilder.or(productEntity.proName.contains(keyword));
         }
-        if(type.contains("nickname")){
-            conditionBuilder.or(userEntity.nickname.contains(keyword));
-        }
-        if(type.contains("name")){
-            conditionBuilder.or(userEntity.name.contains(keyword));
+        if (type.contains("name")){
+            conditionBuilder.or(productEntity.userEntity.name.contains(keyword));
         }
         return builder.and(conditionBuilder);
     }

@@ -22,6 +22,9 @@ public class EventEntity {
     private long eid;
 
     @Column(nullable = false)
+    private String name;
+
+    @Column(nullable = false)
     private String path;
 
     @Column(nullable = false)

@@ -9,17 +9,15 @@ public interface UserViewService {
 
     default UserListDTO entityToDTO(UserEntity userEntity){
         UserListDTO build = UserListDTO.builder()
-                .uid(userEntity.getUId())
                 .login(userEntity.getLogin())
-                .password(userEntity.getPassword())
                 .email(userEntity.getEmail())
                 .name(userEntity.getName())
                 .nickname(userEntity.getNickname())
-                .path(userEntity.getPath())
                 .report(String.valueOf(userEntity.getReport()))
                 .build();
         return build;
 
     }
     PageResultDTO<UserListDTO, UserEntity> getList(PageRequestDTO pageRequestDTO);
+
 }

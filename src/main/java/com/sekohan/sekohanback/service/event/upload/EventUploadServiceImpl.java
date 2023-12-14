@@ -1,5 +1,6 @@
 package com.sekohan.sekohanback.service.event.upload;
 
+import com.sekohan.sekohanback.dto.event.BannerNameDTO;
 import com.sekohan.sekohanback.entity.EventEntity;
 import com.sekohan.sekohanback.repository.EventRepository;
 import lombok.RequiredArgsConstructor;
@@ -28,13 +29,11 @@ public class EventUploadServiceImpl implements EventUploadService{
     String uploadPath;
 
 
-
-
     @Override
     @Transactional(rollbackFor = Exception.class)  //오류나면 롤백
-    public void uploadFile(MultipartFile uploadFiles) throws Exception {
-        log.info("파일업로드");
-            if (uploadFiles.getContentType().startsWith("image") == false) {
+    public void uploadFile(MultipartFile uploadFiles, BannerNameDTO bannerNameDTO) throws Exception {
+
+        if (!uploadFiles.getContentType().startsWith("image/")) {
                 throw new Exception("잘못된 파일 형식 입니다.");
             }
             String originalFilename=uploadFiles.getOriginalFilename();
@@ -45,13 +44,12 @@ public class EventUploadServiceImpl implements EventUploadService{
             String folderPath = makeFolder();  //폴더 생성
             String uuid = UUID.randomUUID().toString();  //UUID 생성
             String saveName = uploadPath + File.separator +folderPath+File.separator+ uuid+"_"+fileName; //이미지 파일 이름
-            log.info("uploadfile : {}",uploadPath);
             Path path = Paths.get(saveName);
-            log.info("path : {}",path);
             try {
                 uploadFiles.transferTo(path);
                 eventRepository.save(
                         EventEntity.builder()
+                                .name(bannerNameDTO.getBannerName())
                                 .path(saveName)
                                 .uuid(uuid)
                                 .build()
@@ -59,15 +57,11 @@ public class EventUploadServiceImpl implements EventUploadService{
             } catch (IOException e) {
                 log.info(e.toString());
             }
-            log.info("리턴");
     }
     private String makeFolder(){  //파일 생성 메서드
         String str = LocalDate.now().format(DateTimeFormatter.ofPattern("yyyy/MM/dd"));
-        log.info("날짜 생성 : {}",str);
         String folderPath = str.replace("//", File.separator);
-        log.info("폴더 생성 : {}",folderPath);
         File uploadPathFolder = new File(uploadPath, folderPath);
-        log.info("업로드 경로 폴더 : {}",uploadPathFolder);
         if (uploadPathFolder.exists() == false) {
             uploadPathFolder.mkdirs();
         }
