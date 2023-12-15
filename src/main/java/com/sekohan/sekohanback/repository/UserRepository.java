@@ -9,7 +9,8 @@ import org.springframework.data.repository.query.Param;
 
 import java.util.Optional;
 
-public interface UserRepository extends JpaRepository<UserEntity, Long>, QuerydslPredicateExecutor<UserEntity> { //<Entity 클래스명, ID의 타입>을 명시
+public interface UserRepository extends JpaRepository<UserEntity, Long>,
+        QuerydslPredicateExecutor<UserEntity> { //<Entity 클래스명, ID의 타입>을 명시
 
     @EntityGraph(attributePaths = {"userRole"}, type = EntityGraph.EntityGraphType.LOAD)
     @Query("select m from UserEntity m where m.login=:login")

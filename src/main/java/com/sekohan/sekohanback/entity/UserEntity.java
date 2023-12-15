@@ -43,11 +43,9 @@ public class UserEntity {
     @Column(nullable = false)
     private UserRole userRole;
 
-    public void update(String nickname, String email) {
+    public void update(String nickname, String email, String path) {
         this.nickname=nickname;
         this.email=email;
-    }
-    public void pathUpdate(String path){
         this.path=path;
     }
     public void pwUpdate(String password) {

@@ -5,10 +5,8 @@ import com.sekohan.sekohanback.service.user.modify.UserModifyService;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PutMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
+import org.springframework.web.multipart.MultipartFile;
 
 @RestController
 @Slf4j
@@ -24,8 +22,9 @@ public class UserModifyController {
     }
 
     @PutMapping("/update")
-    public ResponseEntity update(UserModifyDTO userModifyDTO){
-        userModifyService.modify(userModifyDTO);
-        return ResponseEntity.ok(userModifyDTO);
+    public ResponseEntity update(UserModifyDTO userModifyDTO,
+                                 @RequestParam("multipartFile") MultipartFile multipartFile){
+        userModifyService.modify(userModifyDTO, multipartFile);
+        return ResponseEntity.ok("수정 완료");
     }
 }

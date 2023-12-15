@@ -37,9 +37,10 @@ public class SignUpServiceImpl implements SignUpService {
             profilePath = bassicsPath.concat(File.separator+"basics.png");
         }
         else {
-            if (userSignUpDTO.getMultipartFile().getContentType().startsWith("image") == false) {
+            if (!userSignUpDTO.getMultipartFile().getContentType().startsWith("image/")) {
 //                throw new Exception("잘못된 파일 형식 입니다.");
             }
+
             String folderPath=makeFolder(userSignUpDTO);  //폴더생성
             String saveName = uploadPath + File.separator + folderPath+File.separator + userSignUpDTO.getMultipartFile().getOriginalFilename();
             Path path = Paths.get(saveName);

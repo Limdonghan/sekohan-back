@@ -1,8 +1,10 @@
 package com.sekohan.sekohanback.controller;
 
 import com.sekohan.sekohanback.dto.event.BannerNameDTO;
+import com.sekohan.sekohanback.dto.event.EventModifyDTO;
 import com.sekohan.sekohanback.dto.page.PageRequestDTO;
 import com.sekohan.sekohanback.service.event.delete.EventDeleteService;
+import com.sekohan.sekohanback.service.event.modify.EventModifyService;
 import com.sekohan.sekohanback.service.event.upload.EventUploadService;
 import com.sekohan.sekohanback.service.event.view.EventViewService;
 import com.sekohan.sekohanback.service.product.ProService;
@@ -10,6 +12,7 @@ import com.sekohan.sekohanback.service.user.view.UserViewService;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.http.ResponseEntity;
+import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
 
@@ -22,6 +25,7 @@ public class AdminController {
     private final EventUploadService eventUploadService;
     private final EventViewService eventViewService;
     private final EventDeleteService eventDeleteService;
+    private final EventModifyService eventModifyService;
     private final UserViewService userViewService;
     private final ProService proService;
 
@@ -44,6 +48,14 @@ public class AdminController {
     @GetMapping("/eventlist")
     public ResponseEntity eventList(PageRequestDTO pageRequestDTO){
         return ResponseEntity.ok(eventViewService.getList(pageRequestDTO));
+    }
+
+    /* 이벤트 수정 */
+    @PutMapping("/update")
+    public ResponseEntity update(@RequestParam("multipartFile") MultipartFile multipartFile,
+                                 @Validated EventModifyDTO eventModifyDTO){
+        eventModifyService.modify(eventModifyDTO,multipartFile);
+        return ResponseEntity.ok("수정완료");
     }
 
     /* 이벤트 삭체 */

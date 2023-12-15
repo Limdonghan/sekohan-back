@@ -1,9 +1,10 @@
 package com.sekohan.sekohanback.dto.user.modify;
 
-import lombok.*;
-import org.springframework.web.multipart.MultipartFile;
+import lombok.AllArgsConstructor;
+import lombok.Getter;
+import lombok.NoArgsConstructor;
+import lombok.Setter;
 
-@Builder
 @Getter
 @Setter
 @AllArgsConstructor  //모든 필드 값을 파라미터로 받은 생성자 생성
@@ -12,5 +13,4 @@ public class UserModifyDTO {
 
     private String email;
     private String nickname;
-    private MultipartFile multipartFile;
 }

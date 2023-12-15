@@ -9,6 +9,7 @@ import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Service;
+import org.springframework.web.multipart.MultipartFile;
 
 import java.io.File;
 import java.io.IOException;
@@ -27,14 +28,17 @@ public class UserModifyServiceImpl implements UserModifyService{
 
     /* 회원이 회원수정을 누르면 토크으로 회원정보를 검색해서 일치하는 회원의 정보를 표시*/
     @Override
-    public void modify(UserModifyDTO userModifyDTO){
+    public void modify(UserModifyDTO userModifyDTO, MultipartFile multipartFile){
 
         UserEntity user = userSecurityRepository.getUser();
 
         UserEntity result = userRepository.findByLogin2(user.getLogin());
 
+        String originalFilename=multipartFile.getOriginalFilename();
+        String fileName = originalFilename.substring(originalFilename.lastIndexOf("\\") + 1);
+
         String folderPath=makeFolder();
-        String saveName = uploadPath + File.separator + folderPath+File.separator + userModifyDTO.getMultipartFile().getOriginalFilename(); // 새로 저장
+        String saveName = uploadPath + File.separator + folderPath+File.separator + fileName; // 새로 저장
         Path path = Paths.get(saveName);
         String originalProfilePath = result.getPath();
         try {
@@ -42,15 +46,14 @@ public class UserModifyServiceImpl implements UserModifyService{
             if (file.exists()) {
                 file.delete();
             }
-            userModifyDTO.getMultipartFile().transferTo(path);
+            multipartFile.transferTo(path);
         } catch (IOException e) {
             log.info(e.toString());
         }
 
-        if(result.getEmail() == null){
+        if(result.getEmail() != null){
             UserEntity userEntity = result;
-            userEntity.update(userModifyDTO.getNickname(),userModifyDTO.getEmail());
-            userEntity.pathUpdate(path.toString());
+            userEntity.update(userModifyDTO.getNickname(),userModifyDTO.getEmail(),path.toString());
             userRepository.save(userEntity);
         }
     }
